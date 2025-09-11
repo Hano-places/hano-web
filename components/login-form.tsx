@@ -24,16 +24,20 @@ export function LoginForm() {
   }
 
   return (
+<<<<<<< HEAD
     <div className="space-y-6">
+=======
+    <div className="space-y-4 max-w-md ">
+>>>>>>> c787be5123cecd86370d297254faebf07c4677a1
       {/* Logo */}
-      <div className="flex justify-center mb-8">
-        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-          <Image src="/logo.png" alt="Hano Logo" width={32} height={32} className="w-8 h-8" />
+      <div className="flex justify-center mb-3">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center">
+          <Image src="/logo.png" alt="Hano Logo" width={64} height={64} className="w-13 h-16" />
         </div>
       </div>
 
       {/* Header */}
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-1">
         <h2 className="text-xl font-semibold text-white">Log in to your account</h2>
         <p className="text-brand-dark-400 text-sm">Welcome back! Please enter your details.</p>
       </div>

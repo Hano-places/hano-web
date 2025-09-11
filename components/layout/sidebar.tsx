@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ChartLine,
   Users,
@@ -40,6 +41,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
+  const pathname = usePathname();
   return (
     <>
       {/* Mobile overlay */}
@@ -95,7 +97,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-8 space-y-6 overflow-y-auto">
+        <nav className="flex-1 py-8 space-y-6 overflow-y-auto no-scrollbar">
           {menu.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <h3 className="text-s font-medium text-brand-dark-100 mb-6 px-3 uppercase tracking-wider">
@@ -104,14 +106,15 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
               <ul className="space-y-0.5">
                 {section.items.map((item, itemIndex) => {
                   const Icon = item.icon;
+                  const isActive = pathname === item.href || item.active;
                   return (
                     <li key={itemIndex}>
                       <Link
   href={item.href}
   className={cn(
     "flex items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-200 group relative h-14",
-    item.active
-      ? "border-l-4 text-brand-dark-50 after:content-[''] after:absolute after:top-0 after:right-[-1px] after:h-full after:w-px after:bg-[#060606]"
+    isActive
+      ? "border-l-4 border-white bg-brand-dark-900 text-white"
       : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
   )}
 >
@@ -119,13 +122,13 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
     <Icon
       className={cn(
         "h-6 w-6 transition-colors",
-        item.active ? "text-white" : "text-gray-400 group-hover:text-white"
+        isActive ? "text-white" : "text-gray-400 group-hover:text-white"
       )}
     />
     <span
       className={cn(
         "transition-colors text-base",
-        item.active ? "text-white font-semibold" : "group-hover:text-white"
+        isActive ? "text-white font-semibold" : "group-hover:text-white"
       )}
     >
       {item.label}
@@ -137,7 +140,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
       variant="destructive"
       className={cn(
         "h-6 w-6 p-0 text-xs flex items-center justify-center rounded-full",
-        item.active ? "bg-red-500 text-white" : "bg-red-500 hover:bg-red-600"
+        isActive ? "bg-red-500 text-white" : "bg-red-500 hover:bg-red-600"
       )}
     >
       {item.badge}
