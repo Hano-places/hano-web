@@ -28,7 +28,7 @@ export default function HomePage() {
             {/* Content goes here */}
             {/* <ActivityTrendChart /> */}
 
-            {/* <ValueCard
+            <ValueCard
               title="Visitors"
               value={4}
               unit="Users"
@@ -37,7 +37,7 @@ export default function HomePage() {
               icon={<Users />}
               className="w-80"
               label="Active"
-            /> */}
+            />
 
             {/* <LoginForm /> */}
             {/* <ProgressTable /> */}
