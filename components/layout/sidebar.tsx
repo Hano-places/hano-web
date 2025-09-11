@@ -18,37 +18,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+type MenuIcon = typeof ChartLine;
+
+export interface SidebarMenuItem {
+  icon: MenuIcon;
+  label: string;
+  href: string;
+  active?: boolean;
+  badge?: number;
+}
+
+export interface SidebarMenuSection {
+  section: string;
+  items: SidebarMenuItem[];
+}
+
 interface SidebarProps {
   isOpen: boolean;
   onToggle: () => void;
+  menu: SidebarMenuSection[];
 }
 
-const menuItems = [
-  {
-    section: "App Management",
-    items: [
-      { icon: ChartLine, label: "Dashboard", active: true, href: "/" },
-      { icon: Users, label: "Users", href: "/users" },
-      { icon: Building2, label: "Businesses", badge: 5, href: "/businesses" },
-      { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
-      { icon: DollarSign, label: "Revenues", href: "/revenues" },
-      { icon: ShoppingCart, label: "Reports", badge: 9, href: "/reports" },
-    ],
-  },
-  {
-    section: "Company Settings",
-    items: [
-      { icon: Shield, label: "Roles", href: "/roles" },
-      { icon: UsersRound, label: "Members", href: "/members" },
-    ],
-  },
-  {
-    section: "Account",
-    items: [{ icon: LogOut, label: "Sign Out", href: "/logout" }],
-  },
-];
-
-export function Sidebar({ isOpen, onToggle }: SidebarProps) {
+export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
   return (
     <>
       {/* Mobile overlay */}
@@ -62,8 +53,8 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out",
-          "lg:translate-x-0 lg:static lg:z-auto",
+          "fixed left-0 lg:left-16 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-gray-800",
+          "lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -105,7 +96,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
 
         {/* Navigation */}
         <nav className="flex-1 py-8 space-y-6 overflow-y-auto">
-          {menuItems.map((section, sectionIndex) => (
+          {menu.map((section, sectionIndex) => (
             <div key={sectionIndex}>
               <h3 className="text-s font-medium text-brand-dark-100 mb-6 px-3 uppercase tracking-wider">
                 {section.section}
@@ -120,7 +111,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   className={cn(
     "flex items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-200 group relative h-14",
     item.active
-      ? "border-l-4 border-white bg-brand-dark-900 text-white"
+      ? "border-l-4 text-brand-dark-50 after:content-[''] after:absolute after:top-0 after:right-[-1px] after:h-full after:w-px after:bg-[#060606]"
       : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
   )}
 >

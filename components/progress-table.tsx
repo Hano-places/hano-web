@@ -9,7 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react"
 
-interface RegistrationRequest {
+export interface RegistrationRequest {
   id: string
   name: string
   email: string
@@ -23,85 +23,17 @@ interface RegistrationRequest {
   status: "pending" | "approved" | "rejected"
 }
 
-const mockData: RegistrationRequest[] = [
-      {
-    id: "1",
-    name: "John Doe",
-    email: "johndoe@gmail.com",
-    avatar:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-    totalCoins: 2300,
-    places: 2,
-    lastVisit: {
-      location: "Grand Venue Hotel",
-      time: "Today 2:00 pm",
-    },
-    status: "pending",
-  },
-  {
-    id: "2",
-    name: "Alice Smith",
-    email: "alice@gmail.com",
-    avatar:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-    totalCoins: 5000,
-    places: 4,
-    lastVisit: {
-      location: "Luxury Inn",
-      time: "Yesterday 5:30 pm",
-    },
-    status: "approved",
-  },
-  {
-    id: "3",
-    name: "Michael Lee",
-    email: "michael@gmail.com",
-    avatar:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-    totalCoins: 1200,
-    places: 1,
-    lastVisit: {
-      location: "City Center",
-      time: "Today 11:15 am",
-    },
-    status: "rejected",
-  },
-  {
-    id: "4",
-    name: "Emma Watson",
-    email: "emma@gmail.com",
-    avatar:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-    totalCoins: 3200,
-    places: 3,
-    lastVisit: {
-      location: "Grand Venue Hotel",
-      time: "Today 9:00 am",
-    },
-    status: "approved",
-  },
-  {
-    id: "5",
-    name: "David Brown",
-    email: "david@gmail.com",
-    avatar:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-    totalCoins: 450,
-    places: 1,
-    lastVisit: {
-      location: "Downtown Plaza",
-      time: "Yesterday 3:45 pm",
-    },
-    status: "pending",
-  },
-]
+interface ProgressTableProps {
+  data: RegistrationRequest[]
+  title?: string
+}
 
 type SortField = "group" | "status" | null
 type SortDirection = "asc" | "desc"
 
 const ITEMS_PER_PAGE = 5
 
-const ProgressTable: React.FC = () => {
+const ProgressTable: React.FC<ProgressTableProps> = ({ data, title = "Recent Business Registration Requests" }) => {
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [currentPage, setCurrentPage] = useState(1)
@@ -143,7 +75,7 @@ const ProgressTable: React.FC = () => {
 
   // ✅ Sorting logic
   const sortedData = useMemo(() => {
-    let sorted = [...mockData]
+    let sorted = [...(data ?? [])]
     if (sortField) {
       sorted.sort((a, b) => {
         let valA, valB
@@ -213,7 +145,7 @@ const ProgressTable: React.FC = () => {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-xl font-semibold text-gray-100">
-              Recent Business Registration Requests
+              {title}
             </h1>
             <button className="p-2 hover:bg-dark-800 rounded-lg transition-colors">
               <MoreHorizontal className="w-5 h-5 text-gray-400" />
