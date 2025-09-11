@@ -62,7 +62,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out",
+          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-gray-800",
           "lg:translate-x-0 lg:static lg:z-auto",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
@@ -120,7 +120,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   className={cn(
     "flex items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-200 group relative h-14", // ⬅️ increased height
     item.active
-      ? "border-l-4 text-brand-dark-50"
+      ? "border-l-4 text-brand-dark-50 after:content-[''] after:absolute after:top-0 after:right-[-1px] after:h-full after:w-px after:bg-[#060606]"
       : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
   )}
 >

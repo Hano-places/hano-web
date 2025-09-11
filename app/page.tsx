@@ -13,7 +13,7 @@ export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen px-16 bg-[#000000] flex">
+    <div className="min-h-screen px-16 bg-[#000000] flex lgml-64">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
 
@@ -26,7 +26,7 @@ export default function HomePage() {
         <main className="flex-1 px-6 py-6">
           <div className="max-w-7xl mx-auto">
             {/* Content goes here */}
-            {/* <ActivityTrendChart /> */}
+            <ActivityTrendChart />
 
             <ValueCard
               title="Visitors"
@@ -40,7 +40,7 @@ export default function HomePage() {
             />
 
             {/* <LoginForm /> */}
-            {/* <ProgressTable /> */}
+            <ProgressTable />
           </div>
         </main>
       </div>
