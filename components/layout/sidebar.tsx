@@ -118,23 +118,23 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                       <Link
   href={item.href}
   className={cn(
-    "flex items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-200 group relative h-14", // ⬅️ increased height
+    "flex items-center justify-between px-4 py-4 text-sm font-medium transition-all duration-200 group relative h-14",
     item.active
-      ? "border-l-4 text-brand-dark-50"
+      ? "border-l-4 border-white bg-brand-dark-900 text-white"
       : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
   )}
 >
   <div className="flex items-center space-x-5"> {/* ⬅️ wider space between icon and text */}
     <Icon
       className={cn(
-        "h-6 w-6 transition-colors", // ⬅️ slightly larger icon
-        item.active ? "text-brand-dark-50" : "text-gray-400 group-hover:text-white"
+        "h-6 w-6 transition-colors",
+        item.active ? "text-white" : "text-gray-400 group-hover:text-white"
       )}
     />
     <span
       className={cn(
-        "transition-colors text-base", // ⬅️ bigger text size
-        item.active ? "text-brand-dark-50 font-semibold" : "group-hover:text-white"
+        "transition-colors text-base",
+        item.active ? "text-white font-semibold" : "group-hover:text-white"
       )}
     >
       {item.label}

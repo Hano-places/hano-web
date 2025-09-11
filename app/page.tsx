@@ -38,9 +38,17 @@ export default function HomePage() {
               className="w-80"
               label="Active"
             />
+            <div className="mt-10 space-y-12">
+              <section>
+                <h2 className="text-xl font-semibold text-white mb-4">Login Form Preview</h2>
+                <LoginForm />
+              </section>
 
-            {/* <LoginForm /> */}
-            {/* <ProgressTable /> */}
+              <section>
+                <h2 className="text-xl font-semibold text-white mb-4">Table Preview</h2>
+                <ProgressTable />
+              </section>
+            </div>
           </div>
         </main>
       </div>

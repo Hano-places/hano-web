@@ -82,7 +82,7 @@ export function LoginForm() {
               Remember for 30 days
             </Label>
           </div>
-          <button type="button" className="text-sm text-tertiary-500 hover:text-tertiary-400 transition-colors">
+          <button type="button" className="text-sm transition-colors" style={{ color: "#D63D34" }}>
             Forgot password
           </button>
         </div>
@@ -122,7 +122,7 @@ export function LoginForm() {
       {/* Sign up link */}
       <div className="text-center">
         <span className="text-brand-dark-400 text-sm">Don't have an account? </span>
-        <button className="text-tertiary-500 hover:text-tertiary-400 text-sm font-medium transition-colors">
+        <button className="text-sm font-medium transition-colors" style={{ color: "#D63D34" }}>
           Sign up
         </button>
       </div>
