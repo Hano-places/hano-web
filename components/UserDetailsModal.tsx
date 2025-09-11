@@ -1,6 +1,7 @@
 "use client";
 
 import { X, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
+import { useRouter } from "next/navigation";
 import ValueCard from "@/components/value-card";
 import { type RegistrationRequest } from "@/components/progress-table";
 
@@ -10,6 +11,7 @@ interface UserDetailsModalProps {
 }
 
 export default function UserDetailsModal({ selected, onClose }: UserDetailsModalProps) {
+  const router = useRouter();
   if (!selected) return null;
 
   return (
@@ -101,7 +103,13 @@ export default function UserDetailsModal({ selected, onClose }: UserDetailsModal
             >
               Back
             </button>
-            <button className="w-full px-4 py-3 rounded-lg bg-white text-black font-medium">
+            <button
+              className="w-full px-4 py-3 rounded-lg bg-white text-black font-medium"
+              onClick={() => {
+                const userName = encodeURIComponent(selected.name);
+                router.push(`/users/${userName}`);
+              }}
+            >
               View Full Activity
             </button>
           </div>

@@ -1,15 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ProgressTable, { type RegistrationRequest } from "@/components/progress-table";
 import ValueCard from "@/components/value-card";
-import { Navbar } from "@/components/layout/navbar";
-import { Sidebar, type SidebarMenuSection } from "@/components/layout/sidebar";
-import { Users, X, BadgeCheck, MapPin, Link2, Phone } from "lucide-react";
-import { useState } from "react";
+import AppShell from "@/components/layout/app-shell";
+import { type SidebarMenuSection } from "@/components/layout/sidebar";
+import { Users } from "lucide-react";
+import UserDetailsModal from "@/components/UserDetailsModal";
 
 export default function UsersPage() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selected, setSelected] = useState<RegistrationRequest | null>(null);
 
   const user = {
@@ -113,134 +113,28 @@ export default function UsersPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#000000] flex pr-16">
-      {/* Sidebar */}
-      <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} menu={menu} />
+    <AppShell user={user} menu={menu}>
+      <div className="space-y-8">
+        {/* Top metric cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <ValueCard title="All Users" value={234800} unit="Users" description="+2.4%" label="All time" />
+          <ValueCard title="Active" value={100} unit="Users" description="+2.4%" label="Today" />
+          <ValueCard title="Restricted" value={4600} unit="Users" description="-0.5%" label="All time" />
+          <ValueCard title="Visitors" value={4} unit="Users" description="+1" label="Now" />
+        </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex bg-[#0C0C0C] flex-col px-12 lg:ml-[20rem]">
-        {/* Navbar */}
-        <Navbar onSidebarToggle={() => setSidebarOpen(!sidebarOpen)} user={user} />
+        {/* Activity chart */}
+        <ActivityTrendChart data={chartData} />
 
-        {/* Main Content */}
-        <main className="flex-1 px-6 py-6">
-          <div className="max-w-7xl mx-auto space-y-8">
-            {/* Top metric cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <ValueCard title="All Users" value={234800} unit="Users" description="+2.4%" label="All time" />
-              <ValueCard title="Active" value={100} unit="Users" description="+2.4%" label="Today" />
-              <ValueCard title="Restricted" value={4600} unit="Users" description="-0.5%" label="All time" />
-              <ValueCard title="Visitors" value={4} unit="Users" description="+1" label="Now" />
-            </div>
-
-            {/* Activity chart */}
-            <ActivityTrendChart data={chartData} />
-
-            {/* Table */}
-            <ProgressTable
-              data={tableData}
-              title="Recent Business Registration Requests"
-              onViewDetails={(req) => setSelected(req)}
-            />
-          </div>
-        </main>
+        {/* Table */}
+        <ProgressTable
+          data={tableData}
+          title="Recent Business Registration Requests"
+          onViewDetails={(req) => setSelected(req)}
+        />
       </div>
-
-      {/* Modal with backdrop blur */}
-      {/* Modal with backdrop blur */}
-{selected && (
-  <div className="fixed inset-0 z-[60]">
-    {/* Backdrop */}
-    <div
-      className="absolute inset-0 backdrop-blur-md bg-black/50"
-      onClick={() => setSelected(null)}
-    />
-
-    {/* Centered Modal */}
-    <div className="absolute inset-0 flex items-center justify-center p-4">
-      <div
-        className="relative w-[638px] h-[466px] rounded-3xl p-8 overflow-hidden"
-        style={{
-          backgroundImage: "url('/modal.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Close Button (top-right corner) */}
-        <button
-          className="absolute top-6 right-6 text-brand-dark-200"
-          onClick={() => setSelected(null)}
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 bg-brand-dark-900 rounded-2xl mb-6 mt-6">
-          {/* Left - Avatar and Info */}
-          <div className="flex items-start gap-4">
-            <img
-              src={selected.avatar}
-              alt={selected.name}
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div>
-              <div className="text-lg font-semibold text-brand-dark-100">
-                {selected.name}
-              </div>
-              <div className="text-sm text-brand-dark-100">{selected.email}</div>
-              <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-brand-dark-100">
-                <span className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" /> {selected.lastVisit.location}, Rwanda
-                </span>
-                <a href="#" className="flex items-center gap-2 hover:underline">
-                  <Link2 className="w-4 h-4" /> View Business Page
-                </a>
-                <span className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" /> +250-791-234-567
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right - Verified badge */}
-          <BadgeCheck className="w-6 h-6 text-blue-500" />
-        </div>
-
-        {/* Content - two value cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-          <ValueCard
-            title="Total Visits"
-            value={selected.totalCoins}
-            unit="RWF"
-            description={`${selected.places} Plans`}
-            label="↑ 2.4%"}
-          />
-          <ValueCard
-            title="Accumulated Coins"
-            value={selected.totalCoins}
-            unit="Hano coins"
-            description={`${selected.places} Plans`}
-            label="↑ 2.4%"}
-          />
-        </div>
-
-        {/* Footer */}
-        <div className="grid grid-cols-2 divide-x gap-6">
-          <button
-            className="w-full px-4 py-3 rounded-lg text-brand-dark-200 border border-brand-dark-700"
-            onClick={() => setSelected(null)}
-          >
-            Back
-          </button>
-          <button className="w-full px-4 py-3 rounded-lg bg-white text-black font-medium">
-            View Full Activity
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
-    </div>
+      {/* External Modal */}
+      <UserDetailsModal selected={selected} onClose={() => setSelected(null)} />
+    </AppShell>
   );
 }

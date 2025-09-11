@@ -12,27 +12,30 @@ export interface RegistrationRequest {
   name: string
   email: string
   avatar: string
-  totalCoins: number
-  places: number
-  lastVisit: {
-    location: string
-    time: string
+  time: {
+    date: string
+    clock: string
   }
-  status: "pending" | "approved" | "rejected"
+  review: {
+    date: string
+    clock: string
+  }
+  rewards: number
+  rewarded?: boolean
 }
 
-interface ProgressTableProps {
+interface HistoryTableProps {
   data: RegistrationRequest[]
   title?: string
   onViewDetails?: (request: RegistrationRequest) => void
 }
 
-type SortField = "group" | "status" | null
+type SortField = "group" | "rewards" | null
 type SortDirection = "asc" | "desc"
 
 const ITEMS_PER_PAGE = 5
 
-const ProgressTable: React.FC<ProgressTableProps> = ({
+const HistoryTable: React.FC<HistoryTableProps> = ({
   data,
   title = "Recent Business Registration Requests",
   onViewDetails,
@@ -40,6 +43,7 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [currentPage, setCurrentPage] = useState(1)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -50,19 +54,12 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
     }
   }
 
-  const getStatusBadge = (status: string) => {
+  const getRewardBadge = (rewarded?: boolean) => {
     const baseClasses =
-      "inline-flex items-center px-3 py-1 rounded-md text-sm font-medium"
-    switch (status) {
-      case "pending":
-        return `${baseClasses} bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300`
-      case "approved":
-        return `${baseClasses} bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300`
-      case "rejected":
-        return `${baseClasses} bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300`
-      default:
-        return baseClasses
-    }
+      "inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium"
+    return rewarded
+      ? `${baseClasses} bg-green-900/30 text-green-300 border border-green-900`
+      : `${baseClasses} hidden`
   }
 
   const SortIcon = ({ field }: { field: SortField }) => {
@@ -85,9 +82,9 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
         if (sortField === "group") {
           valA = a.name.toLowerCase()
           valB = b.name.toLowerCase()
-        } else if (sortField === "status") {
-          valA = a.status
-          valB = b.status
+        } else if (sortField === "rewards") {
+          valA = a.rewards
+          valB = b.rewards
         }
         if (valA! < valB!) return sortDirection === "asc" ? -1 : 1
         if (valA! > valB!) return sortDirection === "asc" ? 1 : -1
@@ -95,9 +92,9 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
       })
     }
     return sorted
-  }, [sortField, sortDirection, data])
+  }, [sortField, sortDirection])
 
-  // ✅ Compact page numbers
+  // ✅ Page numbers with ellipsis
   const getPageNumbers = (totalPages: number, currentPage: number) => {
     const pages: (number | string)[] = []
 
@@ -136,6 +133,29 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
     currentPage * ITEMS_PER_PAGE
   )
 
+  const allSelectedOnPage =
+    paginatedData.length > 0 &&
+    paginatedData.every((r) => selectedIds.has(r.id))
+  const someSelectedOnPage =
+    paginatedData.some((r) => selectedIds.has(r.id)) && !allSelectedOnPage
+
+  const toggleSelectAllOnPage = () => {
+    const next = new Set(selectedIds)
+    if (allSelectedOnPage) {
+      paginatedData.forEach((r) => next.delete(r.id))
+    } else {
+      paginatedData.forEach((r) => next.add(r.id))
+    }
+    setSelectedIds(next)
+  }
+
+  const toggleSelectOne = (id: string) => {
+    const next = new Set(selectedIds)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    setSelectedIds(next)
+  }
+
   return (
     <div className="dark">
       <div className="min-h-screen bg-dark-900">
@@ -153,8 +173,23 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
             {/* Table Header */}
             <div
               className="hidden md:grid gap-4 px-6 py-4 border-b border-gray-800 bg-dark-900/50"
-              style={{ gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr" }}
+              style={{
+                gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr",
+              }}
             >
+              {/* Select all */}
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  aria-label="Select all"
+                  checked={allSelectedOnPage}
+                  onChange={toggleSelectAllOnPage}
+                  ref={(el) => {
+                    if (el) el.indeterminate = someSelectedOnPage
+                  }}
+                  className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
+                />
+              </div>
               <button
                 className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
                 onClick={() => handleSort("group")}
@@ -162,18 +197,16 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
                 Group
                 <SortIcon field="group" />
               </button>
+              <div className="text-sm font-medium text-gray-300">Time</div>
               <div className="text-sm font-medium text-gray-300">
-                Total Hano Coins
-              </div>
-              <div className="text-sm font-medium text-gray-300">
-                Last Visit
+                Made a Review
               </div>
               <button
                 className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
-                onClick={() => handleSort("status")}
+                onClick={() => handleSort("rewards")}
               >
-                Account Status
-                <SortIcon field="status" />
+                Rewards
+                <SortIcon field="rewards" />
               </button>
               <div className="text-sm font-medium text-gray-300">Action</div>
             </div>
@@ -184,8 +217,20 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
                 <div
                   key={request.id}
                   className="grid grid-cols-1 gap-4 px-6 py-4 hover:bg-dark-800/50 transition-colors md:grid"
-                  style={{ gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr" }}
+                  style={{
+                    gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr",
+                  }}
                 >
+                  {/* Row checkbox */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      aria-label={`Select ${request.name}`}
+                      checked={selectedIds.has(request.id)}
+                      onChange={() => toggleSelectOne(request.id)}
+                      className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
+                    />
+                  </div>
                   {/* Group */}
                   <div className="flex items-center gap-3">
                     <img
@@ -203,33 +248,39 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
                     </div>
                   </div>
 
-                  {/* Total Hano Coins */}
-                  <div className="flex flex-col justify-center">
-                    <div className="font-semibold text-gray-100">
-                      {request.totalCoins.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      {request.places} Places
-                    </div>
-                  </div>
-
-                  {/* Last Visit */}
+                  {/* Time */}
                   <div className="flex flex-col justify-center">
                     <div className="font-medium text-gray-100">
-                      {request.lastVisit.location}
+                      {request.time.date}
                     </div>
                     <div className="text-sm text-gray-400">
-                      {request.lastVisit.time}
+                      {request.time.clock}
                     </div>
                   </div>
 
-                  {/* Account Status */}
-                  <div className="flex items-center">
-                    <span className={getStatusBadge(request.status)}>
-                      <span className="w-2 h-2 rounded-full bg-white mr-2"></span>
-                      {request.status.charAt(0).toUpperCase() +
-                        request.status.slice(1)}
-                    </span>
+                  {/* Made a Review */}
+                  <div className="flex flex-col justify-center">
+                    <div className="font-medium text-gray-100">
+                      {request.review.date}
+                    </div>
+                    <div className="text-sm text-gray-400">
+                      {request.review.clock}
+                    </div>
+                  </div>
+
+                  {/* Rewards */}
+                  <div className="flex items-center gap-3">
+                    {!request.rewarded && (
+                      <div className={`font-semibold text-red-400`}>
+                        {request.rewards > 0
+                          ? `+${request.rewards}`
+                          : `${request.rewards}`}
+                      </div>
+                    )}
+                    {request.rewarded && (
+                              <span className={getRewardBadge(true)}>
+                                  <span className="w-2 h-2 rounded-full bg-white mr-2"></span>Rewarded</span>
+                    )}
                   </div>
 
                   {/* Action */}
@@ -279,9 +330,7 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
             <button
               className="px-3 py-2 text-sm text-gray-400 hover:text-gray-100 disabled:opacity-50"
               disabled={currentPage === totalPages}
-              onClick={() =>
-                setCurrentPage((p) => Math.min(totalPages, p + 1))
-              }
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             >
               Next
             </button>
@@ -292,4 +341,4 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
   )
 }
 
-export default ProgressTable
+export default HistoryTable

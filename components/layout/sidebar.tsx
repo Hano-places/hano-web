@@ -55,7 +55,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 lg:left-16 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-gray-800",
+          "fixed left-0  top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-gray-800",
           "lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
@@ -85,15 +85,6 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
           >
             <Menu className="h-5 w-5" />
           </Button>
-        </div>
-
-        {/* Three dots separator */}
-        <div className="flex justify-center py-2">
-          <div className="flex space-x-1">
-            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
-          </div>
         </div>
 
         {/* Navigation */}

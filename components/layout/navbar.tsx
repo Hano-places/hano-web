@@ -27,7 +27,7 @@ interface NavbarProps {
 export function Navbar({ onSidebarToggle, user }: NavbarProps) {
   return (
     <header className="text-white py-12">
-   <div className="flex items-center justify-between w-full gap-4">
+   <div className="flex items-center justify-between w-auto gap-4">
     {/* Left section */}
     <div className="flex items-center flex-shrink-0 gap-3 ">
       <Button
@@ -38,7 +38,7 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
       >
         <Menu className="h-5 w-5" />
       </Button>
-      <div className="hidden lg:block">
+      <div className="">
         <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
       </div>
     </div>
@@ -100,7 +100,6 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
         className="text-white bg-brand-dark-800  rounded-lg py-6 px-8"
       >
         <Bell className="h-6 w-6 m-2" />
-        <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full ring-2 ring-[#0A0A0A]" />
       </Button>
     </div>
   </div>

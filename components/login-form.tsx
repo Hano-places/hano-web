@@ -24,20 +24,16 @@ export function LoginForm() {
   }
 
   return (
-<<<<<<< HEAD
     <div className="space-y-6">
-=======
-    <div className="space-y-4 max-w-md ">
->>>>>>> c787be5123cecd86370d297254faebf07c4677a1
       {/* Logo */}
-      <div className="flex justify-center mb-3">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center">
-          <Image src="/logo.png" alt="Hano Logo" width={64} height={64} className="w-13 h-16" />
+      <div className="flex justify-center mb-8">
+        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+          <Image src="/logo.png" alt="Hano Logo" width={32} height={32} className="w-8 h-8" />
         </div>
       </div>
 
       {/* Header */}
-      <div className="text-center space-y-1">
+      <div className="text-center space-y-2">
         <h2 className="text-xl font-semibold text-white">Log in to your account</h2>
         <p className="text-brand-dark-400 text-sm">Welcome back! Please enter your details.</p>
       </div>
@@ -86,7 +82,7 @@ export function LoginForm() {
               Remember for 30 days
             </Label>
           </div>
-          <button type="button" className="text-sm transition-colors" style={{ color: "#D63D34" }}>
+          <button type="button" className="text-sm text-tertiary-500 hover:text-tertiary-400 transition-colors">
             Forgot password
           </button>
         </div>
@@ -126,7 +122,7 @@ export function LoginForm() {
       {/* Sign up link */}
       <div className="text-center">
         <span className="text-brand-dark-400 text-sm">Don't have an account? </span>
-        <button className="text-sm font-medium transition-colors" style={{ color: "#D63D34" }}>
+        <button className="text-tertiary-500 hover:text-tertiary-400 text-sm font-medium transition-colors">
           Sign up
         </button>
       </div>
