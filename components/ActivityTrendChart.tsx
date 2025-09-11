@@ -3,27 +3,26 @@
 import React, { useState } from 'react';
 import { MoreHorizontal } from 'lucide-react';
 
-interface ChartData {
+export interface ChartDataPoint {
   day: string;
   registeredUsers: number;
   visitors: number;
 }
 
-const mockData: ChartData[] = [
-  { day: 'Sun', registeredUsers: 45, visitors: 65 },
-  { day: 'Mon', registeredUsers: 75, visitors: 85 },
-  { day: 'Tue', registeredUsers: 55, visitors: 70 },
-  { day: 'Wed', registeredUsers: 85, visitors: 35 },
-  { day: 'Thu', registeredUsers: 70, visitors: 80 },
-  { day: 'Fri', registeredUsers: 60, visitors: 75 },
-  { day: 'Sat', registeredUsers: 80, visitors: 90 },
-];
+interface ActivityTrendChartProps {
+  data: ChartDataPoint[];
+  periods?: string[];
+  title?: string;
+}
 
-const ActivityTrendChart: React.FC = () => {
+const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
+  data,
+  periods = ['All Time', '7 Days', '24 Hours', '1 Hour'],
+  title = 'Activity Trend',
+}) => {
   const [selectedPeriod, setSelectedPeriod] = useState('All Time');
-  const periods = ['All Time', '7 Days', '24 Hours', '1 Hour'];
 
-  const maxValue = Math.max(...mockData.flatMap(d => [d.registeredUsers, d.visitors]));
+  const maxValue = Math.max(...data.flatMap(d => [d.registeredUsers, d.visitors]));
 
   const getPathData = (data: number[], color: 'users' | 'visitors') => {
     const width = 100;
@@ -37,15 +36,15 @@ const ActivityTrendChart: React.FC = () => {
     return `M 0,${height} L ${points.join(' L ')} L ${width},${height} Z`;
   };
 
-  const registeredUsersData = mockData.map(d => d.registeredUsers);
-  const visitorsData = mockData.map(d => d.visitors);
+  const registeredUsersData = data.map(d => d.registeredUsers);
+  const visitorsData = data.map(d => d.visitors);
 
   return (
     <div className="bg-brand-dark-900 border-4 border-brand-dark-800 rounded-xl p-4 sm:p-6 w-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
         <h3 className="text-lg font-medium text-brand-dark-50">
-          Activity Trend
+          {title}
         </h3>
         <button className="p-1 hover:bg-muted rounded-lg transition-colors">
           <MoreHorizontal className="w-5 h-5 text-brand-dark-100" />
@@ -138,7 +137,7 @@ const ActivityTrendChart: React.FC = () => {
 
           {/* X-axis labels */}
           <div className="flex justify-between mt-2 text-xs text-brand-dark-100">
-            {mockData.map((item) => (
+            {data.map((item) => (
               <span key={item.day} className="text-center">
                 {item.day}
               </span>

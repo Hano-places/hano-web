@@ -13,11 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface NavbarProps {
-  onSidebarToggle: () => void;
+interface NavbarUser {
+  name: string;
+  email: string;
+  avatarUrl?: string;
 }
 
-export function Navbar({ onSidebarToggle }: NavbarProps) {
+interface NavbarProps {
+  onSidebarToggle: () => void;
+  user: NavbarUser;
+}
+
+export function Navbar({ onSidebarToggle, user }: NavbarProps) {
   return (
     <header className="text-white py-12">
    <div className="flex items-center justify-between w-full gap-4">
@@ -57,12 +64,12 @@ export function Navbar({ onSidebarToggle }: NavbarProps) {
   <DropdownMenuTrigger asChild>
     <button className="flex items-center text-white px-6 py-4 rounded-lg focus:outline-none">
       <Avatar className="h-9 w-9 mx-2">
-        <AvatarImage src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1" />
-        <AvatarFallback className="bg-brand-dark-600 text-white font-semibold">PI</AvatarFallback>
+        <AvatarImage src={user.avatarUrl ?? ""} />
+        <AvatarFallback className="bg-brand-dark-600 text-white font-semibold">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
       </Avatar>
       <div className="text-left hidden md:block">
-        <p className="text-base font-medium text-white leading-none">Patrick Ihirwe</p>
-        <p className="text-xs text-gray-400">user@gmail.com</p>
+        <p className="text-base font-medium text-white leading-none">{user.name}</p>
+        <p className="text-xs text-gray-400">{user.email}</p>
       </div>
       <ChevronDown className="h-5 w-5 text-gray-400" />
     </button>
