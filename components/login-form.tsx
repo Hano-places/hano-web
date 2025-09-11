@@ -24,7 +24,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-6 max-w-md ">
+    <div className="space-y-6">
       {/* Logo */}
       <div className="flex justify-center mb-8">
         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">

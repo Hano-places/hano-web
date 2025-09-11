@@ -26,6 +26,7 @@ export interface RegistrationRequest {
 interface ProgressTableProps {
   data: RegistrationRequest[]
   title?: string
+  onViewDetails?: (request: RegistrationRequest) => void
 }
 
 type SortField = "group" | "status" | null
@@ -33,7 +34,7 @@ type SortDirection = "asc" | "desc"
 
 const ITEMS_PER_PAGE = 5
 
-const ProgressTable: React.FC<ProgressTableProps> = ({ data, title = "Recent Business Registration Requests" }) => {
+const ProgressTable: React.FC<ProgressTableProps> = ({ data, title = "Recent Business Registration Requests", onViewDetails }) => {
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [currentPage, setCurrentPage] = useState(1)
@@ -234,7 +235,7 @@ const ProgressTable: React.FC<ProgressTableProps> = ({ data, title = "Recent Bus
 
                   {/* Action */}
                   <div className="flex items-center">
-                    <button className="px-4 py-2 bg-[#ffffff] text-dark-800 rounded-lg text-sm font-medium transition-colors border border-gray-700">
+                    <button onClick={() => onViewDetails?.(request)} className="px-4 py-2 bg-[#ffffff] text-dark-800 rounded-lg text-sm font-medium transition-colors border border-gray-700">
                       View Details
                     </button>
                   </div>
