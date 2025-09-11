@@ -13,12 +13,12 @@ export default function HomePage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#000000] flex">
+    <div className="min-h-screen px-16 bg-[#000000] flex">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
 
       {/* Main Content Area */}
-      <div className="flex-1 min-h-screen lg:ml-64 flex bg-[#0C0C0C] flex-col px-12 border-l border-[#1A1A1A]">
+      <div className="flex-1 flex bg-[#0C0C0C] flex-col px-12">
         {/* Navbar */}
         <Navbar onSidebarToggle={() => setSidebarOpen(!sidebarOpen)} />
 

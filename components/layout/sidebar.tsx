@@ -61,7 +61,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-[#1A1A1A]",
+          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#060606] text-white transition-transform duration-300 ease-in-out",
           "lg:translate-x-0 lg:static lg:z-auto",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
@@ -93,7 +93,14 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
           </Button>
         </div>
 
-        {/* Separator removed to keep a clean seam with navbar */}
+        {/* Three dots separator */}
+        <div className="flex justify-center py-2">
+          <div className="flex space-x-1">
+            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+            <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+          </div>
+        </div>
 
         {/* Navigation */}
         <nav className="flex-1 py-8 space-y-6 overflow-y-auto">
