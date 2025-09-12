@@ -7,7 +7,7 @@ import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { Users, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ValueCard from "@/components/value-card";
-import HistoryTable, { type RegistrationRequest } from "@/components/history-table";
+import HistoryTable, { type RegistrationRequest } from "@/components/users/history-table";
 
 export default function UserActivityPage() {
   const params = useParams();

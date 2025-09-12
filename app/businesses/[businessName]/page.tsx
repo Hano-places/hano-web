@@ -7,7 +7,7 @@ import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { Users, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ValueCard from "@/components/value-card";
-import HistoryTable, { type RegistrationRequest } from "@/components/history-table";
+import BusinessProgressTable, { type BusinessVisitHistory } from "@/components/businesses/business-progress-table";
 
 export default function BusinessActivityPage() {
   const params = useParams();
@@ -58,28 +58,61 @@ export default function BusinessActivityPage() {
     []
   );
 
-  const tableData: RegistrationRequest[] = [
+  const tableData: BusinessVisitHistory[] = [
     {
       id: "1",
-      name: businessName,
-      email: "info@example.com",
-      avatar:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      businessName: businessName,
+      email: "Mario.Koss@hotmail.com",
+      avatar: "",
       time: { date: "2, May, 2025", clock: "2:04 pm" },
-      review: { date: "2, May, 2025", clock: "2:04 pm" },
+      category: "Hotel",
+      subcategory: "Accommodation",
       rewards: 20,
       rewarded: false,
     },
     {
       id: "2",
-      name: businessName,
-      email: "info@example.com",
-      avatar:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-      time: { date: "3, May, 2025", clock: "11:14 am" },
-      review: { date: "3, May, 2025", clock: "11:30 am" },
+      businessName: businessName,
+      email: "Mario.Koss@hotmail.com",
+      avatar: "",
+      time: { date: "2, May, 2025", clock: "2:04 pm" },
+      category: "Hotel",
+      subcategory: "Accommodation",
       rewards: 20,
       rewarded: true,
+    },
+    {
+      id: "3",
+      businessName: businessName,
+      email: "Mario.Koss@hotmail.com",
+      avatar: "",
+      time: { date: "2, May, 2025", clock: "2:04 pm" },
+      category: "Hotel",
+      subcategory: "Accommodation",
+      rewards: 20,
+      rewarded: false,
+    },
+    {
+      id: "4",
+      businessName: businessName,
+      email: "Mario.Koss@hotmail.com",
+      avatar: "",
+      time: { date: "2, May, 2025", clock: "2:04 pm" },
+      category: "Hotel",
+      subcategory: "Accommodation",
+      rewards: 20,
+      rewarded: true,
+    },
+    {
+      id: "5",
+      businessName: businessName,
+      email: "Mario.Koss@hotmail.com",
+      avatar: "",
+      time: { date: "2, May, 2025", clock: "2:04 pm" },
+      category: "Hotel",
+      subcategory: "Accommodation",
+      rewards: 20,
+      rewarded: false,
     },
   ];
 
@@ -138,7 +171,7 @@ export default function BusinessActivityPage() {
         </div>
 
         {/* Visit History */}
-        <HistoryTable data={tableData} title="Visit History" />
+        <BusinessProgressTable data={tableData} title="Visit History" />
       </div>
     </AppShell>
   );

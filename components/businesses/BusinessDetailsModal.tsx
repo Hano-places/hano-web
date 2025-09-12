@@ -3,10 +3,10 @@
 import { X, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ValueCard from "@/components/value-card";
-import { type RegistrationRequest } from "@/components/progress-table";
+import { type BusinessVisit } from "./business-history-table";
 
 interface BusinessDetailsModalProps {
-  selected: RegistrationRequest | null;
+  selected: BusinessVisit | null;
   onClose: () => void;
 }
 
@@ -42,13 +42,11 @@ export default function BusinessDetailsModal({ selected, onClose }: BusinessDeta
             <div className="flex items-center justify-between">
               {/* Avatar + Info */}
               <div className="flex items-start gap-4">
-                <img
-                  src={selected.avatar}
-                  alt={selected.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
+                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
+                  <div className="w-6 h-6 text-white font-bold text-xs">S</div>
+                </div>
                 <div>
-                  <div className="text-lg font-semibold text-brand-dark-100">{selected.name}</div>
+                  <div className="text-lg font-semibold text-brand-dark-100">{selected.businessName}</div>
                   <div className="text-sm text-brand-dark-100">{selected.email}</div>
                 </div>
               </div>
@@ -58,9 +56,9 @@ export default function BusinessDetailsModal({ selected, onClose }: BusinessDeta
             </div>
 
             <div className="flex items-center justify-between text-xs text-brand-dark-100">
-              {/* Last Visit */}
+              {/* Location */}
               <span className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" /> {selected.lastVisit.location}, Rwanda
+                <MapPin className="w-4 h-4" /> {selected.category}, Rwanda
               </span>
 
               {/* Phone + Link */}
@@ -78,18 +76,18 @@ export default function BusinessDetailsModal({ selected, onClose }: BusinessDeta
           {/* Value Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
             <ValueCard
-              title="Total Visits"
-              value={selected.totalCoins}
-              unit="RWF"
-              description={`${selected.places} Plans`}
+              title="Total Clients"
+              value={selected.clients}
+              unit="clients"
+              description={`${selected.category} business`}
               label="↑ 2.4%"
               icon={<ClipboardCopy className="w-5 h-5 text-brand-dark-100" />}
             />
             <ValueCard
-              title="Accumulated Coins"
-              value={selected.totalCoins}
-              unit="Hano coins"
-              description={`${selected.places} Plans`}
+              title="Coins Per Visit"
+              value={selected.coinsPerVisit}
+              unit="coins"
+              description={`${selected.currentPlan} plan`}
               label="↑ 2.4%"
               icon={<ClipboardCopy className="w-5 h-5 text-brand-dark-100" />}
             />
@@ -106,7 +104,7 @@ export default function BusinessDetailsModal({ selected, onClose }: BusinessDeta
             <button
               className="w-full px-4 py-3 rounded-lg bg-white text-black font-medium"
               onClick={() => {
-                const businessName = encodeURIComponent(selected.name);
+                const businessName = encodeURIComponent(selected.businessName);
                 router.push(`/businesses/${businessName}`);
               }}
             >

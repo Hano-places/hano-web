@@ -9,7 +9,7 @@ import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { Users } from "lucide-react";
 import BusinessDetailsModal from "@/components/businesses/BusinessDetailsModal";
 
-export default function BusinessesPage() {
+export default function PendingBusinessesPage() {
   const [selected, setSelected] = useState<BusinessVisit | null>(null);
 
   const user = {
@@ -25,7 +25,8 @@ export default function BusinessesPage() {
       items: [
         { icon: Users, label: "Dashboard", href: "/" },
         { icon: Users, label: "Users", href: "/users" },
-        { icon: Users, label: "Businesses", badge: 5, href: "/businesses", active: true },
+        { icon: Users, label: "Businesses", badge: 5, href: "/businesses" },
+        { icon: Users, label: "Pending", href: "/businesses/pending", active: true },
         { icon: Users, label: "Subscriptions", href: "/subscriptions" },
         { icon: Users, label: "Revenues", href: "/revenues" },
         { icon: Users, label: "Reports", badge: 9, href: "/reports" },
@@ -64,56 +65,32 @@ export default function BusinessesPage() {
       subcategory: "Accommodation",
       clients: 240,
       coinsPerVisit: 20,
-      currentPlan: "Free",
-      time: { date: "2, May, 2025", clock: "2:04 pm" },
-    },
-    {
-      id: "2",
-      businessName: "Grand Venue Hotels",
-      email: "Mario.Koss@hotmail.com",
-      avatar: "",
-      category: "Hotel",
-      subcategory: "Accommodation",
-      clients: 240,
-      coinsPerVisit: 20,
       currentPlan: "Pending",
       time: { date: "2, May, 2025", clock: "2:04 pm" },
     },
     {
+      id: "2",
+      businessName: "Luxury Inn",
+      email: "contact@luxuryinn.com",
+      avatar: "",
+      category: "Hotel",
+      subcategory: "Accommodation",
+      clients: 180,
+      coinsPerVisit: 25,
+      currentPlan: "Pending",
+      time: { date: "1, May, 2025", clock: "3:15 pm" },
+    },
+    {
       id: "3",
-      businessName: "Grand Venue Hotels",
-      email: "Mario.Koss@hotmail.com",
+      businessName: "City Center Hotel",
+      email: "hello@citycenter.com",
       avatar: "",
       category: "Hotel",
       subcategory: "Accommodation",
-      clients: 240,
-      coinsPerVisit: 20,
-      currentPlan: "Hotel",
-      time: { date: "2, May, 2025", clock: "2:04 pm" },
-    },
-    {
-      id: "4",
-      businessName: "Grand Venue Hotels",
-      email: "Mario.Koss@hotmail.com",
-      avatar: "",
-      category: "Hotel",
-      subcategory: "Accommodation",
-      clients: 240,
-      coinsPerVisit: 20,
-      currentPlan: "Rejected",
-      time: { date: "2, May, 2025", clock: "2:04 pm" },
-    },
-    {
-      id: "5",
-      businessName: "Grand Venue Hotels",
-      email: "Mario.Koss@hotmail.com",
-      avatar: "",
-      category: "Hotel",
-      subcategory: "Accommodation",
-      clients: 240,
-      coinsPerVisit: 20,
-      currentPlan: "Approved",
-      time: { date: "2, May, 2025", clock: "2:04 pm" },
+      clients: 120,
+      coinsPerVisit: 15,
+      currentPlan: "Pending",
+      time: { date: "30, Apr, 2025", clock: "11:30 am" },
     },
   ];
 
@@ -122,10 +99,10 @@ export default function BusinessesPage() {
       <div className="space-y-8">
         {/* Top metric cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ValueCard title="All Businesses" value={1234} unit="Groups" description="+2.4%" label="All time" />
-          <ValueCard title="Active" value={100} unit="Groups" description="+2.4%" label="Today" />
-          <ValueCard title="Suspended" value={46} unit="Groups" description="-0.5%" label="All time" />
-          <ValueCard title="Visitors" value={4} unit="Now" description="+1" label="Now" />
+          <ValueCard title="Pending Businesses" value={3} unit="Groups" description="+2.4%" label="All time" />
+          <ValueCard title="Under Review" value={2} unit="Groups" description="+2.4%" label="Today" />
+          <ValueCard title="Awaiting Approval" value={1} unit="Groups" description="-0.5%" label="All time" />
+          <ValueCard title="New Requests" value={0} unit="Now" description="+1" label="Now" />
         </div>
 
         {/* Activity chart */}
@@ -134,7 +111,7 @@ export default function BusinessesPage() {
         {/* Table */}
         <BusinessHistoryTable
           data={tableData}
-          title="Recent Business Registration Requests"
+          title="Pending Business Registration Requests"
           onViewDetails={(req) => setSelected(req)}
         />
       </div>

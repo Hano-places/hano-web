@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
-import ProgressTable, { type RegistrationRequest } from "@/components/progress-table";
+import ProgressTable, { type RegistrationRequest } from "@/components/users/progress-table";
 import ValueCard from "@/components/value-card";
 import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { Users } from "lucide-react";
-import UserDetailsModal from "@/components/UserDetailsModal";
+import UserDetailsModal from "@/components/users/UserDetailsModal";
 
 export default function UsersPage() {
   const [selected, setSelected] = useState<RegistrationRequest | null>(null);
