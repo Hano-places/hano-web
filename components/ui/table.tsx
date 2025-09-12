@@ -57,7 +57,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
       data-slot="table-row"
       className={cn(
         // Default height 112px → shrinks to 80px on small screens
-        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors h-[112px] sm:h-[80px]",
+        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors h-[112px]",
         className
       )}
       {...props}
