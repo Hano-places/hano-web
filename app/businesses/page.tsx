@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import BusinessHistoryTable, { type BusinessVisit } from "@/components/businesses/business-history-table";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ValueCard from "@/components/value-card";
 import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
@@ -133,12 +134,23 @@ export default function BusinessesPage() {
         {/* Activity chart */}
         <ActivityTrendChart data={chartData} />
 
-        {/* Table */}
-        <BusinessHistoryTable
-          data={tableData}
-          title="Recent Business Registration Requests"
-          onViewDetails={(req) => setSelected(req)}
-        />
+        {/* Tabs + Tables */}
+        <Tabs defaultValue="active" className="w-full">
+          <TabsList className="grid grid-cols-3 w-full bg-brand-dark-900 border border-brand-dark-800">
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="pending">Pending</TabsTrigger>
+            <TabsTrigger value="restricted">Restricted</TabsTrigger>
+          </TabsList>
+          <TabsContent value="active" className="mt-4">
+            <BusinessHistoryTable data={tableData} title="Recent Business Registration Requests" onViewDetails={(req) => setSelected(req)} />
+          </TabsContent>
+          <TabsContent value="pending" className="mt-4">
+            <BusinessHistoryTable data={tableData} title="Recent Business Registration Requests" onViewDetails={(req) => setSelected(req)} variant="pending" />
+          </TabsContent>
+          <TabsContent value="restricted" className="mt-4">
+            <div className="rounded-lg border border-brand-dark-800 p-6 text-brand-dark-300">Restricted view coming soon.</div>
+          </TabsContent>
+        </Tabs>
       </div>
       {/* External Modal */}
       <BusinessDetailsModal selected={selected} onClose={() => setSelected(null)} />

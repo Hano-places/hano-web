@@ -36,6 +36,7 @@ interface BusinessHistoryTableProps {
   data: BusinessVisit[]
   title?: string
   onViewDetails?: (visit: BusinessVisit) => void
+  variant?: "default" | "pending"
 }
 
 type SortField = "group" | "currentPlan" | null
@@ -47,6 +48,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
   data,
   title = "Recent Business Registration Requests",
   onViewDetails,
+  variant = "default",
 }) => {
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
@@ -127,6 +129,11 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
   // Filtering and sorting logic
   const filteredAndSortedData = useMemo(() => {
     let filtered = [...(data ?? [])]
+
+    // If pending variant, only show pending records
+    if (variant === "pending") {
+      filtered = filtered.filter((item) => item.currentPlan === "Pending")
+    }
 
     // Apply search filter
     if (searchValue) {
@@ -277,15 +284,17 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                   <TableHead className="text-brand-dark-300">Category</TableHead>
                   <TableHead className="text-brand-dark-300">Clients</TableHead>
                   <TableHead className="text-brand-dark-300">Coins Per Visit</TableHead>
-                  <TableHead>
-                    <button
-                      className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
-                      onClick={() => handleSort("currentPlan")}
-                    >
-                      Current Plan
-                      <SortIcon field="currentPlan" />
-                    </button>
-                  </TableHead>
+                  {variant !== "pending" && (
+                    <TableHead>
+                      <button
+                        className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
+                        onClick={() => handleSort("currentPlan")}
+                      >
+                        Current Plan
+                        <SortIcon field="currentPlan" />
+                      </button>
+                    </TableHead>
+                  )}
                   <TableHead className="text-brand-dark-300">Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -344,19 +353,37 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                         +{visit.coinsPerVisit}
                       </div>
                     </TableCell>
+                    {variant !== "pending" && (
+                      <TableCell>
+                        <span className={getPlanBadge(visit.currentPlan)}>
+                          <span className="w-2 h-2 rounded-full bg-white mr-2"></span>
+                          {visit.currentPlan}
+                        </span>
+                      </TableCell>
+                    )}
                     <TableCell>
-                      <span className={getPlanBadge(visit.currentPlan)}>
-                        <span className="w-2 h-2 rounded-full bg-white mr-2"></span>
-                        {visit.currentPlan}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <button
-                        onClick={() => onViewDetails?.(visit)}
-                        className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
-                      >
-                        View Details
-                      </button>
+                      {variant === "pending" ? (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => onViewDetails?.(visit)}
+                            className="px-4 py-2 bg-brand-dark-800 text-brand-dark-200 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
+                          >
+                            Details
+                          </button>
+                          <button
+                            className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
+                          >
+                            Approve
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => onViewDetails?.(visit)}
+                          className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
+                        >
+                          View Details
+                        </button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}
