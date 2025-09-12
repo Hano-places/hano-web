@@ -8,6 +8,7 @@ import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { Users } from "lucide-react";
 import UserDetailsModal from "@/components/users/UserDetailsModal";
+import PageHeader from "@/components/layout/page-header";
 
 export default function UsersPage() {
   const [selected, setSelected] = useState<RegistrationRequest | null>(null);
@@ -114,6 +115,7 @@ export default function UsersPage() {
 
   return (
     <AppShell user={user} menu={menu}>
+      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users" }]} />
       <div className="space-y-8">
         {/* Top metric cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

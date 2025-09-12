@@ -42,7 +42,7 @@ export default function BusinessDetailsModal({ selected, onClose }: BusinessDeta
             <div className="flex items-center justify-between">
               {/* Avatar + Info */}
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-brand-dark-700 flex items-center justify-center">
                   <div className="w-6 h-6 text-white font-bold text-xs">S</div>
                 </div>
                 <div>

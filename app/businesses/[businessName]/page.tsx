@@ -8,6 +8,7 @@ import { Users, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-r
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ValueCard from "@/components/value-card";
 import BusinessProgressTable, { type BusinessVisitHistory } from "@/components/businesses/business-progress-table";
+import PageHeader from "@/components/layout/page-header";
 
 export default function BusinessActivityPage() {
   const params = useParams();
@@ -118,6 +119,7 @@ export default function BusinessActivityPage() {
 
   return (
     <AppShell user={user} menu={menu}>
+      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Businesses", href: "/businesses" }, { label: businessName }]} />
       <div className="space-y-8">
         {/* Header + Activity */}
         <div

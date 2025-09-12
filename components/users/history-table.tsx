@@ -6,6 +6,15 @@ import {
   ChevronUp,
   MoreHorizontal,
 } from "lucide-react"
+import TableControls from "@/components/ui/table-controls"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export interface RegistrationRequest {
   id: string
@@ -44,6 +53,24 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [searchValue, setSearchValue] = useState("")
+  const [filterValue, setFilterValue] = useState("all")
+  const [sortValue, setSortValue] = useState("default")
+
+  // Filter and sort options
+  const filterOptions = [
+    { value: "all", label: "All Rewards" },
+    { value: "rewarded", label: "Rewarded" },
+    { value: "pending", label: "Pending" },
+  ]
+
+  const sortOptions = [
+    { value: "default", label: "Default" },
+    { value: "group-asc", label: "Name A-Z" },
+    { value: "group-desc", label: "Name Z-A" },
+    { value: "rewards-asc", label: "Rewards Low-High" },
+    { value: "rewards-desc", label: "Rewards High-Low" },
+  ]
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -51,6 +78,18 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
     } else {
       setSortField(field)
       setSortDirection("asc")
+    }
+  }
+
+  const handleSortChange = (value: string) => {
+    setSortValue(value)
+    if (value === "default") {
+      setSortField(null)
+      setSortDirection("asc")
+    } else {
+      const [field, direction] = value.split("-")
+      setSortField(field as SortField)
+      setSortDirection(direction as SortDirection)
     }
   }
 
@@ -73,11 +112,28 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
     )
   }
 
-  // ✅ Sorting logic
-  const sortedData = useMemo(() => {
-    let sorted = [...(data ?? [])]
+  // Filtering and sorting logic
+  const filteredAndSortedData = useMemo(() => {
+    let filtered = [...(data ?? [])]
+
+    // Apply search filter
+    if (searchValue) {
+      filtered = filtered.filter((item) =>
+        item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    }
+
+    // Apply reward filter
+    if (filterValue === "rewarded") {
+      filtered = filtered.filter((item) => item.rewarded === true)
+    } else if (filterValue === "pending") {
+      filtered = filtered.filter((item) => item.rewarded !== true)
+    }
+
+    // Apply sorting
     if (sortField) {
-      sorted.sort((a, b) => {
+      filtered.sort((a, b) => {
         let valA, valB
         if (sortField === "group") {
           valA = a.name.toLowerCase()
@@ -91,8 +147,9 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
         return 0
       })
     }
-    return sorted
-  }, [sortField, sortDirection])
+
+    return filtered
+  }, [data, searchValue, filterValue, sortField, sortDirection])
 
   // ✅ Page numbers with ellipsis
   const getPageNumbers = (totalPages: number, currentPage: number) => {
@@ -126,9 +183,9 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
     return pages
   }
 
-  // ✅ Pagination
-  const totalPages = Math.ceil(sortedData.length / ITEMS_PER_PAGE)
-  const paginatedData = sortedData.slice(
+  // Pagination
+  const totalPages = Math.ceil(filteredAndSortedData.length / ITEMS_PER_PAGE)
+  const paginatedData = filteredAndSortedData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   )
@@ -158,27 +215,34 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
 
   return (
     <div className="dark">
-      <div className="min-h-screen bg-dark-900">
+      <div className="min-h-screen">
         <div className="mx-auto">
+          {/* Table Controls */}
+          <TableControls
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            filterValue={filterValue}
+            onFilterChange={setFilterValue}
+            sortValue={sortValue}
+            onSortChange={handleSortChange}
+            filterOptions={filterOptions}
+            sortOptions={sortOptions}
+          />
+
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-semibold text-gray-100">{title}</h1>
-            <button className="p-2 hover:bg-dark-800 rounded-lg transition-colors">
-              <MoreHorizontal className="w-5 h-5 text-gray-400" />
+            <h1 className="text-xl font-semibold text-brand-dark-100">{title}</h1>
+            <button className="p-2 hover:bg-brand-dark-800 rounded-lg transition-colors">
+              <MoreHorizontal className="w-5 h-5 text-brand-dark-400" />
             </button>
           </div>
 
           {/* Table */}
-          <div className="bg-dark-900 rounded-lg border border-gray-800 overflow-hidden">
-            {/* Table Header */}
-            <div
-              className="hidden md:grid gap-4 px-6 py-4 border-b border-gray-800 bg-dark-900/50"
-              style={{
-                gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr",
-              }}
-            >
-              {/* Select all */}
-              <div className="flex items-center">
+          <div className="bg-brand-dark-900 rounded-lg border border-brand-dark-800 overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-brand-dark-800 hover:bg-transparent">
+                  <TableHead className="w-12">
                 <input
                   type="checkbox"
                   aria-label="Select all"
@@ -187,51 +251,45 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
                   ref={(el) => {
                     if (el) el.indeterminate = someSelectedOnPage
                   }}
-                  className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
+                  className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
                 />
-              </div>
+                  </TableHead>
+                  <TableHead>
               <button
-                className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
+                className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
                 onClick={() => handleSort("group")}
               >
                 Group
                 <SortIcon field="group" />
               </button>
-              <div className="text-sm font-medium text-gray-300">Time</div>
-              <div className="text-sm font-medium text-gray-300">
-                Made a Review
-              </div>
+                  </TableHead>
+                  <TableHead className="text-brand-dark-300">Time</TableHead>
+                  <TableHead className="text-brand-dark-300">Made a Review</TableHead>
+                  <TableHead>
               <button
-                className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
+                className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
                 onClick={() => handleSort("rewards")}
               >
                 Rewards
                 <SortIcon field="rewards" />
               </button>
-              <div className="text-sm font-medium text-gray-300">Action</div>
-            </div>
-
-            {/* Table Body */}
-            <div className="divide-y divide-gray-800">
+                  </TableHead>
+                  <TableHead className="text-brand-dark-300">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
               {paginatedData.map((request) => (
-                <div
-                  key={request.id}
-                  className="grid grid-cols-1 gap-4 px-6 py-4 hover:bg-dark-800/50 transition-colors md:grid"
-                  style={{
-                    gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr",
-                  }}
-                >
-                  {/* Row checkbox */}
-                  <div className="flex items-center">
+                  <TableRow key={request.id} className="border-brand-dark-800 hover:bg-brand-dark-800/50">
+                    <TableCell>
                     <input
                       type="checkbox"
                       aria-label={`Select ${request.name}`}
                       checked={selectedIds.has(request.id)}
                       onChange={() => toggleSelectOne(request.id)}
-                      className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
+                      className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
                     />
-                  </div>
-                  {/* Group */}
+                    </TableCell>
+                    <TableCell>
                   <div className="flex items-center gap-3">
                     <img
                       src={request.avatar}
@@ -239,36 +297,36 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <div className="font-medium text-gray-100">
+                      <div className="font-medium text-brand-dark-100">
                         {request.name}
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-brand-dark-400">
                         {request.email}
                       </div>
                     </div>
                   </div>
-
-                  {/* Time */}
+                    </TableCell>
+                    <TableCell>
                   <div className="flex flex-col justify-center">
-                    <div className="font-medium text-gray-100">
+                    <div className="font-medium text-brand-dark-100">
                       {request.time.date}
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-sm text-brand-dark-400">
                       {request.time.clock}
                     </div>
                   </div>
-
-                  {/* Made a Review */}
+                    </TableCell>
+                    <TableCell>
                   <div className="flex flex-col justify-center">
-                    <div className="font-medium text-gray-100">
+                    <div className="font-medium text-brand-dark-100">
                       {request.review.date}
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div className="text-sm text-brand-dark-400">
                       {request.review.clock}
                     </div>
                   </div>
-
-                  {/* Rewards */}
+                    </TableCell>
+                    <TableCell>
                   <div className="flex items-center gap-3">
                     {!request.rewarded && (
                       <div className={`font-semibold text-red-400`}>
@@ -279,28 +337,29 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
                     )}
                     {request.rewarded && (
                               <span className={getRewardBadge(true)}>
-                                  <span className="w-2 h-2 rounded-full bg-white mr-2"></span>Rewarded</span>
+                            <span className="w-2 h-2 rounded-full bg-white mr-2"></span>Rewarded
+                          </span>
                     )}
                   </div>
-
-                  {/* Action */}
-                  <div className="flex items-center">
+                    </TableCell>
+                    <TableCell>
                     <button
                       onClick={() => onViewDetails?.(request)}
-                      className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-gray-700"
+                      className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
                     >
                       View Details
                     </button>
-                  </div>
-                </div>
+                    </TableCell>
+                  </TableRow>
               ))}
-            </div>
+              </TableBody>
+            </Table>
           </div>
 
           {/* Pagination */}
           <div className="flex items-center justify-center mt-6 gap-2">
             <button
-              className="px-3 py-2 text-sm text-gray-400 hover:text-gray-100 disabled:opacity-50"
+              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             >
@@ -309,7 +368,7 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
 
             {getPageNumbers(totalPages, currentPage).map((page, index) =>
               page === "..." ? (
-                <span key={`dots-${index}`} className="px-2 text-gray-500">
+                <span key={`dots-${index}`} className="px-2 text-brand-dark-500">
                   ...
                 </span>
               ) : (
@@ -317,8 +376,8 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
                   key={`page-${page}`}
                   className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
                     currentPage === page
-                      ? "bg-dark-700 text-gray-100"
-                      : "text-gray-400 hover:text-gray-100 hover:bg-dark-800"
+                      ? "bg-brand-dark-700 text-brand-dark-100"
+                      : "text-brand-dark-400 hover:text-brand-dark-100 hover:bg-brand-dark-800"
                   }`}
                   onClick={() => setCurrentPage(Number(page))}
                 >
@@ -328,7 +387,7 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
             )}
 
             <button
-              className="px-3 py-2 text-sm text-gray-400 hover:text-gray-100 disabled:opacity-50"
+              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             >

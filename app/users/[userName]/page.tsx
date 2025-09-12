@@ -8,6 +8,7 @@ import { Users, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-r
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ValueCard from "@/components/value-card";
 import HistoryTable, { type RegistrationRequest } from "@/components/users/history-table";
+import PageHeader from "@/components/layout/page-header";
 
 export default function UserActivityPage() {
   const params = useParams();
@@ -96,6 +97,7 @@ export default function UserActivityPage() {
 
   return (
     <AppShell user={user} menu={menu}>
+      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users", href: "/users" }, { label: userName }]} />
       <div className="space-y-8">
         {/* Header + Activity */}
         <div

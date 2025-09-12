@@ -2,6 +2,15 @@
 
 import React, { useState } from 'react';
 import { MoreHorizontal } from 'lucide-react';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+} from 'recharts';
 
 export interface ChartDataPoint {
   day: string;
@@ -24,20 +33,28 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
 
   const maxValue = Math.max(...data.flatMap(d => [d.registeredUsers, d.visitors]));
 
-  const getPathData = (data: number[], color: 'users' | 'visitors') => {
-    const width = 100;
-    const height = 60;
-    const points = data.map((value, index) => {
-      const x = (index / (data.length - 1)) * width;
-      const y = height - (value / maxValue) * height;
-      return `${x},${y}`;
-    });
-
-    return `M 0,${height} L ${points.join(' L ')} L ${width},${height} Z`;
+  // Custom tooltip component
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-brand-dark-800 border border-brand-dark-700 rounded-lg p-3 shadow-lg">
+          <p className="text-brand-dark-100 text-sm font-medium mb-2">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <div key={index} className="flex items-center gap-2 text-sm">
+              <div
+                className="w-3 h-3 rounded-sm"
+                style={{ backgroundColor: entry.color }}
+              />
+              <span className="text-brand-dark-100">
+                {entry.dataKey === 'registeredUsers' ? 'Registered Users' : 'Visitors'}: {entry.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
   };
-
-  const registeredUsersData = data.map(d => d.registeredUsers);
-  const visitorsData = data.map(d => d.visitors);
 
   return (
     <div className="bg-brand-dark-900 border-4 border-brand-dark-800 rounded-xl p-4 sm:p-6 w-full">
@@ -81,69 +98,61 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
       </div>
 
       {/* Chart Container */}
-      <div className="relative">
-        {/* Y-axis labels */}
-        <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-brand-dark-100 py-2">
-          <span>100%</span>
-          <span>75%</span>
-          <span>50%</span>
-          <span>25%</span>
-          <span>0%</span>
-        </div>
-
-        {/* Chart SVG */}
-        <div className="ml-8 sm:ml-10">
-          <svg
-            viewBox="0 0 100 60"
-            className="w-full h-32 sm:h-40"
-            preserveAspectRatio="none"
+      <div className="w-full h-64 sm:h-80">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={data}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
           >
-            {/* Grid lines */}
             <defs>
-              <pattern id="grid" width="100" height="15" patternUnits="userSpaceOnUse">
-                <path d="M 0 15 L 100 15" stroke="currentColor" strokeWidth="0.2" className="text-border" />
-              </pattern>
-            </defs>
-            <rect width="100" height="60" fill="url(#grid)" />
-
-            {/* Gradients */}
-            <defs>
-              <linearGradient id="registeredUsersGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="rgb(156, 163, 175)" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="rgb(156, 163, 175)" stopOpacity="0.05" />
+              <linearGradient id="registeredUsersGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="rgb(156, 163, 175)" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="rgb(156, 163, 175)" stopOpacity={0.05} />
               </linearGradient>
-              <linearGradient id="visitorsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="rgb(107, 114, 128)" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="rgb(107, 114, 128)" stopOpacity="0.1" />
+              <linearGradient id="visitorsGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="rgb(107, 114, 128)" stopOpacity={0.4} />
+                <stop offset="95%" stopColor="rgb(107, 114, 128)" stopOpacity={0.1} />
               </linearGradient>
             </defs>
-
-            {/* Registered Users */}
-            <path
-              d={getPathData(registeredUsersData, 'users')}
-              fill="url(#registeredUsersGradient)"
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="rgb(55, 65, 81)"
+              strokeOpacity={0.3}
+            />
+            <XAxis
+              dataKey="day"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgb(209, 213, 219)', fontSize: 12 }}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fill: 'rgb(209, 213, 219)', fontSize: 12 }}
+              domain={[0, maxValue]}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <Area
+              type="monotone"
+              dataKey="registeredUsers"
               stroke="rgb(156, 163, 175)"
-              strokeWidth="0.5"
+              strokeWidth={2}
+              fill="url(#registeredUsersGradient)"
             />
-
-            {/* Visitors */}
-            <path
-              d={getPathData(visitorsData, 'visitors')}
-              fill="url(#visitorsGradient)"
+            <Area
+              type="monotone"
+              dataKey="visitors"
               stroke="rgb(107, 114, 128)"
-              strokeWidth="0.5"
+              strokeWidth={2}
+              fill="url(#visitorsGradient)"
             />
-          </svg>
-
-          {/* X-axis labels */}
-          <div className="flex justify-between mt-2 text-xs text-brand-dark-100">
-            {data.map((item) => (
-              <span key={item.day} className="text-center">
-                {item.day}
-              </span>
-            ))}
-          </div>
-        </div>
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

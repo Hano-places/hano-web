@@ -3,7 +3,7 @@
 import { X, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ValueCard from "@/components/value-card";
-import { type RegistrationRequest } from "@/components/progress-table";
+import { type RegistrationRequest } from "@/components/users/progress-table";
 
 interface UserDetailsModalProps {
   selected: RegistrationRequest | null;

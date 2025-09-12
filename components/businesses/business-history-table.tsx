@@ -6,6 +6,15 @@ import {
   ChevronUp,
   MoreHorizontal,
 } from "lucide-react"
+import TableControls from "@/components/ui/table-controls"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export interface BusinessVisit {
   id: string
@@ -43,6 +52,27 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [searchValue, setSearchValue] = useState("")
+  const [filterValue, setFilterValue] = useState("all")
+  const [sortValue, setSortValue] = useState("default")
+
+  // Filter and sort options
+  const filterOptions = [
+    { value: "all", label: "All Plans" },
+    { value: "Free", label: "Free" },
+    { value: "Pending", label: "Pending" },
+    { value: "Approved", label: "Approved" },
+    { value: "Rejected", label: "Rejected" },
+    { value: "Hotel", label: "Hotel" },
+  ]
+
+  const sortOptions = [
+    { value: "default", label: "Default" },
+    { value: "group-asc", label: "Name A-Z" },
+    { value: "group-desc", label: "Name Z-A" },
+    { value: "plan-asc", label: "Plan A-Z" },
+    { value: "plan-desc", label: "Plan Z-A" },
+  ]
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -50,6 +80,18 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
     } else {
       setSortField(field)
       setSortDirection("asc")
+    }
+  }
+
+  const handleSortChange = (value: string) => {
+    setSortValue(value)
+    if (value === "default") {
+      setSortField(null)
+      setSortDirection("asc")
+    } else {
+      const [field, direction] = value.split("-")
+      setSortField(field as SortField)
+      setSortDirection(direction as SortDirection)
     }
   }
 
@@ -82,11 +124,27 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
     )
   }
 
-  // Sorting logic
-  const sortedData = useMemo(() => {
-    let sorted = [...(data ?? [])]
+  // Filtering and sorting logic
+  const filteredAndSortedData = useMemo(() => {
+    let filtered = [...(data ?? [])]
+
+    // Apply search filter
+    if (searchValue) {
+      filtered = filtered.filter((item) =>
+        item.businessName.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    }
+
+    // Apply plan filter
+    if (filterValue && filterValue !== "all") {
+      filtered = filtered.filter((item) => item.currentPlan === filterValue)
+    }
+
+    // Apply sorting
     if (sortField) {
-      sorted.sort((a, b) => {
+      filtered.sort((a, b) => {
         let valA, valB
         if (sortField === "group") {
           valA = a.businessName.toLowerCase()
@@ -100,8 +158,9 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
         return 0
       })
     }
-    return sorted
-  }, [sortField, sortDirection, data])
+
+    return filtered
+  }, [data, searchValue, filterValue, sortField, sortDirection])
 
   // Page numbers with ellipsis
   const getPageNumbers = (totalPages: number, currentPage: number) => {
@@ -136,8 +195,8 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
   }
 
   // Pagination
-  const totalPages = Math.ceil(sortedData.length / ITEMS_PER_PAGE)
-  const paginatedData = sortedData.slice(
+  const totalPages = Math.ceil(filteredAndSortedData.length / ITEMS_PER_PAGE)
+  const paginatedData = filteredAndSortedData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   )
@@ -167,150 +226,148 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
 
   return (
     <div className="dark">
-      <div className="min-h-screen bg-dark-900">
+      <div className="min-h-screen">
         <div className="mx-auto">
+          {/* Table Controls */}
+          <TableControls
+            searchValue={searchValue}
+            onSearchChange={setSearchValue}
+            filterValue={filterValue}
+            onFilterChange={setFilterValue}
+            sortValue={sortValue}
+            onSortChange={handleSortChange}
+            filterOptions={filterOptions}
+            sortOptions={sortOptions}
+          />
+
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-semibold text-gray-100">{title}</h1>
-            <button className="p-2 hover:bg-dark-800 rounded-lg transition-colors">
-              <MoreHorizontal className="w-5 h-5 text-gray-400" />
+            <h1 className="text-xl font-semibold text-brand-dark-100">{title}</h1>
+            <button className="p-2 hover:bg-brand-dark-800 rounded-lg transition-colors">
+              <MoreHorizontal className="w-5 h-5 text-brand-dark-400" />
             </button>
           </div>
 
           {/* Table */}
-          <div className="bg-dark-900 rounded-lg border border-gray-800 overflow-hidden">
-            {/* Table Header */}
-            <div
-              className="hidden md:grid gap-4 px-6 py-4 border-b border-gray-800 bg-dark-900/50"
-              style={{
-                gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr 1fr",
-              }}
-            >
-              {/* Select all */}
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  aria-label="Select all"
-                  checked={allSelectedOnPage}
-                  onChange={toggleSelectAllOnPage}
-                  ref={(el) => {
-                    if (el) el.indeterminate = someSelectedOnPage
-                  }}
-                  className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
-                />
-              </div>
-              <button
-                className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
-                onClick={() => handleSort("group")}
-              >
-                Group
-                <SortIcon field="group" />
-              </button>
-              <div className="text-sm font-medium text-gray-300">Category</div>
-              <div className="text-sm font-medium text-gray-300">Clients</div>
-              <div className="text-sm font-medium text-gray-300">Coins Per Visit</div>
-              <button
-                className="flex items-center gap-2 text-left text-sm font-medium text-gray-300 hover:text-gray-100 transition-colors"
-                onClick={() => handleSort("currentPlan")}
-              >
-                Current Plan
-                <SortIcon field="currentPlan" />
-              </button>
-              <div className="text-sm font-medium text-gray-300">Action</div>
-            </div>
-
-            {/* Table Body */}
-            <div className="divide-y divide-gray-800">
-              {paginatedData.map((visit) => (
-                <div
-                  key={visit.id}
-                  className="grid grid-cols-1 gap-4 px-6 py-4 hover:bg-dark-800/50 transition-colors md:grid"
-                  style={{
-                    gridTemplateColumns: "28px 2fr 1fr 1fr 1fr 1fr 1fr",
-                  }}
-                >
-                  {/* Row checkbox */}
-                  <div className="flex items-center">
+          <div className="rounded-lg border border-brand-dark-800 overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-brand-dark-800 bg-brand-dark-900 hover:bg-transparent">
+                  <TableHead className="w-12">
                     <input
                       type="checkbox"
-                      aria-label={`Select ${visit.businessName}`}
-                      checked={selectedIds.has(visit.id)}
-                      onChange={() => toggleSelectOne(visit.id)}
-                      className="h-4 w-4 rounded border-gray-600 bg-dark-800 text-blue-500 focus:ring-0"
+                      aria-label="Select all"
+                      checked={allSelectedOnPage}
+                      onChange={toggleSelectAllOnPage}
+                      ref={(el) => {
+                        if (el) el.indeterminate = someSelectedOnPage
+                      }}
+                      className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
                     />
-                  </div>
-
-                  {/* Group */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
-                      <div className="w-6 h-6 text-white font-bold text-xs">S</div>
-                    </div>
-                    <div>
-                      <div className="font-medium text-gray-100">
-                        {visit.businessName}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {visit.email}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Category */}
-                  <div className="flex flex-col justify-center">
-                    <div className="font-medium text-gray-100">
-                      {visit.category}
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      {visit.subcategory}
-                    </div>
-                  </div>
-
-                  {/* Clients */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex -space-x-2">
-                      {Array.from({ length: 4 }, (_, i) => (
-                        <div
-                          key={i}
-                          className="w-6 h-6 rounded-full bg-gray-600 border-2 border-gray-800"
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-400">+{visit.clients}</span>
-                  </div>
-
-                  {/* Coins Per Visit */}
-                  <div className="flex items-center">
-                    <div className="font-semibold text-red-400">
-                      +{visit.coinsPerVisit}
-                    </div>
-                  </div>
-
-                  {/* Current Plan */}
-                  <div className="flex items-center">
-                    <span className={getPlanBadge(visit.currentPlan)}>
-                      <span className="w-2 h-2 rounded-full bg-white mr-2"></span>
-                      {visit.currentPlan}
-                    </span>
-                  </div>
-
-                  {/* Action */}
-                  <div className="flex items-center">
+                  </TableHead>
+                  <TableHead>
                     <button
-                      onClick={() => onViewDetails?.(visit)}
-                      className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-gray-700"
+                      className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
+                      onClick={() => handleSort("group")}
                     >
-                      View Details
+                      Group
+                      <SortIcon field="group" />
                     </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                  </TableHead>
+                  <TableHead className="text-brand-dark-300">Category</TableHead>
+                  <TableHead className="text-brand-dark-300">Clients</TableHead>
+                  <TableHead className="text-brand-dark-300">Coins Per Visit</TableHead>
+                  <TableHead>
+                    <button
+                      className="flex items-center gap-2 text-left text-sm font-medium text-brand-dark-300 hover:text-brand-dark-100 transition-colors"
+                      onClick={() => handleSort("currentPlan")}
+                    >
+                      Current Plan
+                      <SortIcon field="currentPlan" />
+                    </button>
+                  </TableHead>
+                  <TableHead className="text-brand-dark-300">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {paginatedData.map((visit) => (
+                  <TableRow key={visit.id} className="border-brand-dark-800 bg-brand-dark-900 hover:bg-brand-dark-800/50">
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        aria-label={`Select ${visit.businessName}`}
+                        checked={selectedIds.has(visit.id)}
+                        onChange={() => toggleSelectOne(visit.id)}
+                        className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-brand-dark-900 flex items-center justify-center">
+                          <div className="w-6 h-6 text-white font-bold text-xs">S</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-brand-dark-100">
+                            {visit.businessName}
+                          </div>
+                          <div className="text-sm text-brand-dark-400">
+                            {visit.email}
+                          </div>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-col justify-center">
+                        <div className="font-medium text-brand-dark-100">
+                          {visit.category}
+                        </div>
+                        <div className="text-sm text-brand-dark-400">
+                          {visit.subcategory}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <div className="flex -space-x-2">
+                          {Array.from({ length: 4 }, (_, i) => (
+                            <div
+                              key={i}
+                              className="w-6 h-6 rounded-full bg-brand-dark-900 border-2 border-brand-dark-800"
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm text-brand-dark-400">+{visit.clients}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="font-semibold text-red-400">
+                        +{visit.coinsPerVisit}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className={getPlanBadge(visit.currentPlan)}>
+                        <span className="w-2 h-2 rounded-full bg-white mr-2"></span>
+                        {visit.currentPlan}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <button
+                        onClick={() => onViewDetails?.(visit)}
+                        className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
+                      >
+                        View Details
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
 
           {/* Pagination */}
           <div className="flex items-center justify-center mt-6 gap-2">
             <button
-              className="px-3 py-2 text-sm text-gray-400 hover:text-gray-100 disabled:opacity-50"
+              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             >
@@ -319,7 +376,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
 
             {getPageNumbers(totalPages, currentPage).map((page, index) =>
               page === "..." ? (
-                <span key={`dots-${index}`} className="px-2 text-gray-500">
+                <span key={`dots-${index}`} className="px-2 text-brand-dark-500">
                   ...
                 </span>
               ) : (
@@ -327,8 +384,8 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                   key={`page-${page}`}
                   className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
                     currentPage === page
-                      ? "bg-dark-700 text-gray-100"
-                      : "text-gray-400 hover:text-gray-100 hover:bg-dark-800"
+                      ? "bg-brand-dark-700 text-brand-dark-100"
+                      : "text-brand-dark-400 hover:text-brand-dark-100 hover:bg-brand-dark-800"
                   }`}
                   onClick={() => setCurrentPage(Number(page))}
                 >
@@ -338,7 +395,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
             )}
 
             <button
-              className="px-3 py-2 text-sm text-gray-400 hover:text-gray-100 disabled:opacity-50"
+              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             >
