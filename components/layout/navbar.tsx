@@ -79,7 +79,7 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
     align="end"
     className="w-56 bg-brand-dark-800/95 border-gray-700 backdrop-blur-sm"
   >
-    <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Profile </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Account Settings </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Preferences </DropdownMenuItem> <DropdownMenuSeparator className="bg-brand-dark-700" /> <DropdownMenuItem className="text-red-400 focus:bg-brand-dark-700/50"> Sign Out </DropdownMenuItem>
+    <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Profile </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Account Settings </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Preferences </DropdownMenuItem> <DropdownMenuSeparator className="bg-brand-dark-700" /> <DropdownMenuItem className="text-red-400 focus:text-brand-dark-100 focus:bg-red-400/50"> Sign Out </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 
