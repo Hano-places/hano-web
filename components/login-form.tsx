@@ -52,7 +52,7 @@ export function LoginForm() {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-brand-dark-700 border border-brand-dark-600 text-white placeholder:text-brand-dark-400 focus:border-violet-500 focus:outline-none rounded-lg h-12"
+            className="bg-brand-dark-700 border border-brand-dark-600 text-white placeholder:text-brand-dark-400 focus:border-tertiary-400 focus:outline-none rounded-lg h-12"
             required
           />
         </div>
@@ -67,7 +67,7 @@ export function LoginForm() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-brand-dark-700 border border-brand-dark-600 text-white placeholder:text-brand-dark-400 focus:border-violet-500 focus:outline-none rounded-lg h-12"
+            className="bg-brand-dark-700 border border-brand-dark-600 text-white placeholder:text-brand-dark-400 focus:border-tertiary-400 focus:outline-none rounded-lg h-12"
             required
           />
         </div>
@@ -78,7 +78,7 @@ export function LoginForm() {
               id="remember"
               checked={rememberMe}
               onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-              className="border-brand-dark-600 data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600"
+              className="border-brand-dark-600 data-[state=checked]:bg-tertiary-600 data-[state=checked]:border-tertiary-600"
             />
             <Label htmlFor="remember" className="text-sm text-brand-dark-400">
               Remember for 30 days
