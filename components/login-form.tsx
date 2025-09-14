@@ -28,7 +28,7 @@ export function LoginForm() {
   return (
     <div className="space-y-6">
       {/* Logo */}
-      <div className="flex justify-center mb-8">
+       <div className="flex justify-center mb-8">
         <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
           <Image src="/logo.png" alt="Hano Logo" width={32} height={32} className="w-8 h-8" />
         </div>
