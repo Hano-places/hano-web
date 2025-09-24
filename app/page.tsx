@@ -28,8 +28,8 @@ export default function HomePage() {
       section: "App Management",
       items: [
         { icon: LayoutDashboard, label: "Dashboard", href: "/", active: true },
-        { icon: Users, label: "Users", href: "/users" },
         { icon: Building2, label: "Businesses", badge: 5, href: "/businesses" },
+        { icon: Users, label: "Users", href: "/users" },
         { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
         { icon: DollarSign, label: "Revenues", href: "/revenues" },
         { icon: BarChart3, label: "Reports", badge: 9, href: "/reports" },

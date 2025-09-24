@@ -26,8 +26,8 @@ export default function BusinessActivityPage() {
       section: "App Management",
       items: [
         { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-        { icon: Users, label: "Users", href: "/users" },
         { icon: Building2, label: "Businesses", badge: 5, href: "/businesses", active: true },
+        { icon: Users, label: "Users", href: "/users" },
         { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
         { icon: DollarSign, label: "Revenues", href: "/revenues" },
         { icon: BarChart3, label: "Reports", badge: 9, href: "/reports" },

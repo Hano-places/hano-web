@@ -46,7 +46,7 @@ export default function PageHeader({ breadcrumbs, onExport }: PageHeaderProps) {
             </React.Fragment>
           ))}
           <BreadcrumbItem>
-            <BreadcrumbPage className="text-brand-dark-200">{last?.label}</BreadcrumbPage>
+            <BreadcrumbPage className="text-brand-dark-50">{last?.label}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
