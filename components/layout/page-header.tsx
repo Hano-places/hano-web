@@ -53,7 +53,7 @@ export default function PageHeader({ breadcrumbs, onExport }: PageHeaderProps) {
 
       <div className="flex items-center gap-4">
         <Select defaultValue="range">
-          <SelectTrigger className="min-w-[280px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 *:data-[slot=select-value]:text-brand-dark-100">
+          <SelectTrigger className="min-w-[180px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 *:data-[slot=select-value]:text-brand-dark-100">
             <Calendar className="w-5 h-5 text-brand-dark-300" />
             <SelectValue placeholder="Select Dates" />
           </SelectTrigger>

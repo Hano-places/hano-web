@@ -57,7 +57,7 @@ const TableControls: React.FC<TableControlsProps> = ({
       <div className="flex items-center gap-4">
         {/* Filter Dropdown */}
         <Select value={filterValue} onValueChange={onFilterChange}>
-          <SelectTrigger className="min-w-[280px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 hover:bg-brand-dark-700 focus:border-brand-dark-500 focus:ring-brand-dark-500/20 text-base">
+          <SelectTrigger className="min-w-[180px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 hover:bg-brand-dark-700 focus:border-brand-dark-500 focus:ring-brand-dark-500/20 text-base">
             <Calendar className="w-5 h-5 text-brand-dark-400 mr-2" />
             <SelectValue placeholder={filterPlaceholder} />
           </SelectTrigger>
@@ -76,7 +76,7 @@ const TableControls: React.FC<TableControlsProps> = ({
 
         {/* Sort Dropdown */}
         <Select value={sortValue} onValueChange={onSortChange}>
-          <SelectTrigger className="min-w-[280px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 hover:bg-brand-dark-700 focus:border-brand-dark-500 focus:ring-brand-dark-500/20 text-base">
+          <SelectTrigger className="min-w-[180px] data-[size=default]:h-14 data-[size=sm]:h-14 h-14 px-5 bg-brand-dark-900 border-brand-dark-700 text-brand-dark-100 hover:bg-brand-dark-700 focus:border-brand-dark-500 focus:ring-brand-dark-500/20 text-base">
             <Calendar className="w-5 h-5 text-brand-dark-400 mr-2" />
             <SelectValue placeholder={sortPlaceholder} />
           </SelectTrigger>
