@@ -1,13 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState, useMemo } from "react";
 import type { ChartDataPoint } from "@/components/ActivityTrendChart";
 import ProgressTable, { type RegistrationRequest } from "@/components/users/progress-table";
 import ValueCard from "@/components/value-card";
 import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import PageHeader from "@/components/layout/page-header";
-import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut, Coins, QrCode, BadgeCheck } from "lucide-react";
+import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut, Coins, QrCode, BadgeCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { PieChart, Pie, Cell } from "recharts";
 import { ChartContainer, type ChartConfig, ChartLegend, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Card } from "@/components/ui/card";
@@ -17,6 +18,8 @@ const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart
 });
 
 export default function HomePage() {
+  const [currentPicksPage, setCurrentPicksPage] = useState(1);
+  const PICKS_PER_PAGE = 3;
   const user = {
     name: "Patrick Ihirwe",
     email: "user@gmail.com",
@@ -200,8 +203,36 @@ export default function HomePage() {
       price: "250",
       tag: "New Deal",
       logo: "/logo.png",
-    },
+      },
+
   ];
+
+  // Pagination helpers
+  const getPageNumbers = (totalPages: number, currentPage: number) => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push("...");
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+      for (let i = start; i <= end; i++) if (!pages.includes(i)) pages.push(i);
+      if (currentPage < totalPages - 2) pages.push("...");
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
+  const totalPicksPages = Math.ceil(latestPicks.length / PICKS_PER_PAGE) || 1;
+  const paginatedPicks = useMemo(
+    () =>
+      latestPicks.slice(
+        (currentPicksPage - 1) * PICKS_PER_PAGE,
+        currentPicksPage * PICKS_PER_PAGE
+      ),
+    [latestPicks, currentPicksPage]
+  );
 
   return (
     <AppShell user={user} menu={menu}>
@@ -261,8 +292,8 @@ export default function HomePage() {
               <h3 className="text-brand-dark-50 font-semibold">Latest Picks</h3>
               <a href="#" className="text-sm text-brand-dark-300 hover:text-brand-dark-100">View All →</a>
             </div>
-            <div className={`space-y-4 ${tableData.length > 8 ? 'max-h-[calc(100vh-360px)] overflow-y-auto no-scrollbar pr-2' : ''}`}>
-              {latestPicks.map((p, idx) => (
+            <div className={"space-y-4 max-h-100vh overflow-y-auto no-scrollbar pr-2"}>
+              {paginatedPicks.map((p, idx) => (
                 <Card key={`${p.title}-${idx}`} className="relative bg-brand-dark-900 border border-gray-800 overflow-hidden p-0 rounded-2xl">
                   <div className="relative aspect-[4/3] w-full">
                     <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover" />
@@ -302,16 +333,42 @@ export default function HomePage() {
                 </Card>
               ))}
             </div>
-            <div className="flex items-center justify-between text-brand-dark-300 text-sm px-1 pt-1">
-              <button className="px-2 py-1 rounded-lg bg-brand-dark-900 border border-gray-800">‹</button>
-              <div className="flex items-center gap-3">
-                <button className="opacity-70">1</button>
-                <button className="opacity-70">2</button>
-                <button className="opacity-70">…</button>
-                <button className="opacity-70">5</button>
-                <button className="opacity-70">6</button>
-              </div>
-              <button className="px-2 py-1 rounded-lg bg-brand-dark-900 border border-gray-800">›</button>
+            <div className="flex items-center justify-center mt-4 gap-2 px-1">
+              <button
+                className="px-2 py-2 rounded-lg bg-brand-dark-900 border border-gray-800 text-brand-dark-300 hover:text-brand-dark-100 disabled:opacity-50"
+                disabled={currentPicksPage === 1}
+                onClick={() => setCurrentPicksPage((p) => Math.max(1, p - 1))}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              {getPageNumbers(totalPicksPages, currentPicksPage).map((page, index) =>
+                page === "..." ? (
+                  <span key={`dots-${index}`} className="px-2 text-brand-dark-500">
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={`page-${page}`}
+                    className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
+                      currentPicksPage === page
+                        ? "bg-brand-dark-700 text-brand-dark-100"
+                        : "text-brand-dark-400 hover:text-brand-dark-100 hover:bg-brand-dark-800"
+                    }`}
+                    onClick={() => setCurrentPicksPage(Number(page))}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+
+              <button
+                className="px-2 py-2 rounded-lg bg-brand-dark-900 border border-gray-800 text-brand-dark-300 hover:text-brand-dark-100 disabled:opacity-50"
+                disabled={currentPicksPage === totalPicksPages}
+                onClick={() => setCurrentPicksPage((p) => Math.min(totalPicksPages, p + 1))}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
