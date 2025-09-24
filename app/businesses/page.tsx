@@ -7,7 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import ValueCard from "@/components/value-card";
 import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
-import { Users } from "lucide-react";
+import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut } from "lucide-react";
 import BusinessDetailsModal from "@/components/businesses/BusinessDetailsModal";
 import PageHeader from "@/components/layout/page-header";
 
@@ -25,24 +25,17 @@ export default function BusinessesPage() {
     {
       section: "App Management",
       items: [
-        { icon: Users, label: "Dashboard", href: "/" },
+        { icon: LayoutDashboard, label: "Dashboard", href: "/" },
         { icon: Users, label: "Users", href: "/users" },
-        { icon: Users, label: "Businesses", badge: 5, href: "/businesses", active: true },
-        { icon: Users, label: "Subscriptions", href: "/subscriptions" },
-        { icon: Users, label: "Revenues", href: "/revenues" },
-        { icon: Users, label: "Reports", badge: 9, href: "/reports" },
-      ],
-    },
-    {
-      section: "Company Settings",
-      items: [
-        { icon: Users, label: "Roles", href: "/roles" },
-        { icon: Users, label: "Members", href: "/members" },
+        { icon: Building2, label: "Businesses", badge: 5, href: "/businesses", active: true },
+        { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
+        { icon: DollarSign, label: "Revenues", href: "/revenues" },
+        { icon: BarChart3, label: "Reports", badge: 9, href: "/reports" },
       ],
     },
     {
       section: "Account",
-      items: [{ icon: Users, label: "Sign Out", href: "/logout" }],
+      items: [{ icon: LogOut, label: "Sign Out", href: "/logout" }],
     },
   ];
 

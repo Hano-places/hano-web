@@ -63,7 +63,7 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
       <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <button className="flex items-center text-white px-6 py-4 rounded-lg focus:outline-none">
-      <Avatar className="h-9 w-9 mx-2">
+      <Avatar className="h-10 w-10 mx-2">
         <AvatarImage src={user.avatarUrl ?? ""} />
         <AvatarFallback className="bg-brand-dark-600 text-white font-semibold">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
       </Avatar>

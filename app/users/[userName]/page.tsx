@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import AppShell from "@/components/layout/app-shell";
 import { type SidebarMenuSection } from "@/components/layout/sidebar";
-import { Users, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
+import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut, BadgeCheck, MapPin, Link2, Phone, ClipboardCopy } from "lucide-react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 import ValueCard from "@/components/value-card";
 import HistoryTable, { type RegistrationRequest } from "@/components/users/history-table";
@@ -25,24 +25,17 @@ export default function UserActivityPage() {
     {
       section: "App Management",
       items: [
-        { icon: Users, label: "Dashboard", href: "/" },
+        { icon: LayoutDashboard, label: "Dashboard", href: "/" },
         { icon: Users, label: "Users", href: "/users", active: true },
-        { icon: Users, label: "Businesses", badge: 5, href: "/businesses" },
-        { icon: Users, label: "Subscriptions", href: "/subscriptions" },
-        { icon: Users, label: "Revenues", href: "/revenues" },
-        { icon: Users, label: "Reports", badge: 9, href: "/reports" },
-      ],
-    },
-    {
-      section: "Company Settings",
-      items: [
-        { icon: Users, label: "Roles", href: "/roles" },
-        { icon: Users, label: "Members", href: "/members" },
+        { icon: Building2, label: "Businesses", badge: 5, href: "/businesses" },
+        { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
+        { icon: DollarSign, label: "Revenues", href: "/revenues" },
+        { icon: BarChart3, label: "Reports", badge: 9, href: "/reports" },
       ],
     },
     {
       section: "Account",
-      items: [{ icon: Users, label: "Sign Out", href: "/logout" }],
+      items: [{ icon: LogOut, label: "Sign Out", href: "/logout" }],
     },
   ];
 

@@ -20,12 +20,12 @@ export default function AppShell({ user, menu, children }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white">
+    <div className="min-h-screen bg-[#000000] text-white" style={{ ['--sidebar-width' as any]: '16rem' }}>
       {/* Fixed sidebar (mobile slide-in). Reserve space on lg screens */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} menu={menu} />
 
       {/* Content area with left padding equal to sidebar width on lg */}
-      <div className="pl-0 lg:pl-64">
+      <div className="pl-0 lg:pl-[var(--sidebar-width)]">
         {/* Main column */}
         <div className="min-h-screen bg-[#0C0C0C] px-6 md:px-12">
           <Navbar onSidebarToggle={() => setSidebarOpen(!sidebarOpen)} user={user} />
