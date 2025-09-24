@@ -63,13 +63,13 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
       >
         {/* Header */}
         <div className="flex items-center justify-between py-4 pr-4 pl-6">
-          <div className="flex items-center">
-            <div className="w-14 h-14 flex items-center justify-center p-0.5">
-              <div className="w-12 h-12 flex items-center justify-center">
+           <div className="flex items-center">
+             <div className="w-16 h-16 flex items-center justify-center p-0.5">
+               <div className="w-14 h-14 flex items-center justify-center">
                 <img
                   src="/logo.png"
                   alt="Hano Logo"
-                  className="w-11 h-11 object-contain"
+                  className="w-12 h-12 object-contain"
                 />
               </div>
             </div>
@@ -92,7 +92,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
         <nav className="flex-1 py-5 space-y-5 overflow-y-auto no-scrollbar">
           {menu.map((section, sectionIndex) => (
             <div key={sectionIndex}>
-              <h3 className="text-xs font-semibold text-brand-dark-100 mb-4 pl-7 pr-3 tracking-wider">
+              <h3 className="text-sm  text-brand-dark-100 mb-4 pl-7 pr-3 tracking-wider">
                 {section.section}
               </h3>
               <ul className="space-y-0.5">
@@ -120,7 +120,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
     <span
       className={cn(
         "transition-colors text-sm",
-        isActive ? "text-white font-semibold" : "group-hover:text-white"
+        isActive ? "text-white " : "group-hover:text-white"
       )}
     >
       {item.label}

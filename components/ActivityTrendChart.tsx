@@ -57,7 +57,7 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
   };
 
   return (
-    <div className="bg-brand-dark-900 border-4 border-brand-dark-800 rounded-xl p-4 sm:p-6 w-full">
+    <div className="bg-brand-dark-900 border border-brand-dark-700 rounded-xl p-4 sm:p-6 w-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
         <h3 className="text-lg font-medium text-brand-dark-50">
