@@ -26,10 +26,10 @@ interface NavbarProps {
 
 export function Navbar({ onSidebarToggle, user }: NavbarProps) {
   return (
-    <header className="text-white py-4">
-   <div className="flex items-center justify-between w-auto gap-4">
+    <header className="text-white py-6 mb-8">
+  <div className="grid grid-cols-[2fr_5fr_2fr] items-center w-full gap-3">
     {/* Left section */}
-    <div className="flex items-center flex-shrink-0 gap-3 ">
+   <div className="flex items-center flex-shrink-0 gap-2 ">
       <Button
         variant="ghost"
         size="sm"
@@ -44,34 +44,34 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
     </div>
 
     {/* Center - Search */}
-    <div className="flex-1 px-8">
+    <div className="px-8">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-brand-dark-300" />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white" />
         <Input
           type="search"
           placeholder="Search here..."
-          className="pl-12 h-12 bg-brand-dark-800/40 border-brand-dark-700 text-white
-                     placeholder-brand-dark-400 focus:bg-brand-dark-800/60
-                     focus:border-brand-dark-600 rounded-xl w-full"
+          className="pl-12 h-10 bg-brand-dark-900 border-brand-dark-900 text-white
+                     placeholder-brand-dark-400 focus:bg-brand-dark-900/60
+                     focus:border-brand-dark-600 rounded-lg w-full"
         />
       </div>
     </div>
 
     {/* Right section */}
-    <div className="flex items-center gap-12 flex-shrink-0">
+    <div className="flex items-center justify-end gap-6 flex-shrink-0">
       {/* User menu */}
       <DropdownMenu>
   <DropdownMenuTrigger asChild>
-    <button className="flex items-center text-white px-6 py-4 rounded-lg focus:outline-none">
-      <Avatar className="h-10 w-10 mx-2">
+    <button className="flex items-center text-white px-4 py-3 rounded-lg focus:outline-none">
+      <Avatar className="h-9 w-9 mx-2">
         <AvatarImage src={user.avatarUrl ?? ""} />
-        <AvatarFallback className="bg-brand-dark-600 text-white">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
+        <AvatarFallback className="bg-brand-dark-900 text-white">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
       </Avatar>
       <div className="text-left hidden md:block">
-        <p className="text-base font-medium text-white leading-none">{user.name}</p>
+        <p className="text-sm text-white leading-none">{user.name}</p>
         <p className="text-xs text-brand-dark-400">{user.email}</p>
       </div>
-      <ChevronDown className="h-5 w-5 text-brand-dark-400" />
+      <ChevronDown className="h-5 w-5 ml-2 text-brand-dark-400" />
     </button>
   </DropdownMenuTrigger>
 
@@ -85,19 +85,19 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
 
 
       {/* Settings */}
-      <Button
+  <Button
         variant="ghost"
         size="sm"
-        className="text-white bg-brand-dark-800 rounded-lg py-6 px-8"
+      className="text-white bg-brand-dark-900 rounded-lg py-3 px-4"
       >
         <Settings className="h-6 w-6 m-2" />
       </Button>
 
       {/* Notifications */}
-      <Button
+  <Button
         variant="ghost"
         size="sm"
-        className="text-white bg-brand-dark-800  rounded-lg py-6 px-8"
+      className="text-white bg-brand-dark-900  rounded-lg py-3 px-4"
       >
         <Bell className="h-6 w-6 m-2" />
       </Button>

@@ -168,7 +168,7 @@ export default function HomePage() {
     const { payload } = props;
     if (!payload?.length) return null;
     return (
-      <div className="grid grid-cols-3 gap-x-6 gap-y-2 pt-4 justify-items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pt-4 justify-items-start">
         {payload.map((item: any) => (
           <div key={item.value} className="flex items-center gap-2 text-sm">
             <span className="h-2 w-2 rounded-[2px]" style={{ backgroundColor: item.color }} />
