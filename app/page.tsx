@@ -287,7 +287,7 @@ export default function HomePage() {
           <div className="lg:col-span-2 ">
             <ProgressTable data={tableData} title="Recent Business Registration Requests" />
           </div>
-          <div className="space-y-4 h-[87%] flex flex-col">
+          <div className="space-y-4 flex flex-col">
             <div className="flex items-center justify-between px-1">
               <h3 className="text-brand-dark-50 font-semibold">Latest Picks</h3>
               <a href="#" className="text-sm text-brand-dark-300 hover:text-brand-dark-100">View All →</a>
