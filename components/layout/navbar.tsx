@@ -26,7 +26,7 @@ interface NavbarProps {
 
 export function Navbar({ onSidebarToggle, user }: NavbarProps) {
   return (
-    <header className="text-white py-12">
+    <header className="text-white py-4">
    <div className="flex items-center justify-between w-auto gap-4">
     {/* Left section */}
     <div className="flex items-center flex-shrink-0 gap-3 ">
@@ -39,20 +39,20 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
         <Menu className="h-5 w-5" />
       </Button>
       <div className="">
-        <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
+        <h1 className="text-lg text-white">Dashboard</h1>
       </div>
     </div>
 
     {/* Center - Search */}
-    <div className="flex-1 max-w-3xl px-4">
+    <div className="flex-1 px-8">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-300" />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-brand-dark-300" />
         <Input
           type="search"
           placeholder="Search here..."
-          className="pl-12 h-12 bg-brand-dark-800/40 border-gray-700 text-white
-                     placeholder-gray-400 focus:bg-brand-dark-800/60
-                     focus:border-gray-600 rounded-xl w-full"
+          className="pl-12 h-12 bg-brand-dark-800/40 border-brand-dark-700 text-white
+                     placeholder-brand-dark-400 focus:bg-brand-dark-800/60
+                     focus:border-brand-dark-600 rounded-xl w-full"
         />
       </div>
     </div>
@@ -65,19 +65,19 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
     <button className="flex items-center text-white px-6 py-4 rounded-lg focus:outline-none">
       <Avatar className="h-10 w-10 mx-2">
         <AvatarImage src={user.avatarUrl ?? ""} />
-        <AvatarFallback className="bg-brand-dark-600 text-white font-semibold">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
+        <AvatarFallback className="bg-brand-dark-600 text-white">{(user.name || "").split(" ").map(p=>p[0]).join("").slice(0,2).toUpperCase()}</AvatarFallback>
       </Avatar>
       <div className="text-left hidden md:block">
         <p className="text-base font-medium text-white leading-none">{user.name}</p>
-        <p className="text-xs text-gray-400">{user.email}</p>
+        <p className="text-xs text-brand-dark-400">{user.email}</p>
       </div>
-      <ChevronDown className="h-5 w-5 text-gray-400" />
+      <ChevronDown className="h-5 w-5 text-brand-dark-400" />
     </button>
   </DropdownMenuTrigger>
 
   <DropdownMenuContent
     align="end"
-    className="w-56 bg-brand-dark-800/95 border-gray-700 backdrop-blur-sm"
+    className="w-56 bg-brand-dark-800/95 border-brand-dark-700 backdrop-blur-sm"
   >
     <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Profile </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Account Settings </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Preferences </DropdownMenuItem> <DropdownMenuSeparator className="bg-brand-dark-700" /> <DropdownMenuItem className="text-red-400 focus:text-brand-dark-100 focus:bg-red-400/50"> Sign Out </DropdownMenuItem>
   </DropdownMenuContent>

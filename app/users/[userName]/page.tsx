@@ -94,7 +94,7 @@ export default function UserActivityPage() {
       <div className="space-y-8">
         {/* Header + Activity */}
         <div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 rounded-3xl sm:p-8 border border-brand-dark-800 bg-cover bg-center w-full"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 rounded-3xl sm:p-8 border border-brand-dark-800 bg-cover bg-center w-full"
           style={{
             backgroundImage: "url('/modalDetails.png')",
             backgroundSize: "cover",
@@ -129,7 +129,7 @@ export default function UserActivityPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
               <ValueCard title="Total Visits" value={234800} unit="RWF" description={`2 Plans`} label="↑ 2.4%" icon={<ClipboardCopy className="w-5 h-5 text-brand-dark-100" />} />
               <ValueCard title="All Users" value={234800} unit="usr" description={`2 Plans`} label="↑ 2.4%" icon={<ClipboardCopy className="w-5 h-5 text-brand-dark-100" />} />
             </div>

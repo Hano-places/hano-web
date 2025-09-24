@@ -27,7 +27,7 @@ export default function AppShell({ user, menu, children }: AppShellProps) {
       {/* Content area with left padding equal to sidebar width on lg */}
       <div className="pl-0 lg:pl-[var(--sidebar-width)]">
         {/* Main column */}
-        <div className="min-h-screen bg-[#0C0C0C] px-6 md:px-12">
+        <div className="min-h-screen bg-[#0C0C0C] px-6 md:px-8">
           <Navbar onSidebarToggle={() => setSidebarOpen(!sidebarOpen)} user={user} />
 
           <main className="pb-8 overflow-x-hidden">

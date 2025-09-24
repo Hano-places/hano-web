@@ -208,14 +208,14 @@ export default function HomePage() {
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Dashboard" }]} />
 
       <div className="space-y-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
           <ValueCard title="Revenues" value={234800} unit="RWF" description="2 Plans" label="↑ 2.4%" />
           <ValueCard title="All users" value={120} unit="Users" description="80 Registered" label="↑ 2.4%" />
           <ValueCard title="Active Businesses" value={4600} unit="Businesses" description="All time" label="↑ 2.4%" />
           <ValueCard title="Pending Registrations" value={4} unit="Users" description="1 hr ago" label="↑ 2.4%" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <ActivityTrendChart data={chartData} />
           </div>
@@ -252,7 +252,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <ProgressTable data={tableData} title="Recent Business Registration Requests" />
           </div>

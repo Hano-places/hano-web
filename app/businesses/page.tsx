@@ -117,7 +117,7 @@ export default function BusinessesPage() {
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Businesses" }]} />
       <div className="space-y-8">
         {/* Top metric cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <ValueCard title="All Businesses" value={1234} unit="Groups" description="+2.4%" label="All time" />
           <ValueCard title="Active" value={100} unit="Groups" description="+2.4%" label="Today" />
           <ValueCard title="Suspended" value={46} unit="Groups" description="-0.5%" label="All time" />

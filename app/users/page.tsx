@@ -116,7 +116,7 @@ export default function UsersPage() {
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users" }]} />
       <div className="space-y-8">
         {/* Top metric cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <ValueCard title="All Users" value={234800} unit="Users" description="+2.4%" label="All time" />
           <ValueCard title="Active" value={100} unit="Users" description="+2.4%" label="Today" />
           <ValueCard title="Restricted" value={4600} unit="Users" description="-0.5%" label="All time" />
