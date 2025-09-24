@@ -355,7 +355,7 @@ const BusinessProgressTable: React.FC<BusinessProgressTableProps> = ({
                 ))}
               </TableBody>
               {/* Full-width pagination row */}
-              <TableRow className="hover:bg-transparent border-t border-brand-dark-800">
+              <TableRow className="border-brand-dark-800 bg-brand-dark-900 hover:bg-brand-dark-800/50">
                 <TableCell colSpan={6} className="p-3">
                   <div className="flex items-center justify-center gap-2">
                     <button
