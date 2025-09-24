@@ -215,7 +215,7 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
 
   return (
     <div className="dark">
-      <div className="min-h-screen">
+      <div className="">
         <div className="mx-auto">
           {/* Table Controls */}
           <TableControls

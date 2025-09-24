@@ -233,7 +233,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
 
   return (
     <div className="dark">
-      <div className="min-h-screen">
+      <div className="">
         <div className="mx-auto">
           {/* Table Controls */}
           <TableControls

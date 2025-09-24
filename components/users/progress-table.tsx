@@ -195,7 +195,7 @@ const ProgressTable: React.FC<ProgressTableProps> = ({
 
   return (
     <div className="dark">
-      <div className="min-h-screen">
+      <div className="h-full">
         <div className="mx-auto">
           {/* Table Controls */}
           <TableControls
