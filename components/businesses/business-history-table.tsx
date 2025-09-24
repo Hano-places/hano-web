@@ -247,18 +247,21 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
             sortOptions={sortOptions}
           />
 
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-semibold text-brand-dark-100">{title}</h1>
-            <button className="p-2 hover:bg-brand-dark-800 rounded-lg transition-colors">
-              <MoreHorizontal className="w-5 h-5 text-brand-dark-400" />
-            </button>
-          </div>
-
           {/* Table */}
           <div className="rounded-lg border border-brand-dark-800 overflow-hidden">
             <Table>
               <TableHeader>
+                {/* Full-width title row with fixed height 49px */}
+                <TableRow className="border-brand-dark-800 bg-brand-dark-900 hover:bg-transparent">
+                  <TableHead colSpan={variant !== "pending" ? 7 : 6} className="h-[49px]">
+                    <div className="flex items-center justify-between">
+                      <h1 className="text-xl font-semibold text-brand-dark-100">{title}</h1>
+                      <button className="p-2 hover:bg-brand-dark-800 rounded-lg transition-colors">
+                        <MoreHorizontal className="w-5 h-5 text-brand-dark-400" />
+                      </button>
+                    </div>
+                  </TableHead>
+                </TableRow>
                 <TableRow className="border-brand-dark-800 bg-brand-dark-900 hover:bg-transparent">
                   <TableHead className="w-12">
                     <input
@@ -269,7 +272,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                       ref={(el) => {
                         if (el) el.indeterminate = someSelectedOnPage
                       }}
-                      className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
+                      className="h-4 w-4 rounded bg-brand-dark-800 border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
                     />
                   </TableHead>
                   <TableHead>
@@ -387,47 +390,48 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                     </TableCell>
                   </TableRow>
                 ))}
+                {/* Full-width pagination row */}
+                <TableRow className="hover:bg-transparent border-t border-brand-dark-800">
+                  <TableCell colSpan={variant !== "pending" ? 7 : 6} className="p-3">
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      >
+                        Prev
+                      </button>
+
+                      {getPageNumbers(totalPages, currentPage).map((page, index) =>
+                        page === "..." ? (
+                          <span key={`dots-${index}`} className="px-2 text-brand-dark-500">...</span>
+                        ) : (
+                          <button
+                            key={`page-${page}`}
+                            className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
+                              currentPage === page
+                                ? "text-brand-dark-100"
+                                : "text-brand-dark-400 hover:text-brand-dark-100"
+                            }`}
+                            onClick={() => setCurrentPage(Number(page))}
+                          >
+                            {page}
+                          </button>
+                        )
+                      )}
+
+                      <button
+                        className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
-          </div>
-
-          {/* Pagination */}
-          <div className="flex items-center justify-center mt-6 gap-2">
-            <button
-              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            >
-              ← Prev
-            </button>
-
-            {getPageNumbers(totalPages, currentPage).map((page, index) =>
-              page === "..." ? (
-                <span key={`dots-${index}`} className="px-2 text-brand-dark-500">
-                  ...
-                </span>
-              ) : (
-                <button
-                  key={`page-${page}`}
-                  className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                    currentPage === page
-                      ? "bg-brand-dark-700 text-brand-dark-100"
-                      : "text-brand-dark-400 hover:text-brand-dark-100 hover:bg-brand-dark-800"
-                  }`}
-                  onClick={() => setCurrentPage(Number(page))}
-                >
-                  {page}
-                </button>
-              )
-            )}
-
-            <button
-              className="px-3 py-2 text-sm text-brand-dark-400 hover:text-brand-dark-100 disabled:opacity-50"
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            >
-              Next →
-            </button>
           </div>
         </div>
       </div>
