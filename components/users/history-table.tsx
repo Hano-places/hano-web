@@ -235,7 +235,7 @@ const HistoryTable: React.FC<HistoryTableProps> = ({
               <TableHeader>
                 {/* Full-width title row */}
                 <TableRow className="border-brand-dark-800 hover:bg-transparent">
-                  <TableHead colSpan={6} className="h-[56px]">
+                  <TableHead colSpan={6} className="h-[49px]">
                     <div className="flex items-center justify-between">
                       <h1 className="text-xl font-semibold text-brand-dark-100">{title}</h1>
                       <button className="p-2 hover:bg-brand-dark-800 rounded-lg transition-colors">

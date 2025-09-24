@@ -287,12 +287,12 @@ export default function HomePage() {
           <div className="lg:col-span-2">
             <ProgressTable data={tableData} title="Recent Business Registration Requests" />
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 h-[87%] flex flex-col">
             <div className="flex items-center justify-between px-1">
               <h3 className="text-brand-dark-50 font-semibold">Latest Picks</h3>
               <a href="#" className="text-sm text-brand-dark-300 hover:text-brand-dark-100">View All →</a>
             </div>
-            <div className={"space-y-4 max-h-100vh overflow-y-auto no-scrollbar pr-2"}>
+            <div className={"space-y-4 flex-1 overflow-y-auto no-scrollbar pr-2"}>
               {paginatedPicks.map((p, idx) => (
                 <Card key={`${p.title}-${idx}`} className="relative bg-brand-dark-900 border border-gray-800 overflow-hidden p-0 rounded-2xl">
                   <div className="relative aspect-[4/3] w-full">
@@ -352,8 +352,8 @@ export default function HomePage() {
                     key={`page-${page}`}
                     className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
                       currentPicksPage === page
-                        ? "bg-brand-dark-700 text-brand-dark-100"
-                        : "text-brand-dark-400 hover:text-brand-dark-100 hover:bg-brand-dark-800"
+                        ? "text-brand-dark-100"
+                        : "text-brand-dark-400 hover:text-brand-dark-100"
                     }`}
                     onClick={() => setCurrentPicksPage(Number(page))}
                   >
