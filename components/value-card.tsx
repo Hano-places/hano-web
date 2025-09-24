@@ -33,7 +33,7 @@ const ValueCard: React.FC<ValueCardProps> = ({
     <div className={`bg-brand-dark-900 rounded-xl border-2 border-brand-dark-700 p-6 ${className}`}>
       {/* Header with title and icon */}
       <div className="flex justify-between mb-8">
-        <h3 className="text-lg font-small text-brand-dark-50">
+        <h3 className="text-sm text-brand-dark-50">
           {title}
         </h3>
         <div className="w-12 h-12 bg-brand-dark-700 rounded-xl flex items-center justify-center self-start">
@@ -44,10 +44,10 @@ const ValueCard: React.FC<ValueCardProps> = ({
       {/* Value and unit */}
       <div className="mb-4">
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-bold text-brand-dark-50">
+          <span className="text-xl text-brand-dark-50">
             {value}
           </span>
-          <span className="text-lg text-brand-dark-50">
+          <span className="text-xs text-brand-dark-400">
             {unit}
           </span>
         </div>

@@ -61,7 +61,7 @@ export default function PageHeader({ breadcrumbs, onExport }: PageHeaderProps) {
             <SelectItem value="today">Today</SelectItem>
             <SelectItem value="7d">Last 7 days</SelectItem>
             <SelectItem value="30d">Last 30 days</SelectItem>
-            <SelectItem value="range">Custom range</SelectItem>
+            <SelectItem value="range">Select dates</SelectItem>
           </SelectContent>
         </Select>
 
