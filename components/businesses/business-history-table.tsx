@@ -272,7 +272,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                       ref={(el) => {
                         if (el) el.indeterminate = someSelectedOnPage
                       }}
-                      className="h-4 w-4 rounded bg-brand-dark-800 border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
+                      className="h-4 w-4 rounded border border-brand-dark-600 bg-brand-dark-900 text-blue-500 focus:ring-0 appearance-none checked:bg-blue-500 checked:border-blue-500"
                     />
                   </TableHead>
                   <TableHead>
@@ -310,7 +310,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                         aria-label={`Select ${visit.businessName}`}
                         checked={selectedIds.has(visit.id)}
                         onChange={() => toggleSelectOne(visit.id)}
-                        className="h-4 w-4 rounded border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0"
+                      className="h-4 w-4 rounded border border-brand-dark-600 bg-brand-dark-800 text-blue-500 focus:ring-0 appearance-none checked:bg-blue-500 checked:border-blue-500"
                       />
                     </TableCell>
                     <TableCell>

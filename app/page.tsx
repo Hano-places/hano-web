@@ -294,7 +294,7 @@ export default function HomePage() {
             </div>
             <div className={"space-y-4 flex-1 overflow-y-auto no-scrollbar pr-2"}>
               {paginatedPicks.map((p, idx) => (
-                <Card key={`${p.title}-${idx}`} className="relative bg-brand-dark-900 border border-gray-800 overflow-hidden p-0 rounded-2xl">
+                <Card key={`${p.title}-${idx}`} className="relative border border-gray-800 overflow-hidden p-0 rounded-2xl">
                   <div className="relative aspect-[4/3] w-full">
                     <img src={p.image} alt={p.title} className="absolute inset-0 w-full h-full object-cover" />
                     {/* top-right new deal pill */}
@@ -307,11 +307,11 @@ export default function HomePage() {
                       </span>
                     </div>
                     {/* dark gradient bottom overlay for readability; keeps top visible */}
-                    <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/85 via-black/55 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-4/5 bg-gradient-to-t from-black/85 via-black/55 to-transparent" />
                   </div>
                   {/* content overlay anchored to bottom */}
                   <div className="absolute inset-x-0 bottom-0 p-4">
-                    <div className="mx-2 mb-2 rounded-xl bg-black/35 ring-1 ring-white/10 p-3">
+                    <div className="mx-2 mb-2 rounded-xl  p-3">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-lg bg-black/60 ring-1 ring-white/15 flex items-center justify-center overflow-hidden">
                           <img src={p.logo} alt="logo" className="w-6 h-6 object-contain" />
