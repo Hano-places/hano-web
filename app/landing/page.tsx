@@ -655,9 +655,6 @@ function FAQSection() {
     <section className="py-20 md:py-32 bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl mb-6">
-            <Image src="/logo.png" alt="FAQ Icon" width={32} height={32} />
-          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Frequently asked questions
           </h2>
@@ -670,25 +667,44 @@ function FAQSection() {
           {faqs.map((faq, index) => (
             <details
               key={index}
-              className="group bg-gray-900/50 rounded-xl border border-gray-800 overflow-hidden"
+              className="group bg-transparent rounded-xl overflow-hidden"
             >
-              <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                <span className="text-lg font-medium">{faq.question}</span>
-                <svg
-                  className="w-5 h-5 text-gray-400 group-open:rotate-180 transition"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
+              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none bg-gray-900/30 group-open:bg-[#1E1E1E]/60 rounded-xl transition-colors">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5">
+                  <svg
+                    className="w-3 h-3 text-gray-400 group-open:hidden"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                  <svg
+                    className="w-3 h-3 text-gray-400 hidden group-open:block"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M20 12H4"
+                    />
+                  </svg>
+                </div>
+                <span className="text-lg font-medium flex-1">
+                  {faq.question}
+                </span>
               </summary>
-              <div className="px-6 pb-6 text-gray-400">{faq.answer}</div>
+              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed">
+                {faq.answer}
+              </div>
             </details>
           ))}
         </div>
