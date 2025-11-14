@@ -240,134 +240,85 @@ function FeaturesSection() {
           </p>
         </div>
 
-        {/* Phone Mockup with Background Image */}
-        <div className="relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]">
-          {/* Background Image */}
-          <div className="absolute inset-0 flex justify-center items-center">
-            <Image
-              src="/landing/landing_features_bg.png"
-              alt="Features Background"
-              width={800}
-              height={800}
-              className="w-auto h-[600px] md:h-[800px] object-contain"
-            />
-          </div>
+        {/* Phone Mockup with Real Background Image */}
+<div className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]"
+  style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
+>
 
-          {/* Phone Image */}
-          <div className="relative z-10">
-            <Image
-              src="/landing/landing_iphone_2.png"
-              alt="App Features"
-              width={450}
-              height={900}
-              className="w-auto h-[550px] md:h-[700px]"
-            />
-          </div>
-
-          {/* Notification Cards - All on Left Side with negative z-index to go behind phone */}
-          <div className="absolute left-[8%] md:left-[20%] top-[8%] z-0 space-y-5 hidden lg:block">
-            {/* Notification 1 */}
-            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-full bg-pink-400 flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="text-white text-xs leading-tight">
-                    <span className="font-semibold">Olivia Rhye</span> shared
-                    moments at
-                  </p>
-                  <p className="text-purple-400 font-semibold text-xs mt-1">
-                    Kigali Lounge & Grill
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Notification 2 */}
-            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-full bg-blue-400 flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="text-white text-xs leading-tight">
-                    <span className="font-semibold">Candice Wu</span> redeemed a
-                    10% reward at
-                  </p>
-                  <p className="text-green-400 font-semibold text-xs mt-1">
-                    Java House Kigali
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Notification 3 */}
-            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-white text-xs leading-tight">
-                    <span className="font-semibold">Nyandungu Eco Park</span>{" "}
-                    raised rewards to
-                  </p>
-                  <p className="text-orange-400 font-semibold text-xs mt-1">
-                    1.4k RWF
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Notification 4 */}
-            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-full bg-teal-400 flex-shrink-0"></div>
-                <div className="flex-1">
-                  <p className="text-white text-xs leading-tight">
-                    <span className="font-semibold">Lana Steiner</span> just
-                    launched
-                  </p>
-                  <p className="text-blue-400 font-semibold text-xs mt-1">
-                    The 10k users challenge workbook
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+  {/* Notification Cards */}
+  <div className="absolute left-[8%] md:left-[20%] bottom-[8%] z-20 space-y-5 hidden lg:block">
+    
+    {/* Notification 1 */}
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+      <div className="flex items-start space-x-3">
+        <div className="w-10 h-10 rounded-full bg-pink-400 flex-shrink-0"></div>
+        <div className="flex-1">
+          <p className="text-white text-xs leading-tight">
+            <span className="font-semibold">Olivia Rhye</span> shared moments at
+          </p>
+          <p className="text-purple-400 font-semibold text-xs mt-1">
+            Kigali Lounge & Grill
+          </p>
         </div>
+      </div>
+    </div>
 
-        {/* Feature Cards with Interactive Tabs */}
-        <div className="max-w-6xl mx-auto mb-16 md:mb-24 lg:mb-32">
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="group cursor-default">
-                {/* Top border indicator - white for first item (active), gray for others */}
-                <div
-                  className={`h-0.5 mb-6 ${
-                    index === 0
-                      ? "bg-white"
-                      : "bg-gray-700 group-hover:bg-gray-500"
-                  } transition-colors`}
-                ></div>
-
-                {/* Icon and Title */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="text-2xl">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold">{feature.title}</h3>
-                </div>
-
-                {/* Description */}
-                <p className="text-gray-400 text-base leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
+    {/* Notification 2 */}
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+      <div className="flex items-start space-x-3">
+        <div className="w-10 h-10 rounded-full bg-blue-400 flex-shrink-0"></div>
+        <div className="flex-1">
+          <p className="text-white text-xs leading-tight">
+            <span className="font-semibold">Candice Wu</span> redeemed a 10% reward at
+          </p>
+          <p className="text-green-400 font-semibold text-xs mt-1">
+            Java House Kigali
+          </p>
         </div>
+      </div>
+    </div>
+
+    {/* Notification 3 */}
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+      <div className="flex items-start space-x-3">
+        <div className="w-10 h-10 rounded-xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
+          <svg
+            className="w-5 h-5 text-white"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <p className="text-white text-xs leading-tight">
+            <span className="font-semibold">Nyandungu Eco Park</span> raised rewards to
+          </p>
+          <p className="text-orange-400 font-semibold text-xs mt-1">
+            1.4k RWF
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Notification 4 */}
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+      <div className="flex items-start space-x-3">
+        <div className="w-10 h-10 rounded-full bg-teal-400 flex-shrink-0"></div>
+        <div className="flex-1">
+          <p className="text-white text-xs leading-tight">
+            <span className="font-semibold">Lana Steiner</span> just launched
+          </p>
+          <p className="text-blue-400 font-semibold text-xs mt-1">
+            The 10k users challenge workbook
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
         {/* Kigali Business Scene Section */}
         <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center max-w-6xl mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Left: Text Content */}
