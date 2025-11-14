@@ -369,7 +369,7 @@ function FeaturesSection() {
           </div>
         </div>
         {/* Kigali Business Scene Section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center max-w-6xl mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Left: Text Content */}
           <div>
             <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-6">
@@ -606,7 +606,7 @@ function FeaturesSection() {
         </div>
 
         {/* Advanced Analytics Section */}
-        <div className="text-center mt-32 mb-20">
+        <div className="text-center mt-16 md:mt-24 lg:mt-32 mb-12 md:mb-16 lg:mb-20">
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
             Features
           </div>
