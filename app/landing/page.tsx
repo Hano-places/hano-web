@@ -83,11 +83,11 @@ export default function LandingPage() {
       {/* Features Section */}
       <FeaturesSection />
 
-      {/* FAQ Section */}
-      <FAQSection />
-
       {/* Team Section */}
       <TeamSection />
+
+     {/* FAQ Section */}
+      <FAQSection />
 
       {/* Footer Section */}
       <FooterSection />
@@ -206,7 +206,7 @@ function HeroSection() {
         <div className="grid lg:grid-cols-[1.5fr_0.5fr] gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left: Phone Mockups */}
           <div className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1">
-            <div className="relative w-full flex items-center justify-center">
+            <div className="relative w-full flex items-center justify-center gap-0">
               <Image
                 src="/landing/landing_iphone.png"
                 alt="App Screenshots"
@@ -220,15 +220,15 @@ function HeroSection() {
                 alt="App Screenshots"
                 width={800}
                 height={800}
-                className="w-full h-auto max-w-3xl"
+                className="w-full h-auto "
                 priority
               />
             </div>
           </div>
 
           {/* Right: Text Content */}
-          <div className="space-y-6 md:space-y-8 order-1 lg:order-2">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+          <div className="space-y-6 md:space-y-8 order-1 lg:order-2 top-0">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight">
               Discover Rwanda's Best Spots
             </h1>
             <p className="text-lg md:text-xl text-gray-400">
