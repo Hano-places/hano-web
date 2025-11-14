@@ -663,13 +663,13 @@ function FAQSection() {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-4 rounded-xl">
           {faqs.map((faq, index) => (
             <details
               key={index}
               className="group bg-transparent rounded-xl overflow-hidden"
             >
-              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none bg-gray-900/30 group-open:bg-[#1E1E1E]/60 rounded-xl transition-colors">
+              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none group-open:bg-[#1E1E1E]/60  transition-colors">
                 <div className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5">
                   <svg
                     className="w-3 h-3 text-gray-400 group-open:hidden"
@@ -702,7 +702,7 @@ function FAQSection() {
                   {faq.question}
                 </span>
               </summary>
-              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed">
+              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed group-open:bg-[#1E1E1E]/60">
                 {faq.answer}
               </div>
             </details>
