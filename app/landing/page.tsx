@@ -344,7 +344,7 @@ function FeaturesSection() {
         <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-20"></div>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-32">
           {features.map((feature, index) => (
             <div key={index} className="text-center">
               <div className="text-5xl mb-6">{feature.icon}</div>
@@ -354,6 +354,268 @@ function FeaturesSection() {
               </p>
             </div>
           ))}
+        </div>
+        {/* Kigali Business Scene Section */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+          {/* Left: Text Content */}
+          <div>
+            <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-6">
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Discover Kigali's vibrant business scene
+            </h2>
+            <p className="text-gray-400 text-xl mb-8">
+              Explore Rwanda's finest places — from local favorites to new
+              discoveries.
+            </p>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <svg
+                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span className="text-gray-300 text-lg">
+                  Track engagement from your visitors across Kigali
+                </span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span className="text-gray-300 text-lg">
+                  Promote your business to locals and travelers alike
+                </span>
+              </li>
+              <li className="flex items-start">
+                <svg
+                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+                <span className="text-gray-300 text-lg">
+                  Gain insights that help you grow and stand out in the city
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right: Image */}
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden">
+              <Image
+                src="/landing/kigali_scene.png"
+                alt="Kigali Business Scene"
+                width={600}
+                height={400}
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Business Tools Section */}
+        <div className="text-center mb-20">
+          <div className="inline-block bg-gray-800 text-gray-300 px-5 py-2.5 rounded-full text-base mb-8">
+            Features
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
+            Smart tools to power your business Hano
+          </h2>
+          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
+            Simple yet powerful features that help your place attract more
+            visitors, increase visibility, and manage your activities
+            effortlessly.
+          </p>
+        </div>
+
+        {/* Business Features Grid */}
+        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto mb-32">
+          {/* Track Performance */}
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 10V3L4 14h7v7l9-11h-7z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-semibold mb-4">
+              Track your performance
+            </h3>
+            <p className="text-gray-400 text-lg leading-relaxed mb-2">
+              Get clear insights into visits, engagement, menu views, and promo
+              usage.
+            </p>
+            <p className="text-gray-500 text-base">
+              Filter and explore your data in seconds.
+            </p>
+          </div>
+
+          {/* Engage with Customers */}
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-semibold mb-4">
+              Engage with customers
+            </h3>
+            <p className="text-gray-400 text-lg leading-relaxed mb-2">
+              Share updates, promotions, and moments in real time.
+            </p>
+            <p className="text-gray-500 text-base">
+              Keep your audience informed and build stronger customer
+              connections.
+            </p>
+          </div>
+
+          {/* Integrate Effortlessly */}
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-semibold mb-4">
+              Integrate effortlessly
+            </h3>
+            <p className="text-gray-400 text-lg leading-relaxed mb-2">
+              Sync your location, menu, booking links, and social pages.
+            </p>
+            <p className="text-gray-500 text-base">
+              Everything works smoothly so you can focus on serving your
+              customers.
+            </p>
+          </div>
+
+          {/* Support */}
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-semibold mb-4">
+              We're here to support you
+            </h3>
+            <p className="text-gray-400 text-lg leading-relaxed mb-2">
+              Get help anytime from the Hano support team.
+            </p>
+            <p className="text-gray-500 text-base">
+              We guide you as you grow your presence and attract more visitors.
+            </p>
+          </div>
+        </div>
+
+        {/* Advanced Analytics Section */}
+        <div className="text-center mt-32 mb-20">
+          <div className="inline-block bg-gray-800 text-gray-300 px-5 py-2.5 rounded-full text-base mb-8">
+            Features
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
+            Cutting-edge features for advanced analytics
+          </h2>
+          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
+            Powerful, self-serve product and growth analytics to help you
+            convert, engage, and retain more users. Trusted by over 4,000
+            startups.
+          </p>
+        </div>
+
+        {/* Analytics Dashboard Image */}
+        <div className="relative max-w-6xl mx-auto mb-0">
+          <Image
+            src="/landing/landing_features_electronics.png"
+            alt="Advanced Analytics Dashboard"
+            width={1200}
+            height={800}
+            className="w-full h-auto"
+          />
         </div>
       </div>
     </section>
