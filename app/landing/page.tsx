@@ -226,14 +226,14 @@ function FeaturesSection() {
     <section className="py-16 md:py-24 lg:py-32 bg-black relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-20">
-          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
+        <div className="text-center mb-12 md:mb-16 lg:mb-20">
+          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm md:text-base mb-6 md:mb-8">
             Features
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place. Hano helps users explore with ease while
             helping businesses grow through visibility, rewards, and insights.
