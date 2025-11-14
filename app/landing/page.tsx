@@ -37,9 +37,9 @@ function HeroSection() {
       </div>
 
       {/* Header/Navbar */}
-      <header className="relative z-50 bg-transparent">
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
+      <header className="relative z-50 bg-transparent pt-6 md:pt-8">
+        <nav className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
               <Image
