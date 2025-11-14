@@ -340,20 +340,33 @@ function FeaturesSection() {
           </div>
         </div>
 
-        {/* Divider Line */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mb-20"></div>
+        {/* Feature Cards with Interactive Tabs */}
+        <div className="max-w-6xl mx-auto mb-32">
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div key={index} className="group cursor-default">
+                {/* Top border indicator - white for first item (active), gray for others */}
+                <div
+                  className={`h-0.5 mb-6 ${
+                    index === 0
+                      ? "bg-white"
+                      : "bg-gray-700 group-hover:bg-gray-500"
+                  } transition-colors`}
+                ></div>
 
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-32">
-          {features.map((feature, index) => (
-            <div key={index} className="text-center">
-              <div className="text-5xl mb-6">{feature.icon}</div>
-              <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+                {/* Icon and Title */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="text-2xl">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-400 text-base leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
         {/* Kigali Business Scene Section */}
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
