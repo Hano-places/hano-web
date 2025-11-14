@@ -241,7 +241,7 @@ function FeaturesSection() {
         </div>
 
         {/* Phone Mockup with Background Image */}
-        <div className="relative flex justify-center items-center mb-24 min-h-[700px] md:min-h-[900px]">
+        <div className="relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]">
           {/* Background Image */}
           <div className="absolute inset-0 flex justify-center items-center">
             <Image
@@ -341,8 +341,8 @@ function FeaturesSection() {
         </div>
 
         {/* Feature Cards with Interactive Tabs */}
-        <div className="max-w-6xl mx-auto mb-32">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="max-w-6xl mx-auto mb-16 md:mb-24 lg:mb-32">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {features.map((feature, index) => (
               <div key={index} className="group cursor-default">
                 {/* Top border indicator - white for first item (active), gray for others */}
@@ -473,7 +473,7 @@ function FeaturesSection() {
         </div>
 
         {/* Business Tools Section */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
             Features
           </div>
@@ -488,7 +488,7 @@ function FeaturesSection() {
         </div>
 
         {/* Business Features Grid */}
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto mb-32">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 max-w-5xl mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Track Performance */}
           <div className="text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
