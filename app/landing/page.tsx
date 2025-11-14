@@ -1,6 +1,79 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Notification Card Component
+interface NotificationCardProps {
+  userName: string;
+  action: string;
+  place: string;
+  placeColor: string;
+  avatarType: "circle" | "square";
+  avatarColor?: string;
+  icon?: React.ReactNode;
+}
+
+function NotificationCard({
+  userName,
+  action,
+  place,
+  placeColor,
+  avatarType,
+  avatarColor,
+  icon,
+}: NotificationCardProps) {
+  return (
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+      <div className="flex items-start space-x-3">
+        <div
+          className={`w-10 h-10 ${
+            avatarType === "circle" ? "rounded-full" : "rounded-xl"
+          } ${
+            avatarColor || "bg-gray-700"
+          } flex-shrink-0 flex items-center justify-center`}
+        >
+          {icon}
+        </div>
+        <div className="flex-1">
+          <p className="text-white text-xs leading-tight">
+            <span className="font-semibold">{userName}</span> {action}
+          </p>
+          <p className={`${placeColor} font-semibold text-xs mt-1`}>{place}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Team Card Component
+interface TeamCardProps {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  bgColor: string;
+}
+
+function TeamCard({ name, role, bio, image, bgColor }: TeamCardProps) {
+  return (
+    <div className="group">
+      <div
+        className={`relative mb-6 w-full aspect-[3/4] ${bgColor} rounded-lg overflow-hidden flex items-center justify-center`}
+      >
+        <Image
+          src={image}
+          alt={name}
+          width={120}
+          height={120}
+          className="opacity-30"
+        />
+      </div>
+      <h3 className="text-xl font-semibold mb-1">{name}</h3>
+      <p className="text-red-500 text-sm mb-3">{role}</p>
+      <p className="text-gray-400 text-sm leading-relaxed">{bio}</p>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black text-white">
@@ -37,7 +110,7 @@ function HeroSection() {
       </div>
 
       {/* Header/Navbar */}
-      <header className="relative z-50 bg-transparent pt-6 md:pt-8">
+      <header className="relative z-50 bg-transparent pt-24 md:pt-32">
         <nav className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
@@ -130,24 +203,24 @@ function HeroSection() {
 
       {/* Hero Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-[1.5fr_0.5fr] gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left: Phone Mockups */}
           <div className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1">
-            <div className="relative w-full max-w-2xl flex items-center justify-center">
+            <div className="relative w-full flex items-center justify-center">
               <Image
                 src="/landing/landing_iphone.png"
                 alt="App Screenshots"
-                width={600}
-                height={600}
+                width={1000}
+                height={1000}
                 className="w-full h-auto"
                 priority
               />
               <Image
                 src="/landing/landing_iphone_1.png"
                 alt="App Screenshots"
-                width={600}
-                height={600}
-                className="w-full h-auto"
+                width={800}
+                height={800}
+                className="w-full h-auto max-w-3xl"
                 priority
               />
             </div>
@@ -199,7 +272,6 @@ function HeroSection() {
     </section>
   );
 }
-
 function FeaturesSection() {
   const features = [
     {
@@ -223,7 +295,7 @@ function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-black relative overflow-hidden">
+    <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16 lg:mb-20">
@@ -239,190 +311,168 @@ function FeaturesSection() {
             helping businesses grow through visibility, rewards, and insights.
           </p>
         </div>
-
-        {/* Phone Mockup with Real Background Image */}
-<div className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]"
-  style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
->
-
-  {/* Notification Cards */}
-  <div className="absolute left-[8%] md:left-[20%] bottom-[8%] z-20 space-y-5 hidden lg:block">
-    
-    {/* Notification 1 */}
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
-      <div className="flex items-start space-x-3">
-        <div className="w-10 h-10 rounded-full bg-pink-400 flex-shrink-0"></div>
-        <div className="flex-1">
-          <p className="text-white text-xs leading-tight">
-            <span className="font-semibold">Olivia Rhye</span> shared moments at
-          </p>
-          <p className="text-purple-400 font-semibold text-xs mt-1">
-            Kigali Lounge & Grill
-          </p>
-        </div>
       </div>
-    </div>
 
-    {/* Notification 2 */}
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
-      <div className="flex items-start space-x-3">
-        <div className="w-10 h-10 rounded-full bg-blue-400 flex-shrink-0"></div>
-        <div className="flex-1">
-          <p className="text-white text-xs leading-tight">
-            <span className="font-semibold">Candice Wu</span> redeemed a 10% reward at
-          </p>
-          <p className="text-green-400 font-semibold text-xs mt-1">
-            Java House Kigali
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* Notification 3 */}
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
-      <div className="flex items-start space-x-3">
-        <div className="w-10 h-10 rounded-xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
-          <svg
-            className="w-5 h-5 text-white"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
-          </svg>
-        </div>
-        <div className="flex-1">
-          <p className="text-white text-xs leading-tight">
-            <span className="font-semibold">Nyandungu Eco Park</span> raised rewards to
-          </p>
-          <p className="text-orange-400 font-semibold text-xs mt-1">
-            1.4k RWF
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* Notification 4 */}
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
-      <div className="flex items-start space-x-3">
-        <div className="w-10 h-10 rounded-full bg-teal-400 flex-shrink-0"></div>
-        <div className="flex-1">
-          <p className="text-white text-xs leading-tight">
-            <span className="font-semibold">Lana Steiner</span> just launched
-          </p>
-          <p className="text-blue-400 font-semibold text-xs mt-1">
-            The 10k users challenge workbook
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-        {/* Kigali Business Scene Section */}
-        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center max-w-6xl mx-auto mb-16 md:mb-24 lg:mb-32">
-          {/* Left: Text Content */}
-          <div>
-            <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center mb-6">
+      {/* Phone Mockup with Real Background Image - Full Width */}
+      <div
+        className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]"
+        style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
+      >
+        {/* Notification Cards */}
+        <div className="absolute left-[10%] md:left-[25%] bottom-[8%] z-20 space-y-5 hidden lg:block">
+          <NotificationCard
+            userName="Olivia Rhye"
+            action="shared moments at"
+            place="Kigali Lounge & Grill"
+            placeColor="text-purple-400"
+            avatarType="circle"
+            avatarColor="bg-pink-400"
+          />
+          <NotificationCard
+            userName="Candice Wu"
+            action="redeemed a 10% reward at"
+            place="Java House Kigali"
+            placeColor="text-green-400"
+            avatarType="circle"
+            avatarColor="bg-blue-400"
+          />
+          <NotificationCard
+            userName="Nyandungu Eco Park"
+            action="raised rewards to"
+            place="1.4k RWF"
+            placeColor="text-orange-400"
+            avatarType="square"
+            avatarColor="bg-gray-700"
+            icon={
               <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                stroke="currentColor"
+                className="w-5 h-5 text-white"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                />
+                <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
               </svg>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Discover Kigali's vibrant business scene
-            </h2>
-            <p className="text-gray-400 text-xl mb-8">
-              Explore Rwanda's finest places — from local favorites to new
-              discoveries.
-            </p>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-gray-300 text-lg">
-                  Track engagement from your visitors across Kigali
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-gray-300 text-lg">
-                  Promote your business to locals and travelers alike
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-gray-300 text-lg">
-                  Gain insights that help you grow and stand out in the city
-                </span>
-              </li>
-            </ul>
-          </div>
+            }
+          />
+          <NotificationCard
+            userName="Lana Steiner"
+            action="just launched"
+            place="The 10k users challenge workbook"
+            placeColor="text-blue-400"
+            avatarType="circle"
+            avatarColor="bg-teal-400"
+          />
+        </div>
+      </div>
 
-          {/* Right: Image */}
-          <div className="relative">
-            <div className="rounded-2xl overflow-hidden">
-              <Image
-                src="/landing/kigali_scene.png"
-                alt="Kigali Business Scene"
-                width={600}
-                height={400}
-                className="w-full h-auto"
-              />
+      {/* Kigali Business Scene Section - Full Width */}
+      <div className="w-full bg-[#030303] py-16 md:py-20 lg:py-24 mb-16 md:mb-24 lg:mb-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
+            {/* Left: Text Content */}
+            <div>
+              <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-6">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Discover Kigali's vibrant business scene
+              </h2>
+              <p className="text-gray-400 text-xl mb-8">
+                Explore Rwanda's finest places — from local favorites to new
+                discoveries.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span className="text-gray-300 text-lg">
+                    Track engagement from your visitors across Kigali
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span className="text-gray-300 text-lg">
+                    Promote your business to locals and travelers alike
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span className="text-gray-300 text-lg">
+                    Gain insights that help you grow and stand out in the city
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Right: Image */}
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden">
+                <Image
+                  src="/landing/kigali_scene.png"
+                  alt="Kigali Business Scene"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Business Tools Section */}
         <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
@@ -585,7 +635,82 @@ function FeaturesSection() {
     </section>
   );
 }
+function TeamSection() {
+  const team = [
+    {
+      name: "Amélie Laurent",
+      role: "Founder & CEO",
+      bio: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit.",
+      image: "/logo.png",
+      bgColor: "bg-pink-200",
+    },
+    {
+      name: "Nikolas Gibbons",
+      role: "Engineering Manager",
+      bio: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
+      image: "/logo.png",
+      bgColor: "bg-green-200",
+    },
+    {
+      name: "Sienna Hewitt",
+      role: "Product Manager",
+      bio: "Former PM for Linear, Lambda School, and On Deck.",
+      image: "/logo.png",
+      bgColor: "bg-yellow-100",
+    },
+    {
+      name: "Lily-Rose Chedjou",
+      role: "Frontend Developer",
+      bio: "Former frontend dev for Linear, Coinbase, and Postscript.",
+      image: "/logo.png",
+      bgColor: "bg-amber-100",
+    },
+    {
+      name: "Zahra Christensen",
+      role: "Backend Developer",
+      bio: "Lead backend dev at Clearbit. Former Clearbit and Loom.",
+      image: "/logo.png",
+      bgColor: "bg-gray-300",
+    },
+  ];
 
+  return (
+    <section className="py-16 md:py-24 lg:py-32 bg-black">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            Meet our team
+          </h2>
+          <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8">
+            Our philosophy is simple — hire a team of diverse, passionate people
+            and foster a culture that empowers you to do your best work.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 transition text-white">
+              About us
+            </button>
+            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition font-medium">
+              Open positions
+            </button>
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16">
+          {team.map((member, index) => (
+            <TeamCard
+              key={index}
+              name={member.name}
+              role={member.role}
+              bio={member.bio}
+              image={member.image}
+              bgColor={member.bgColor}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 function FAQSection() {
   const faqs = [
     {
@@ -676,94 +801,6 @@ function FAQSection() {
     </section>
   );
 }
-
-function TeamSection() {
-  const team = [
-    {
-      name: "Amélie Laurent",
-      role: "Founder & CEO",
-      bio: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit.",
-      image: "/logo.png",
-      bgColor: "bg-pink-200",
-    },
-    {
-      name: "Nikolas Gibbons",
-      role: "Engineering Manager",
-      bio: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
-      image: "/logo.png",
-      bgColor: "bg-green-200",
-    },
-    {
-      name: "Sienna Hewitt",
-      role: "Product Manager",
-      bio: "Former PM for Linear, Lambda School, and On Deck.",
-      image: "/logo.png",
-      bgColor: "bg-yellow-100",
-    },
-    {
-      name: "Lily-Rose Chedjou",
-      role: "Frontend Developer",
-      bio: "Former frontend dev for Linear, Coinbase, and Postscript.",
-      image: "/logo.png",
-      bgColor: "bg-amber-100",
-    },
-    {
-      name: "Zahra Christensen",
-      role: "Backend Developer",
-      bio: "Lead backend dev at Clearbit. Former Clearbit and Loom.",
-      image: "/logo.png",
-      bgColor: "bg-gray-300",
-    },
-  ];
-
-  return (
-    <section className="py-16 md:py-24 lg:py-32 bg-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Meet our team
-          </h2>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8">
-            Our philosophy is simple — hire a team of diverse, passionate people
-            and foster a culture that empowers you to do your best work.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 transition text-white">
-              About us
-            </button>
-            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition font-medium">
-              Open positions
-            </button>
-          </div>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16">
-          {team.map((member, index) => (
-            <div key={index} className="group">
-              <div
-                className={`relative mb-6 w-full aspect-[3/4] ${member.bgColor} rounded-lg overflow-hidden flex items-center justify-center`}
-              >
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={120}
-                  height={120}
-                  className="opacity-30"
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-              <p className="text-red-500 text-sm mb-3">{member.role}</p>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {member.bio}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function FooterSection() {
   return (
     <footer className="bg-black border-t border-gray-800">
