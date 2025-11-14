@@ -241,7 +241,7 @@ function FeaturesSection() {
         </div>
 
         {/* Phone Mockup with Background Image */}
-        <div className="relative flex justify-center items-center mb-24">
+        <div className="relative flex justify-center items-center mb-24 min-h-[700px] md:min-h-[900px]">
           {/* Background Image */}
           <div className="absolute inset-0 flex justify-center items-center">
             <Image
@@ -262,6 +262,81 @@ function FeaturesSection() {
               height={900}
               className="w-auto h-[550px] md:h-[700px]"
             />
+          </div>
+
+          {/* Notification Cards - All on Left Side with negative z-index to go behind phone */}
+          <div className="absolute left-[8%] md:left-[20%] top-[8%] z-0 space-y-5 hidden lg:block">
+            {/* Notification 1 */}
+            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
+              <div className="flex items-start space-x-3">
+                <div className="w-10 h-10 rounded-full bg-pink-400 flex-shrink-0"></div>
+                <div className="flex-1">
+                  <p className="text-white text-xs leading-tight">
+                    <span className="font-semibold">Olivia Rhye</span> shared
+                    moments at
+                  </p>
+                  <p className="text-purple-400 font-semibold text-xs mt-1">
+                    Kigali Lounge & Grill
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Notification 2 */}
+            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
+              <div className="flex items-start space-x-3">
+                <div className="w-10 h-10 rounded-full bg-blue-400 flex-shrink-0"></div>
+                <div className="flex-1">
+                  <p className="text-white text-xs leading-tight">
+                    <span className="font-semibold">Candice Wu</span> redeemed a
+                    10% reward at
+                  </p>
+                  <p className="text-green-400 font-semibold text-xs mt-1">
+                    Java House Kigali
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Notification 3 */}
+            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
+              <div className="flex items-start space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-gray-700 flex-shrink-0 flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <p className="text-white text-xs leading-tight">
+                    <span className="font-semibold">Nyandungu Eco Park</span>{" "}
+                    raised rewards to
+                  </p>
+                  <p className="text-orange-400 font-semibold text-xs mt-1">
+                    1.4k RWF
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Notification 4 */}
+            <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[240px] shadow-xl">
+              <div className="flex items-start space-x-3">
+                <div className="w-10 h-10 rounded-full bg-teal-400 flex-shrink-0"></div>
+                <div className="flex-1">
+                  <p className="text-white text-xs leading-tight">
+                    <span className="font-semibold">Lana Steiner</span> just
+                    launched
+                  </p>
+                  <p className="text-blue-400 font-semibold text-xs mt-1">
+                    The 10k users challenge workbook
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
