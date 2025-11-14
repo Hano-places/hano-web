@@ -129,8 +129,8 @@ function HeroSection() {
       </header>
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-24 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left: Phone Mockups */}
           <div className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1">
             <div className="relative w-full max-w-2xl flex items-center justify-center">
