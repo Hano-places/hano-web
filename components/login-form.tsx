@@ -8,39 +8,48 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import Image from "next/image"
+import { signIn } from "@/lib/auth"
+import { useAuth } from "@/contexts/auth-context"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const { isAuthenticated } = useAuth()
 
   // Redirect if already authenticated
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true" || 
-                           sessionStorage.getItem("isAuthenticated") === "true";
-    
     if (isAuthenticated) {
       router.push("/");
     }
-  }, [router])
+  }, [isAuthenticated, router])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setIsLoading(true)
     
-    // Validate credentials
-    if (email.trim() === "admin" && password === "admin123") {
-      // Store login state in localStorage if remember me is checked
-      if (rememberMe) {
-        localStorage.setItem("isAuthenticated", "true")
+    try {
+      const result = await signIn.email({
+        email: email.trim(),
+        password: password,
+        rememberMe: rememberMe,
+      })
+
+      if (result.error) {
+        setError(result.error.message || "Invalid credentials. Please try logging in again or check your password.")
       } else {
-        sessionStorage.setItem("isAuthenticated", "true")
+        // Success - redirect will happen via useEffect when isAuthenticated changes
+        router.push("/")
       }
-      router.push("/") // ✅ redirect to homepage
-    } else {
-      setError("Invalid credentials. Please try logging in again or check your password.")
+    } catch (err) {
+      setError("An error occurred. Please try again.")
+      console.error("Login error:", err)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -205,8 +214,9 @@ export function LoginForm() {
             width: "360px",
             fontFamily: "var(--font-montserrat), sans-serif"
           }}
+          disabled={isLoading}
         >
-          Sign in
+          {isLoading ? "Signing in..." : "Sign in"}
         </Button>
       </form>
 

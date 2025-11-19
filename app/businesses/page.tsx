@@ -10,15 +10,18 @@ import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut } from "lucide-react";
 import BusinessDetailsModal from "@/components/businesses/BusinessDetailsModal";
 import PageHeader from "@/components/layout/page-header";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function BusinessesPage() {
   const [selected, setSelected] = useState<BusinessVisit | null>(null);
+  const { user } = useAuth();
 
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl:
-      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -113,7 +116,8 @@ export default function BusinessesPage() {
   ];
 
   return (
-    <AppShell user={user} menu={menu}>
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Businesses" }]} />
       <div className="space-y-8">
         {/* Top metric cards */}
@@ -148,5 +152,6 @@ export default function BusinessesPage() {
       {/* External Modal */}
       <BusinessDetailsModal selected={selected} onClose={() => setSelected(null)} />
     </AppShell>
+    </AuthGuard>
   );
 }

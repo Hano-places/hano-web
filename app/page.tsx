@@ -1,8 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useMemo, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo } from "react";
 import type { ChartDataPoint } from "@/components/ActivityTrendChart";
 import ProgressTable, { type RegistrationRequest } from "@/components/users/progress-table";
 import ValueCard from "@/components/value-card";
@@ -13,29 +12,23 @@ import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, L
 import { PieChart, Pie, Cell } from "recharts";
 import { ChartContainer, type ChartConfig, ChartLegend, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Card } from "@/components/ui/card";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart"), {
   ssr: false,
 });
 
 export default function HomePage() {
-  const router = useRouter();
   const [currentPicksPage, setCurrentPicksPage] = useState(1);
   const PICKS_PER_PAGE = 3;
+  const { user } = useAuth();
 
-  // Check authentication on mount
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true" || 
-                           sessionStorage.getItem("isAuthenticated") === "true";
-    
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [router]);
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -247,7 +240,8 @@ export default function HomePage() {
   );
 
   return (
-    <AppShell user={user} menu={menu}>
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Dashboard" }]} />
 
       <div className="space-y-8">
@@ -386,5 +380,6 @@ export default function HomePage() {
         </div>
       </div>
     </AppShell>
+    </AuthGuard>
   );
 }
