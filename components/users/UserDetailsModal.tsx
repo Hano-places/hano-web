@@ -106,8 +106,8 @@ export default function UserDetailsModal({ selected, onClose }: UserDetailsModal
             <button
               className="w-full px-4 py-3 rounded-lg bg-white text-black font-medium"
               onClick={() => {
-                const userName = encodeURIComponent(selected.name);
-                router.push(`/users/${userName}`);
+                const email = encodeURIComponent(selected.name);
+                router.push(`/users/${email}`);
               }}
             >
               View Full Activity

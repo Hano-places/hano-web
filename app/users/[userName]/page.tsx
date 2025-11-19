@@ -12,7 +12,7 @@ import PageHeader from "@/components/layout/page-header";
 
 export default function UserActivityPage() {
   const params = useParams();
-  const userName = decodeURIComponent(String(params?.userName ?? "User"));
+  const email = decodeURIComponent(String(params?.email ?? "User"));
 
   const user = {
     name: "Patrick Ihirwe",
@@ -90,7 +90,7 @@ export default function UserActivityPage() {
 
   return (
     <AppShell user={user} menu={menu}>
-      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users", href: "/users" }, { label: userName }]} />
+      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users", href: "/users" }, { label: email }]} />
       <div className="space-y-8">
         {/* Header + Activity */}
         <div
@@ -105,9 +105,9 @@ export default function UserActivityPage() {
             <div className="p-6 bg-brand-dark-900/80 rounded-2xl mb-8 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-start gap-4">
-                  <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt={userName} className="w-12 h-12 rounded-full object-cover" />
+                  <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt={email} className="w-12 h-12 rounded-full object-cover" />
                   <div>
-                    <div className="text-lg font-semibold text-brand-dark-100">{userName}</div>
+                    <div className="text-lg font-semibold text-brand-dark-100">{email}</div>
                     <div className="text-sm text-brand-dark-100">john@example.com</div>
                   </div>
                 </div>

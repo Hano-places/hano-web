@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import type { ChartDataPoint } from "@/components/ActivityTrendChart";
 import ProgressTable, { type RegistrationRequest } from "@/components/users/progress-table";
 import ValueCard from "@/components/value-card";
@@ -18,8 +19,19 @@ const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart
 });
 
 export default function HomePage() {
+  const router = useRouter();
   const [currentPicksPage, setCurrentPicksPage] = useState(1);
   const PICKS_PER_PAGE = 3;
+
+  // Check authentication on mount
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true" || 
+                           sessionStorage.getItem("isAuthenticated") === "true";
+    
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [router]);
   const user = {
     name: "Patrick Ihirwe",
     email: "user@gmail.com",
