@@ -301,7 +301,7 @@ function FeaturesSection() {
     <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16 lg:mb-20">
+        <div className="text-center relative z-10">
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm md:text-base mb-6 md:mb-8">
             Features
           </div>
@@ -318,7 +318,7 @@ function FeaturesSection() {
 
       {/* Phone Mockup with Real Background Image - Full Width */}
       <div
-        className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]"
+        className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px] top-[-150px] z-0"
         style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
       >
         {/* Notification Cards */}
