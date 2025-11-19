@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 // Notification Card Component
 interface NotificationCardProps {
@@ -67,6 +70,22 @@ function TeamCard({ name, role, bio, image, bgColor }: TeamCardProps) {
 }
 
 export default function LandingPage() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Show scroll-to-top button when user scrolls down
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section with Header */}
@@ -83,11 +102,36 @@ export default function LandingPage() {
 
       {/* Footer Section */}
       <FooterSection />
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-fade-in flex items-center justify-center"
+          aria-label="Scroll to top"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 10l7-7m0 0l7 7m-7-7v18"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }
 
 function HeroSection() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Background Image */}
@@ -108,37 +152,37 @@ function HeroSection() {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center space-x-2 flex-shrink-0"
+              className="flex items-center space-x-2 flex-shrink-0 group animate-fade-in"
             >
               <Image
                 src="/logo.png"
                 alt="Hano"
                 width={40}
                 height={40}
-                className="w-8 h-8 md:w-10 md:h-10"
+                className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"
               />
-              <span className="text-2xl md:text-3xl font-bold">Hano</span>
+              <span className="text-2xl md:text-3xl font-bold group-hover:text-purple-400 transition-colors">Hano</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-10 flex-1 justify-center">
+            <div className="hidden md:flex items-center space-x-10 flex-1 justify-center animate-fade-in animation-delay-200">
               <Link
                 href="#home"
-                className="text-gray-300 hover:text-white transition text-lg"
+                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
               >
                 Home
               </Link>
               <Link
                 href="#products"
-                className="text-gray-300 hover:text-white transition text-lg"
+                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
               >
                 Our Products
               </Link>
               <div className="relative group">
-                <button className="text-gray-300 hover:text-white transition flex items-center text-lg">
+                <button className="text-gray-300 hover:text-white transition-all duration-300 flex items-center text-lg hover:scale-110">
                   Resources
                   <svg
-                    className="w-5 h-5 ml-1"
+                    className="w-5 h-5 ml-1 group-hover:rotate-180 transition-transform duration-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -154,46 +198,110 @@ function HeroSection() {
               </div>
               <Link
                 href="#places"
-                className="text-gray-300 hover:text-white transition text-lg"
+                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
               >
                 Places
               </Link>
             </div>
 
             {/* Auth Buttons */}
-            <div className="flex items-center space-x-4 md:space-x-5 flex-shrink-0">
+            <div className="hidden md:flex items-center space-x-4 md:space-x-5 flex-shrink-0 animate-fade-in animation-delay-400">
               <Link
                 href="/signup"
-                className="text-base md:text-lg text-gray-300 hover:text-white transition"
+                className="text-base md:text-lg text-gray-300 hover:text-white transition-all duration-300 hover:scale-110"
               >
                 Sign Up
               </Link>
               <Link
                 href="/login"
-                className="px-5 md:px-7 py-2.5 bg-white text-black rounded-lg hover:bg-gray-200 transition text-base md:text-lg font-medium"
+                className="px-5 md:px-7 py-2.5 bg-white text-black rounded-lg hover:bg-gray-200 hover:scale-105 transition-all duration-300 text-base md:text-lg font-medium hover:shadow-lg"
               >
                 Log in
               </Link>
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden ml-4">
+            <button 
+              className="md:hidden ml-4 p-2 hover:bg-white/10 rounded-lg transition-all duration-300"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
               <svg
-                className="w-6 h-6"
+                className={`w-6 h-6 transition-transform duration-300 ${mobileMenuOpen ? 'rotate-90' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
               </svg>
             </button>
           </div>
         </nav>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 animate-slide-in-bottom z-50">
+            <div className="px-8 py-6 space-y-4">
+              <Link
+                href="#home"
+                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link
+                href="#products"
+                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Our Products
+              </Link>
+              <Link
+                href="#resources"
+                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Resources
+              </Link>
+              <Link
+                href="#places"
+                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Places
+              </Link>
+              <div className="pt-4 border-t border-white/10 space-y-3">
+                <Link
+                  href="/signup"
+                  className="block text-center text-gray-300 hover:text-white transition-colors text-lg py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  href="/login"
+                  className="block text-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-300 text-lg font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Log in
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Content */}
@@ -396,8 +504,8 @@ function FeaturesSection() {
         <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl">
           <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-7 md:gap-9 lg:gap-11 items-center">
             {/* Left: Text Content */}
-            <div>
-              <div className="w-11 h-11 bg-[#383838] rounded-full flex items-center justify-center mb-5">
+            <div className="animate-fade-in-left">
+              <div className="w-11 h-11 bg-[#383838] rounded-full flex items-center justify-center mb-5 hover:scale-110 hover:bg-purple-600 transition-all duration-300">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="none"
@@ -484,14 +592,14 @@ function FeaturesSection() {
             </div>
 
             {/* Right: Image */}
-            <div className="relative">
-              <div className="overflow-hidden">
+            <div className="relative animate-fade-in-right">
+              <div className="overflow-hidden rounded-lg">
                 <Image
                   src="/landing/kigali_scene.png"
                   alt="Kigali Business Scene"
                   width={600}
                   height={400}
-                  className="w-full h-auto max-h-[350px] md:max-h-[400px] object-cover"
+                  className="w-full h-auto max-h-[350px] md:max-h-[400px] object-cover hover:scale-110 transition-transform duration-700"
                 />
               </div>
             </div>
@@ -518,8 +626,8 @@ function FeaturesSection() {
         {/* Business Features Grid */}
         <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Track Performance */}
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -534,7 +642,7 @@ function FeaturesSection() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-3">
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-purple-400 transition-colors">
               Track your performance
             </h3>
             <p className="text-gray-400 text-base leading-relaxed mb-2">
@@ -547,8 +655,8 @@ function FeaturesSection() {
           </div>
 
           {/* Engage with Customers */}
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-200">
+            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -563,7 +671,7 @@ function FeaturesSection() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-3">
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-400 transition-colors">
               Engage with customers
             </h3>
             <p className="text-gray-400 text-base leading-relaxed mb-2">
@@ -576,8 +684,8 @@ function FeaturesSection() {
           </div>
 
           {/* Integrate Effortlessly */}
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-400">
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -592,7 +700,7 @@ function FeaturesSection() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-3">
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-blue-400 transition-colors">
               Integrate effortlessly
             </h3>
             <p className="text-gray-400 text-base leading-relaxed mb-2">
@@ -605,8 +713,8 @@ function FeaturesSection() {
           </div>
 
           {/* Support */}
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-600">
+            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
                 fill="none"
@@ -621,7 +729,7 @@ function FeaturesSection() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold mb-3">
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-green-400 transition-colors">
               We're here to support you
             </h3>
             <p className="text-gray-400 text-base leading-relaxed mb-2">
@@ -649,13 +757,13 @@ function FeaturesSection() {
         </div>
 
         {/* Analytics Dashboard Image */}
-        <div className="relative mx-auto mb-0">
+        <div className="relative mx-auto mb-0 animate-fade-in-up">
           <Image
             src="/landing/landing_features_electronics.png"
             alt="Advanced Analytics Dashboard"
             width={1200}
             height={800}
-            className="w-full h-auto"
+            className="w-full h-auto hover:scale-105 transition-transform duration-700"
           />
         </div>
       </div>
@@ -705,18 +813,18 @@ function TeamSection() {
     <section className="py-16 md:py-24 lg:py-32 bg-black">
       <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Meet our team
           </h2>
-          <p className="text-gray-400 text-lg mx-auto mb-8">
+          <p className="text-gray-400 text-lg mx-auto mb-8 animate-fade-in animation-delay-200">
             Our philosophy is simple — hire a team of diverse, passionate people
             and foster a culture that empowers you to do your best work.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 transition text-white">
+          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in animation-delay-400">
+            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 hover:scale-105 transition-all duration-300 text-white">
               About us
             </button>
-            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition font-medium">
+            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium">
               Open positions
             </button>
           </div>
@@ -771,10 +879,10 @@ function FAQSection() {
     <section className="py-16 md:py-24 lg:py-32 bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
             Frequently asked questions
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-400 text-lg animate-fade-in animation-delay-200">
             Everything you need to know about the product and billing.
           </p>
         </div>
@@ -783,12 +891,13 @@ function FAQSection() {
           {faqs.map((faq, index) => (
             <details
               key={index}
-              className="group bg-transparent rounded-xl overflow-hidden"
+              className="group bg-transparent rounded-xl overflow-hidden animate-fade-in-up hover:bg-[#1E1E1E]/30 transition-all duration-300"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none group-open:bg-[#1E1E1E]/60  transition-colors">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5">
+              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none group-open:bg-[#1E1E1E]/60 transition-all duration-300 hover:pl-8">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5 group-hover:border-purple-500 group-hover:scale-110 transition-all duration-300">
                   <svg
-                    className="w-3 h-3 text-gray-400 group-open:hidden"
+                    className="w-3 h-3 text-gray-400 group-open:hidden group-hover:text-purple-400 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -801,7 +910,7 @@ function FAQSection() {
                     />
                   </svg>
                   <svg
-                    className="w-3 h-3 text-gray-400 hidden group-open:block"
+                    className="w-3 h-3 text-gray-400 hidden group-open:block group-hover:text-purple-400 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -814,11 +923,11 @@ function FAQSection() {
                     />
                   </svg>
                 </div>
-                <span className="text-lg font-medium flex-1">
+                <span className="text-lg font-medium flex-1 group-hover:text-purple-400 transition-colors">
                   {faq.question}
                 </span>
               </summary>
-              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed group-open:bg-[#1E1E1E]/60">
+              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed group-open:bg-[#1E1E1E]/60 animate-fade-in">
                 {faq.answer}
               </div>
             </details>
