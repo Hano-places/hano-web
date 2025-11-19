@@ -22,7 +22,7 @@ function NotificationCard({
   icon,
 }: NotificationCardProps) {
   return (
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-md rounded-2xl p-4 w-[360px] shadow-xl">
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-xl border border-white/20 rounded-2xl p-4 w-[360px] shadow-xl">
       <div className="flex items-start space-x-3">
         <div
           className={`w-10 h-10 ${
