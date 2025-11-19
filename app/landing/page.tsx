@@ -22,7 +22,7 @@ function NotificationCard({
   icon,
 }: NotificationCardProps) {
   return (
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-2xl border border-white/20 rounded-2xl p-4 w-[360px] shadow-xl">
+    <div className="bg-[#1E1E1E]/60 backdrop-blur-sm border border-white/20 rounded-2xl p-4 w-[360px] shadow-xl">
       <div className="flex items-start space-x-3">
         <div
           className={`w-10 h-10 ${
@@ -56,7 +56,7 @@ interface TeamCardProps {
 function TeamCard({ name, role, bio, image, bgColor }: TeamCardProps) {
   return (
     <div className="group">
-      <div className="relative mb-6 w-full aspect-[4/3] rounded-lg overflow-hidden">
+      <div className="relative mb-6 w-full aspect-[3/4]  overflow-hidden">
         <Image src={image} alt={name} fill className="object-cover" />
       </div>
       <h3 className="text-xl font-semibold mb-1">{name}</h3>
@@ -103,7 +103,7 @@ function HeroSection() {
 
       {/* Header/Navbar */}
       <header className="relative z-50 bg-transparent pt-24 md:pt-32">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="max-w-7xl mx-auto px-16 sm:px-20 lg:px-40">
           <div className="flex items-center justify-between h-16 md:h-20 gap-8">
             {/* Logo */}
             <Link
@@ -197,7 +197,7 @@ function HeroSection() {
       </header>
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32">
+      <div className="relative z-10 container mx-auto px-12 sm:px-16 lg:px-32 max-w-7xl pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32">
         <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-0 md:gap-2 lg:gap-3 items-start">
           {/* Left: Phone Mockups */}
           <div className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1">
@@ -314,7 +314,7 @@ function FeaturesSection() {
         style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
       >
         {/* Notification Cards */}
-        <div className="absolute left-[10%] md:left-[25%] bottom-[8%] z-20 space-y-5 hidden lg:block">
+        <div className="absolute left-[10%] md:left-[22%] bottom-[-3%] z-20 space-y-5 hidden lg:block">
           <NotificationCard
             userName="Olivia Rhye"
             action="shared moments at"
@@ -672,18 +672,18 @@ function TeamSection() {
       bgColor: "bg-purple-200",
     },
     {
-      name: "Irere",
-      role: "Backend Developer",
-      bio: "Building robust and scalable backend systems for Hano.",
-      image: "/team/zahra.jpg",
-      bgColor: "bg-blue-200",
-    },
-    {
       name: "Kwizera Olivier",
       role: "Mobile Developer",
       bio: "Crafting seamless mobile experiences for iOS and Android.",
       image: "/team/nikolas.jpg",
       bgColor: "bg-green-200",
+    },
+        {
+      name: "Kirezi Livia",
+      role: "Marketing & Communications",
+      bio: "Driving brand awareness and customer engagement strategies.",
+      image: "/team/sienna.jpg",
+      bgColor: "bg-pink-200",
     },
     {
       name: "Hatuma Charles",
@@ -692,12 +692,12 @@ function TeamSection() {
       image: "/team/lily.jpg",
       bgColor: "bg-yellow-200",
     },
-    {
-      name: "Kirezi Livia",
-      role: "Marketing & Communications",
-      bio: "Driving brand awareness and customer engagement strategies.",
-      image: "/team/sienna.jpg",
-      bgColor: "bg-pink-200",
+        {
+      name: "Irere",
+      role: "Backend Developer",
+      bio: "Building robust and scalable backend systems for Hano.",
+      image: "/team/zahra.jpg",
+      bgColor: "bg-blue-200",
     },
   ];
 
