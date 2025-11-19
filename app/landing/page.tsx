@@ -57,12 +57,7 @@ function TeamCard({ name, role, bio, image, bgColor }: TeamCardProps) {
   return (
     <div className="group">
       <div className="relative mb-6 w-full aspect-[3/4] rounded-lg overflow-hidden">
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-cover"
-        />
+        <Image src={image} alt={name} fill className="object-cover" />
       </div>
       <h3 className="text-xl font-semibold mb-1">{name}</h3>
       <p className="text-red-500 text-sm mb-3">{role}</p>
@@ -302,10 +297,10 @@ function FeaturesSection() {
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm md:text-base mb-6 md:mb-8">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 mx-auto leading-tight">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 mx-auto leading-relaxed">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place. Hano helps users explore with ease while
             helping businesses grow through visibility, rewards, and insights.
@@ -369,7 +364,10 @@ function FeaturesSection() {
         {/* Progress Bar */}
         <div className="mb-12 md:mb-16">
           <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-            <div className="h-full bg-gray-400 rounded-full" style={{ width: "33.33%" }}></div>
+            <div
+              className="h-full bg-gray-400 rounded-full"
+              style={{ width: "33.33%" }}
+            ></div>
           </div>
         </div>
 
@@ -507,10 +505,10 @@ function FeaturesSection() {
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-sm mb-6">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 max-w-5xl mx-auto leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 mx-auto leading-tight">
             Smart tools to power your business Hano
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-gray-400 text-lg md:text-xl mx-auto leading-relaxed">
             Simple yet powerful features that help your place attract more
             visitors, increase visibility, and manage your activities
             effortlessly.
@@ -518,7 +516,7 @@ function FeaturesSection() {
         </div>
 
         {/* Business Features Grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 max-w-5xl mx-auto mb-16 md:mb-24 lg:mb-32">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Track Performance */}
           <div className="text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -640,10 +638,10 @@ function FeaturesSection() {
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-sm mb-6">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 max-w-5xl mx-auto leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 mx-auto leading-tight">
             Cutting-edge features for advanced analytics
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-gray-400 text-lg md:text-xl mx-auto leading-relaxed">
             Powerful, self-serve product and growth analytics to help you
             convert, engage, and retain more users. Trusted by over 4,000
             startups.
@@ -651,7 +649,7 @@ function FeaturesSection() {
         </div>
 
         {/* Analytics Dashboard Image */}
-        <div className="relative max-w-6xl mx-auto mb-0">
+        <div className="relative mx-auto mb-0">
           <Image
             src="/landing/landing_features_electronics.png"
             alt="Advanced Analytics Dashboard"
@@ -667,39 +665,39 @@ function FeaturesSection() {
 function TeamSection() {
   const team = [
     {
-      name: "Amélie Laurent",
+      name: "Ihirwe Patrick",
       role: "Founder & CEO",
-      bio: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit.",
-      image: "/team/amelie.jpg",
-      bgColor: "",
+      bio: "Visionary leader driving innovation and growth at Hano.",
+      image: "/logo.png",
+      bgColor: "bg-purple-200",
     },
     {
-      name: "Nikolas Gibbons",
-      role: "Engineering Manager",
-      bio: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
-      image: "/team/nikolas.jpg",
-      bgColor: "",
-    },
-    {
-      name: "Sienna Hewitt",
-      role: "Product Manager",
-      bio: "Former PM for Linear, Lambda School, and On Deck.",
-      image: "/team/sienna.jpg",
-      bgColor: "",
-    },
-    {
-      name: "Lily-Rose Chedjou",
-      role: "Frontend Developer",
-      bio: "Former frontend dev for Linear, Coinbase, and Postscript.",
-      image: "/team/lily.jpg",
-      bgColor: "",
-    },
-    {
-      name: "Zahra Christensen",
+      name: "Irere",
       role: "Backend Developer",
-      bio: "Lead backend dev at Clearbit. Former Clearbit and Loom.",
-      image: "/team/zahra.jpg",
-      bgColor: "",
+      bio: "Building robust and scalable backend systems for Hano.",
+      image: "/logo.png",
+      bgColor: "bg-blue-200",
+    },
+    {
+      name: "Kwizera Olivier",
+      role: "Mobile Developer",
+      bio: "Crafting seamless mobile experiences for iOS and Android.",
+      image: "/logo.png",
+      bgColor: "bg-green-200",
+    },
+    {
+      name: "Hatuma Charles",
+      role: "Frontend Developer",
+      bio: "Creating beautiful and intuitive user interfaces.",
+      image: "/logo.png",
+      bgColor: "bg-yellow-200",
+    },
+    {
+      name: "Kirezi Livia",
+      role: "Marketing & Communications",
+      bio: "Driving brand awareness and customer engagement strategies.",
+      image: "/logo.png",
+      bgColor: "bg-pink-200",
     },
   ];
 
@@ -710,7 +708,7 @@ function TeamSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             Meet our team
           </h2>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8">
+          <p className="text-gray-400 text-lg mx-auto mb-8">
             Our philosophy is simple — hire a team of diverse, passionate people
             and foster a culture that empowers you to do your best work.
           </p>
@@ -724,7 +722,7 @@ function TeamSection() {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto mt-16">
           {team.map((member, index) => (
             <TeamCard
               key={index}
