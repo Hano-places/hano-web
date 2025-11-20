@@ -3,87 +3,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-
-// Notification Card Component
-interface NotificationCardProps {
-  userName: string;
-  action: string;
-  place: string;
-  placeColor: string;
-  avatarType: "circle" | "square";
-  avatarColor?: string;
-  icon?: React.ReactNode;
-}
-
-function NotificationCard({
-  userName,
-  action,
-  place,
-  placeColor,
-  avatarType,
-  avatarColor,
-  icon,
-}: NotificationCardProps) {
-  return (
-    <div className="bg-[#1E1E1E]/60 backdrop-blur-sm border border-white/20 rounded-2xl p-4 w-[360px] shadow-xl">
-      <div className="flex items-start space-x-3">
-        <div
-          className={`w-10 h-10 ${
-            avatarType === "circle" ? "rounded-full" : "rounded-xl"
-          } ${
-            avatarColor || "bg-gray-700"
-          } flex-shrink-0 flex items-center justify-center`}
-        >
-          {icon}
-        </div>
-        <div className="flex-1">
-          <p className="text-white text-xs leading-tight">
-            <span className="font-semibold">{userName}</span> {action}
-          </p>
-          <p className={`${placeColor} font-semibold text-xs mt-1`}>{place}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Team Card Component
-interface TeamCardProps {
-  name: string;
-  role: string;
-  bio: string;
-  image: string;
-  bgColor: string;
-}
-
-function TeamCard({ name, role, bio, image, bgColor }: TeamCardProps) {
-  return (
-    <div className="group">
-      <div className="relative mb-6 w-full aspect-[3/4]  overflow-hidden">
-        <Image src={image} alt={name} fill className="object-cover" />
-      </div>
-      <h3 className="text-xl font-semibold mb-1">{name}</h3>
-      <p className="text-red-500 text-sm mb-3">{role}</p>
-      <p className="text-gray-400 text-sm leading-relaxed">{bio}</p>
-    </div>
-  );
-}
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import NotificationCard from "@/components/NotificationCard";
+import TeamCard from "@/components/TeamCard";
 
 export default function LandingPage() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Show scroll-to-top button when user scrolls down
+  // Show scroll to top button when user scrolls down
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
+      setShowScrollTop(window.scrollY > 400);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Function to scroll to the top of the page
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -103,11 +43,15 @@ export default function LandingPage() {
       {/* Footer Section */}
       <FooterSection />
 
-      {/* Scroll to Top Button */}
       {showScrollTop && (
-        <button
+        <motion.button
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-fade-in flex items-center justify-center"
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
           aria-label="Scroll to top"
         >
           <svg
@@ -123,7 +67,7 @@ export default function LandingPage() {
               d="M5 10l7-7m0 0l7 7m-7-7v18"
             />
           </svg>
-        </button>
+        </motion.button>
       )}
     </div>
   );
@@ -131,9 +75,17 @@ export default function LandingPage() {
 
 function HeroSection() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
+
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <motion.section
+      ref={containerRef}
+      className="relative min-h-screen overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -146,87 +98,108 @@ function HeroSection() {
       </div>
 
       {/* Header/Navbar */}
-      <header className="relative z-50 bg-transparent pt-24 md:pt-32">
-        <nav className="max-w-7xl mx-auto px-16 sm:px-20 lg:px-40">
-          <div className="flex items-center justify-between h-16 md:h-20 gap-8">
+      <header className="relative z-50 bg-transparent pt-4 sm:pt-6 md:pt-8 lg:pt-32">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-20 gap-4 sm:gap-8">
             {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center space-x-2 flex-shrink-0 group animate-fade-in"
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              <Image
-                src="/logo.png"
-                alt="Hano"
-                width={40}
-                height={40}
-                className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"
-              />
-              <span className="text-2xl md:text-3xl font-bold group-hover:text-purple-400 transition-colors">Hano</span>
-            </Link>
+              <Link
+                href="/"
+                className="flex items-center space-x-2 flex-shrink-0 group"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 12 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Hano"
+                    width={40}
+                    height={40}
+                    className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10"
+                  />
+                </motion.div>
+                <motion.span
+                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold"
+                  whileHover={{ color: "#a855f7" }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Hano
+                </motion.span>
+              </Link>
+            </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-10 flex-1 justify-center animate-fade-in animation-delay-200">
-              <Link
-                href="#home"
-                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
-              >
-                Home
-              </Link>
-              <Link
-                href="#products"
-                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
-              >
-                Our Products
-              </Link>
-              <div className="relative group">
-                <button className="text-gray-300 hover:text-white transition-all duration-300 flex items-center text-lg hover:scale-110">
-                  Resources
-                  <svg
-                    className="w-5 h-5 ml-1 group-hover:rotate-180 transition-transform duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <motion.div
+              className="hidden md:flex items-center space-x-4 lg:space-x-8 xl:space-x-10 flex-1 justify-center"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              {["Home", "Our Products", "Resources", "Places"].map(
+                (item, index) => (
+                  <motion.div
+                    key={item}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <Link
-                href="#places"
-                className="text-gray-300 hover:text-white transition-all duration-300 text-lg hover:scale-110"
-              >
-                Places
-              </Link>
-            </div>
+                    <Link
+                      href={`#${item.toLowerCase()}`}
+                      className="text-gray-300 hover:text-white transition-all duration-300 text-sm lg:text-base"
+                    >
+                      {item}
+                    </Link>
+                  </motion.div>
+                )
+              )}
+            </motion.div>
 
             {/* Auth Buttons */}
-            <div className="hidden md:flex items-center space-x-4 md:space-x-5 flex-shrink-0 animate-fade-in animation-delay-400">
+            <motion.div
+              className="hidden md:flex items-center space-x-3 lg:space-x-5 flex-shrink-0"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
               <Link
                 href="/signup"
-                className="text-base md:text-lg text-gray-300 hover:text-white transition-all duration-300 hover:scale-110"
+                className="text-sm lg:text-base text-gray-300"
               >
-                Sign Up
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Sign Up
+                </motion.div>
               </Link>
-              <Link
-                href="/login"
-                className="px-5 md:px-7 py-2.5 bg-white text-black rounded-lg hover:bg-gray-200 hover:scale-105 transition-all duration-300 text-base md:text-lg font-medium hover:shadow-lg"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Log in
-              </Link>
-            </div>
+                <Link
+                  href="/login"
+                  className="px-4 lg:px-6 py-2 lg:py-2.5 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-300 text-sm lg:text-base font-medium"
+                >
+                  Log in
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden ml-4 p-2 hover:bg-white/10 rounded-lg transition-all duration-300"
+            <motion.button
+              className="md:hidden ml-2 p-2 hover:bg-white/10 rounded-lg transition-all duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <svg
-                className={`w-6 h-6 transition-transform duration-300 ${mobileMenuOpen ? 'rotate-90' : ''}`}
+                className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ${
+                  mobileMenuOpen ? "rotate-90" : ""
+                }`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -247,138 +220,189 @@ function HeroSection() {
                   />
                 )}
               </svg>
-            </button>
+            </motion.button>
           </div>
         </nav>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 animate-slide-in-bottom z-50">
-            <div className="px-8 py-6 space-y-4">
-              <Link
-                href="#home"
-                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="#products"
-                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Our Products
-              </Link>
-              <Link
-                href="#resources"
-                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Resources
-              </Link>
-              <Link
-                href="#places"
-                className="block text-gray-300 hover:text-white transition-colors text-lg py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Places
-              </Link>
-              <div className="pt-4 border-t border-white/10 space-y-3">
-                <Link
-                  href="/signup"
-                  className="block text-center text-gray-300 hover:text-white transition-colors text-lg py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign Up
+          <motion.div
+            className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 z-50"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-3 sm:space-y-4">
+              {["home", "products", "resources", "places"].map(
+                (item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={`#${item}`}
+                      className="block text-gray-300 hover:text-white transition-colors text-sm sm:text-base py-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </Link>
+                  </motion.div>
+                )
+              )}
+              <div className="pt-3 sm:pt-4 border-t border-white/10 space-y-2 sm:space-y-3">
+                <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="block text-center text-gray-300 hover:text-white transition-colors text-sm sm:text-base py-2"
+                  >
+                    Sign Up
+                  </motion.div>
                 </Link>
-                <Link
-                  href="/login"
-                  className="block text-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-300 text-lg font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Log in
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="block text-center px-4 sm:px-6 py-2 sm:py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-300 text-sm sm:text-base font-medium"
+                  >
+                    Log in
+                  </motion.div>
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </header>
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-12 sm:px-16 lg:px-32 max-w-7xl pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 lg:pb-32">
-        <div className="grid lg:grid-cols-[1.3fr_0.7fr] gap-0 md:gap-2 lg:gap-3 items-start">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl pt-6 sm:pt-8 md:pt-12 lg:pt-24 pb-12 sm:pb-16 md:pb-24 lg:pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.7fr] gap-8 md:gap-10 lg:gap-12 items-start">
           {/* Left: Phone Mockups */}
-          <div className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1">
-            <div className="relative w-full flex items-center justify-center -space-x-8">
-              <Image
-                src="/landing/landing_iphone.png"
-                alt="App Screenshots"
-                width={1000}
-                height={1000}
-                className="w-[48%] h-auto"
-                priority
-              />
-              <Image
-                src="/landing/landing_iphone_1.png"
-                alt="App Screenshots"
-                width={800}
-                height={800}
-                className="w-[48%] h-auto"
-                priority
-              />
+          <motion.div
+            className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1"
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="relative w-full flex items-center justify-center -space-x-6 sm:-space-x-8">
+              <motion.div
+                animate={{ y: [0, -20, 0] }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+              >
+                <Image
+                  src="/landing/landing_iphone.png"
+                  alt="App Screenshots"
+                  width={1000}
+                  height={1000}
+                  className="w-[45%] sm:w-[48%] h-auto"
+                  priority
+                />
+              </motion.div>
+              <motion.div
+                animate={{ y: [0, 20, 0] }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                }}
+              >
+                <Image
+                  src="/landing/landing_iphone_1.png"
+                  alt="App Screenshots"
+                  width={800}
+                  height={800}
+                  className="w-[45%] sm:w-[48%] h-auto"
+                  priority
+                />
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Text Content */}
-          <div className="space-y-4 md:space-y-5 order-1 lg:order-2 lg:pt-0">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold leading-tight">
+          <motion.div
+            className="space-y-3 sm:space-y-4 md:space-y-5 order-1 lg:order-2 lg:pt-0"
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.h1
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Discover Rwanda's Best Spots
-            </h1>
-            <p className="text-base md:text-lg text-gray-400">
+            </motion.h1>
+            <motion.p
+              className="text-sm sm:text-base md:text-lg text-gray-400"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
               Start your 30-day free trial today.
-            </p>
-            <div className="flex flex-row gap-3">
-              <Link href="#" className="inline-block">
-                <div className="bg-black border border-white rounded-lg px-5 py-2.5 flex items-center space-x-3 hover:bg-gray-900 transition">
-                  <svg
-                    className="w-6 h-6 flex-shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" />
-                  </svg>
-                  <div className="text-left">
-                    <div className="text-[10px]">Download on the</div>
-                    <div className="text-base font-semibold">App Store</div>
-                  </div>
-                </div>
-              </Link>
-              <Link href="#" className="inline-block">
-                <div className="bg-black border border-white rounded-lg px-5 py-2.5 flex items-center space-x-3 hover:bg-gray-900 transition">
-                  <svg
-                    className="w-6 h-6 flex-shrink-0"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
-                  </svg>
-                  <div className="text-left">
-                    <div className="text-[10px]">GET IT ON</div>
-                    <div className="text-base font-semibold">Google Play</div>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
+            </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-3 pt-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              {["App Store", "Google Play"].map((store, index) => (
+                <motion.div
+                  key={store}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto"
+                >
+                  <Link href="#" className="inline-block w-full">
+                    <div className="bg-black border border-white rounded-lg px-4 sm:px-5 py-2 sm:py-2.5 flex items-center space-x-2 sm:space-x-3 hover:bg-gray-900 transition justify-center sm:justify-start">
+                      {index === 0 ? (
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+                        </svg>
+                      )}
+                      <div className="text-left">
+                        <div className="text-[9px] sm:text-[10px]">
+                          {index === 0 ? "Download on the" : "GET IT ON"}
+                        </div>
+                        <div className="text-xs sm:text-sm font-semibold">
+                          {store}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
 function FeaturesSection() {
   const features = [
     {
-      icon: "🍴",
+      icon: "🔍",
       title: "Discover Local Gems",
       description:
         "Explore the best restaurants, hotels, and cafés nearby — personalized to your preferences and budget.",
@@ -398,17 +422,17 @@ function FeaturesSection() {
   ];
 
   return (
-    <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-visible">
-      <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl">
+    <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center relative z-10">
+        <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-4 md:px-5 py-2 md:py-2.5 rounded-full text-sm md:text-base mb-6 md:mb-8">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 mx-auto leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 mx-auto leading-relaxed">
+          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place. Hano helps users explore with ease while
             helping businesses grow through visibility, rewards, and insights.
@@ -418,11 +442,11 @@ function FeaturesSection() {
 
       {/* Phone Mockup with Real Background Image - Full Width */}
       <div
-        className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px] top-[-150px] z-0"
+        className="w-full bg-cover bg-center bg-no-repeat relative flex justify-center items-center mb-16 md:mb-20 lg:mb-24 min-h-[600px] md:min-h-[750px] lg:min-h-[900px]"
         style={{ backgroundImage: "url('/landing/landing_features_bg.png')" }}
       >
         {/* Notification Cards */}
-        <div className="absolute left-[10%] md:left-[22%] bottom-[-3%] z-20 space-y-5 hidden lg:block">
+        <div className="absolute left-[10%] md:left-[25%] bottom-[8%] z-20 space-y-5 hidden lg:block">
           <NotificationCard
             userName="Olivia Rhye"
             action="shared moments at"
@@ -467,47 +491,15 @@ function FeaturesSection() {
         </div>
       </div>
 
-      {/* Features Cards Section */}
-      <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl relative z-10 -mt-[100px] md:-mt-[120px] mb-16 md:mb-20 lg:mb-24">
-        {/* Progress Bar */}
-        <div className="mb-12 md:mb-16">
-          <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gray-400 rounded-full"
-              style={{ width: "33.33%" }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
-          {features.map((feature, index) => (
-            <div key={index} className="text-left">
-              <div className="flex items-start gap-1 mb-3">
-                <div className="text-lg md:text-xl flex-shrink-0">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg md:text-xl font-semibold text-white flex-1">
-                  {feature.title}
-                </h3>
-              </div>
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Kigali Business Scene Section - Full Width */}
-      <div className="w-full bg-[#030303] py-12 md:py-16 lg:py-20 mb-14 md:mb-20 lg:mb-24 relative z-10">
-        <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl">
-          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-7 md:gap-9 lg:gap-11 items-center">
+      <div className="w-full bg-[#030303] py-16 md:py-20 lg:py-24 mb-16 md:mb-24 lg:mb-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
             {/* Left: Text Content */}
-            <div className="animate-fade-in-left">
-              <div className="w-11 h-11 bg-[#383838] rounded-full flex items-center justify-center mb-5 hover:scale-110 hover:bg-purple-600 transition-all duration-300">
+            <div>
+              <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-6">
                 <svg
-                  className="w-5 h-5 text-white"
+                  className="w-6 h-6 text-white"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -526,17 +518,17 @@ function FeaturesSection() {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-5">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
                 Discover Kigali's vibrant business scene
               </h2>
-              <p className="text-gray-400 text-lg mb-7">
+              <p className="text-gray-400 text-xl mb-8">
                 Explore Rwanda's finest places — from local favorites to new
                 discoveries.
               </p>
-              <ul className="space-y-3.5">
+              <ul className="space-y-4">
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -548,13 +540,13 @@ function FeaturesSection() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-300 text-base">
+                  <span className="text-gray-300 text-lg">
                     Track engagement from your visitors across Kigali
                   </span>
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -566,13 +558,13 @@ function FeaturesSection() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-300 text-base">
+                  <span className="text-gray-300 text-lg">
                     Promote your business to locals and travelers alike
                   </span>
                 </li>
                 <li className="flex items-start">
                   <svg
-                    className="w-5 h-5 text-green-500 mr-3 flex-shrink-0 mt-1"
+                    className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-1"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -584,7 +576,7 @@ function FeaturesSection() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-300 text-base">
+                  <span className="text-gray-300 text-lg">
                     Gain insights that help you grow and stand out in the city
                   </span>
                 </li>
@@ -592,14 +584,14 @@ function FeaturesSection() {
             </div>
 
             {/* Right: Image */}
-            <div className="relative animate-fade-in-right">
-              <div className="overflow-hidden rounded-lg">
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden">
                 <Image
                   src="/landing/kigali_scene.png"
                   alt="Kigali Business Scene"
                   width={600}
                   height={400}
-                  className="w-full h-auto max-h-[350px] md:max-h-[400px] object-cover hover:scale-110 transition-transform duration-700"
+                  className="w-full h-auto"
                 />
               </div>
             </div>
@@ -607,23 +599,23 @@ function FeaturesSection() {
         </div>
       </div>
 
-      <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Business Tools Section */}
         <div className="text-center mb-12 md:mb-16 lg:mb-20">
-          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-sm mb-6">
+          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 mx-auto leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
             Smart tools to power your business Hano
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl mx-auto leading-relaxed">
+          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
             Simple yet powerful features that help your place attract more
             visitors, increase visibility, and manage your activities
             effortlessly.
           </p>
         </div>
 
-        {/* Business Features Grid */}
+{/* Business Features Grid */}
         <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Track Performance */}
           <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up">
@@ -741,15 +733,16 @@ function FeaturesSection() {
           </div>
         </div>
 
+
         {/* Advanced Analytics Section */}
         <div className="text-center mt-16 md:mt-24 lg:mt-32 mb-12 md:mb-16 lg:mb-20">
-          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-sm mb-6">
+          <div className="inline-block bg-[#F9F5FF] text-[#6941C6] px-5 py-2.5 rounded-full text-base mb-8">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 mx-auto leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
             Cutting-edge features for advanced analytics
           </h2>
-          <p className="text-gray-400 text-lg md:text-xl mx-auto leading-relaxed">
+          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
             Powerful, self-serve product and growth analytics to help you
             convert, engage, and retain more users. Trusted by over 4,000
             startups.
@@ -757,19 +750,20 @@ function FeaturesSection() {
         </div>
 
         {/* Analytics Dashboard Image */}
-        <div className="relative mx-auto mb-0 animate-fade-in-up">
+        <div className="relative max-w-6xl mx-auto mb-0">
           <Image
             src="/landing/landing_features_electronics.png"
             alt="Advanced Analytics Dashboard"
             width={1200}
             height={800}
-            className="w-full h-auto hover:scale-105 transition-transform duration-700"
+            className="w-full h-auto"
           />
         </div>
       </div>
     </section>
   );
 }
+
 function TeamSection() {
   const team = [
     {
@@ -786,7 +780,7 @@ function TeamSection() {
       image: "/team/nikolas.jpg",
       bgColor: "bg-green-200",
     },
-        {
+    {
       name: "Kirezi Livia",
       role: "Marketing & Communications",
       bio: "Driving brand awareness and customer engagement strategies.",
@@ -800,7 +794,7 @@ function TeamSection() {
       image: "/team/lily.jpg",
       bgColor: "bg-yellow-200",
     },
-        {
+    {
       name: "Irere",
       role: "Backend Developer",
       bio: "Building robust and scalable backend systems for Hano.",
@@ -809,43 +803,83 @@ function TeamSection() {
     },
   ];
 
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-black">
-      <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+    <motion.section
+      ref={containerRef}
+      className="py-12 sm:py-16 md:py-24 lg:py-32 bg-black"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl">
+        <div className="text-center mb-10 md:mb-16">
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6 }}
+          >
             Meet our team
-          </h2>
-          <p className="text-gray-400 text-lg mx-auto mb-8 animate-fade-in animation-delay-200">
+          </motion.h2>
+          <motion.p
+            className="text-gray-400 text-sm sm:text-base md:text-lg mx-auto mb-6 md:mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             Our philosophy is simple — hire a team of diverse, passionate people
             and foster a culture that empowers you to do your best work.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in animation-delay-400">
-            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 hover:scale-105 transition-all duration-300 text-white">
-              About us
-            </button>
-            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 hover:scale-105 hover:shadow-lg transition-all duration-300 font-medium">
-              Open positions
-            </button>
-          </div>
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 md:gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {["About us", "Open positions"].map((btn, index) => (
+              <motion.button
+                key={btn}
+                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base ${
+                  index === 0
+                    ? "border border-gray-700 hover:bg-gray-900"
+                    : "bg-white text-black hover:bg-gray-200"
+                } transition w-full sm:w-auto`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {btn}
+              </motion.button>
+            ))}
+          </motion.div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mx-auto mt-10 md:mt-16">
           {team.map((member, index) => (
-            <TeamCard
+            <motion.div
               key={index}
-              name={member.name}
-              role={member.role}
-              bio={member.bio}
-              image={member.image}
-              bgColor={member.bgColor}
-            />
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -10 }}
+            >
+              <TeamCard
+                name={member.name}
+                role={member.role}
+                bio={member.bio}
+                image={member.image}
+                bgColor={member.bgColor}
+              />
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
 function FAQSection() {
   const faqs = [
     {
@@ -875,29 +909,53 @@ function FAQSection() {
     },
   ];
 
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+    <motion.section
+      ref={containerRef}
+      className="py-12 sm:py-16 md:py-24 lg:py-32 bg-black"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl">
+        <div className="text-center mb-10 md:mb-16">
+          <motion.h2
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6 }}
+          >
             Frequently asked questions
-          </h2>
-          <p className="text-gray-400 text-lg animate-fade-in animation-delay-200">
+          </motion.h2>
+          <motion.p
+            className="text-gray-400 text-sm sm:text-base md:text-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             Everything you need to know about the product and billing.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4 rounded-xl">
+        <div className="max-w-3xl mx-auto space-y-3 md:space-y-4 rounded-xl">
           {faqs.map((faq, index) => (
-            <details
+            <motion.details
               key={index}
-              className="group bg-transparent rounded-xl overflow-hidden animate-fade-in-up hover:bg-[#1E1E1E]/30 transition-all duration-300"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="group bg-transparent rounded-xl overflow-hidden hover:bg-[#1E1E1E]/30 transition-all duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
             >
-              <summary className="flex items-start gap-4 p-6 cursor-pointer list-none group-open:bg-[#1E1E1E]/60 transition-all duration-300 hover:pl-8">
-                <div className="flex-shrink-0 w-6 h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5 group-hover:border-purple-500 group-hover:scale-110 transition-all duration-300">
+              <motion.summary
+                className="flex items-start gap-3 md:gap-4 p-4 md:p-6 cursor-pointer list-none group-open:bg-[#1E1E1E]/60 transition-all duration-300 hover:pl-6 md:hover:pl-8"
+                whileHover={{ x: 5 }}
+              >
+                <div className="flex-shrink-0 w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-gray-600 flex items-center justify-center mt-0.5 group-hover:border-purple-500 group-hover:scale-110 transition-all duration-300">
                   <svg
-                    className="w-3 h-3 text-gray-400 group-open:hidden group-hover:text-purple-400 transition-colors"
+                    className="w-2.5 h-2.5 md:w-3 md:h-3 text-gray-400 group-open:hidden group-hover:text-purple-400 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -910,7 +968,7 @@ function FAQSection() {
                     />
                   </svg>
                   <svg
-                    className="w-3 h-3 text-gray-400 hidden group-open:block group-hover:text-purple-400 transition-colors"
+                    className="w-2.5 h-2.5 md:w-3 md:h-3 text-gray-400 hidden group-open:block group-hover:text-purple-400 transition-colors"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -923,91 +981,107 @@ function FAQSection() {
                     />
                   </svg>
                 </div>
-                <span className="text-lg font-medium flex-1 group-hover:text-purple-400 transition-colors">
+                <span className="text-sm md:text-lg font-medium flex-1 group-hover:text-purple-400 transition-colors">
                   {faq.question}
                 </span>
-              </summary>
-              <div className="pl-16 pr-6 pb-6 pt-2 text-gray-400 leading-relaxed group-open:bg-[#1E1E1E]/60 animate-fade-in">
+              </motion.summary>
+              <motion.div
+                className="pl-10 md:pl-16 pr-4 md:pr-6 pb-4 md:pb-6 pt-2 text-gray-400 text-sm md:text-base leading-relaxed group-open:bg-[#1E1E1E]/60"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+              >
                 {faq.answer}
-              </div>
-            </details>
+              </motion.div>
+            </motion.details>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
+
 function FooterSection() {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
+
   return (
-    <footer className="bg-black border-t border-gray-800">
-      <div className="container mx-auto px-16 sm:px-20 lg:px-40 max-w-7xl py-12 md:py-16 lg:py-20">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6">
+    <motion.footer
+      ref={containerRef}
+      className="bg-black border-t border-gray-800"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl py-10 sm:py-12 md:py-16 lg:py-20">
+        <div className="text-center mb-10 md:mb-12">
+          <motion.div
+            className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl mb-4 md:mb-6"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+          >
             <Image src="/logo.png" alt="Hano" width={32} height={32} />
-          </div>
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
+          </motion.div>
+          <motion.h3
+            className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+          >
             Let's get started on something great
-          </h3>
-          <p className="text-gray-400 mb-8">
-            Join over 4,000+ startups already growing with Untitled.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-6 py-3 border border-gray-700 rounded-lg hover:bg-gray-900 transition flex items-center">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          </motion.h3>
+          <motion.p
+            className="text-gray-400 text-sm md:text-base mb-6 md:mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Join over 4,000+ startups already growing with Hano.
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {["View demo", "Get started"].map((btn, index) => (
+              <motion.button
+                key={btn}
+                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base ${
+                  index === 0 ? "border border-gray-700" : "bg-white text-black"
+                } w-full sm:w-auto`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              View demo
-            </button>
-            <button className="px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition font-medium">
-              Get started
-            </button>
-          </div>
+                {btn}
+              </motion.button>
+            ))}
+          </motion.div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+        <div className="border-t border-gray-800 pt-6 md:pt-8">
+          <motion.div
+            className="flex flex-col sm:flex-row justify-between items-center gap-4"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <p className="text-gray-400 text-xs sm:text-sm">
               © 2025 Hano Places. All rights reserved.
             </p>
-            <div className="flex space-x-6">
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition text-sm"
-              >
-                Terms
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition text-sm"
-              >
-                Privacy
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition text-sm"
-              >
-                Cookies
-              </Link>
+            <div className="flex space-x-4 md:space-x-6">
+              {["Terms", "Privacy", "Cookies"].map((link) => (
+                <Link
+                  key={link}
+                  href="#"
+                  className="text-gray-400 hover:text-white transition text-xs sm:text-sm"
+                >
+                  {link}
+                </Link>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
