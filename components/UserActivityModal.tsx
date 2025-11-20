@@ -4,12 +4,12 @@ import { X } from "lucide-react";
 import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTrendChart";
 
 interface UserActivityModalProps {
-  userName: string;
+  email: string;
   data: ChartDataPoint[];
   onClose: () => void;
 }
 
-export default function UserActivityModal({ userName, data, onClose }: UserActivityModalProps) {
+export default function UserActivityModal({ email, data, onClose }: UserActivityModalProps) {
   return (
     <div className="fixed inset-0 z-[60]">
       <div className="absolute inset-0 backdrop-blur-md bg-black/50" onClick={onClose} />
@@ -31,7 +31,7 @@ export default function UserActivityModal({ userName, data, onClose }: UserActiv
             <div className="flex items-center justify-between">
               <div className="text-brand-dark-100">
                 <div className="text-sm opacity-70">Full Activity</div>
-                <div className="text-lg sm:text-xl font-semibold">{userName}</div>
+                <div className="text-lg sm:text-xl font-semibold">{email}</div>
               </div>
             </div>
           </div>

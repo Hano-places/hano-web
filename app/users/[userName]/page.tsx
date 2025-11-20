@@ -9,16 +9,19 @@ import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTr
 import ValueCard from "@/components/value-card";
 import HistoryTable, { type RegistrationRequest } from "@/components/users/history-table";
 import PageHeader from "@/components/layout/page-header";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function UserActivityPage() {
   const params = useParams();
-  const userName = decodeURIComponent(String(params?.userName ?? "User"));
+  const email = decodeURIComponent(String(params?.email ?? "User"));
+  const { user } = useAuth();
 
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl:
-      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -89,8 +92,9 @@ export default function UserActivityPage() {
   ];
 
   return (
-    <AppShell user={user} menu={menu}>
-      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users", href: "/users" }, { label: userName }]} />
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
+      <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users", href: "/users" }, { label: email }]} />
       <div className="space-y-8">
         {/* Header + Activity */}
         <div
@@ -105,9 +109,9 @@ export default function UserActivityPage() {
             <div className="p-6 bg-brand-dark-900/80 rounded-2xl mb-8 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-start gap-4">
-                  <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt={userName} className="w-12 h-12 rounded-full object-cover" />
+                  <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt={email} className="w-12 h-12 rounded-full object-cover" />
                   <div>
-                    <div className="text-lg font-semibold text-brand-dark-100">{userName}</div>
+                    <div className="text-lg font-semibold text-brand-dark-100">{email}</div>
                     <div className="text-sm text-brand-dark-100">john@example.com</div>
                   </div>
                 </div>
@@ -147,5 +151,6 @@ export default function UserActivityPage() {
         <HistoryTable data={tableData} title="Visit History" />
       </div>
     </AppShell>
+    </AuthGuard>
   );
 }

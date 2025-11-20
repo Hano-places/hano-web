@@ -12,6 +12,8 @@ import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, L
 import { PieChart, Pie, Cell } from "recharts";
 import { ChartContainer, type ChartConfig, ChartLegend, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Card } from "@/components/ui/card";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart"), {
   ssr: false,
@@ -20,10 +22,13 @@ const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart
 export default function HomePage() {
   const [currentPicksPage, setCurrentPicksPage] = useState(1);
   const PICKS_PER_PAGE = 3;
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  const { user } = useAuth();
+
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -235,7 +240,8 @@ export default function HomePage() {
   );
 
   return (
-    <AppShell user={user} menu={menu}>
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Dashboard" }]} />
 
       <div className="space-y-8">
@@ -374,5 +380,6 @@ export default function HomePage() {
         </div>
       </div>
     </AppShell>
+    </AuthGuard>
   );
 }

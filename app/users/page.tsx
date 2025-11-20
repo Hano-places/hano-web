@@ -10,6 +10,8 @@ import { type SidebarMenuSection } from "@/components/layout/sidebar";
 import { LayoutDashboard, Users, Building2, CreditCard, DollarSign, BarChart3, LogOut } from "lucide-react";
 import UserDetailsModal from "@/components/users/UserDetailsModal";
 import PageHeader from "@/components/layout/page-header";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart"), {
   ssr: false,
@@ -17,12 +19,13 @@ const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart
 
 export default function UsersPage() {
   const [selected, setSelected] = useState<RegistrationRequest | null>(null);
+  const { user } = useAuth();
 
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl:
-      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -112,7 +115,8 @@ export default function UsersPage() {
   ];
 
   return (
-    <AppShell user={user} menu={menu}>
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users" }]} />
       <div className="space-y-8">
         {/* Top metric cards */}
@@ -136,5 +140,6 @@ export default function UsersPage() {
       {/* External Modal */}
       <UserDetailsModal selected={selected} onClose={() => setSelected(null)} />
     </AppShell>
+    </AuthGuard>
   );
 }

@@ -9,16 +9,19 @@ import ActivityTrendChart, { type ChartDataPoint } from "@/components/ActivityTr
 import ValueCard from "@/components/value-card";
 import BusinessProgressTable, { type BusinessVisitHistory } from "@/components/businesses/business-progress-table";
 import PageHeader from "@/components/layout/page-header";
+import { AuthGuard } from "@/components/auth-guard";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function BusinessActivityPage() {
   const params = useParams();
   const businessName = decodeURIComponent(String(params?.businessName ?? "Business"));
+  const { user } = useAuth();
 
-  const user = {
-    name: "Patrick Ihirwe",
-    email: "user@gmail.com",
-    avatarUrl:
-      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=1",
+  // Use a default user object if user is not loaded yet (will be replaced by AuthGuard)
+  const displayUser = user || {
+    name: "",
+    email: "",
+    avatarUrl: undefined,
   };
 
   const menu: SidebarMenuSection[] = [
@@ -111,7 +114,8 @@ export default function BusinessActivityPage() {
   ];
 
   return (
-    <AppShell user={user} menu={menu}>
+    <AuthGuard>
+      <AppShell user={displayUser} menu={menu}>
       <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Businesses", href: "/businesses" }, { label: businessName }]} />
       <div className="space-y-8">
         {/* Header + Activity */}
@@ -169,5 +173,6 @@ export default function BusinessActivityPage() {
         <BusinessProgressTable data={tableData} title="Visit History" />
       </div>
     </AppShell>
+    </AuthGuard>
   );
 }
