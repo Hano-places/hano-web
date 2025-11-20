@@ -33,7 +33,7 @@ export default function HeroSection() {
 
       {/* Hero Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl pt-6 sm:pt-8 md:pt-12 lg:pt-16 pb-12 sm:pb-16 md:pb-20 lg:pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-5 items-center">
           {/* Left: Phone Mockups - Larger on mobile */}
           <motion.div
             className="relative flex justify-center lg:justify-start items-center order-2 lg:order-1"
@@ -44,7 +44,11 @@ export default function HeroSection() {
             <div className="relative w-full max-w-md lg:max-w-lg flex items-center justify-center -space-x-8 sm:-space-x-12 md:-space-x-16">
               <motion.div
                 animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="w-1/2"
               >
                 <Image
@@ -58,7 +62,12 @@ export default function HeroSection() {
               </motion.div>
               <motion.div
                 animate={{ y: [0, 20, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.2,
+                }}
                 className="w-1/2"
               >
                 <Image
