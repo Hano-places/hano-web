@@ -2,7 +2,6 @@
 
 import NotificationCard from "@/components/NotificationCard";
 import SectionBadge from "./SectionBadge";
-import FeatureCard from "./FeatureCard";
 import Image from "next/image";
 import CheckListItem from "./CheckListItem";
 
@@ -131,7 +130,7 @@ export default function FeaturesSection() {
             </div>
 
             <div className="relative">
-              <div className="rounded-2xl overflow-hidden">
+              <div className="overflow-hidden">
                 <Image src="/landing/kigali_scene.png" alt="Kigali Business Scene" width={600} height={400} className="w-full h-auto" />
               </div>
             </div>
