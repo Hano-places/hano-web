@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <header className="relative z-50 bg-transparent pt-4 sm:pt-6 md:pt-8 lg:pt-32">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
+      <nav className="max-w-7xl mx-auto px-12 sm:px-16 md:px-24 lg:px-32 xl:px-40 ">
         <div className="flex items-center justify-between h-14 sm:h-16 md:h-20 gap-4 sm:gap-8">
           {/* Logo */}
           <motion.div
