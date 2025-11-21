@@ -16,7 +16,8 @@ export default function FeaturesSection() {
             Smart features for a seamless discovery experience
           </h2>
           <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
-            Discover, book, and enjoy Rwanda's best restaurants, hotels, and cafés — all in one place.
+            Discover, book, and enjoy Rwanda's best restaurants, hotels, and
+            cafés — all in one place.
           </p>
         </div>
       </div>
@@ -103,35 +104,60 @@ export default function FeaturesSection() {
       </div>
 
       {/* Kigali Business Scene */}
-      <div className="w-full bg-[#030303] py-16 md:py-20 lg:py-24 mb-16 md:mb-24 lg:mb-32">
+      <div className="w-full bg-[#030303] py-12 md:py-14 lg:py-16 mb-16 md:mb-24 lg:mb-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
             <div>
               <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-6">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
                     d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
                   />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Discover Kigali's vibrant business scene</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Discover Kigali's vibrant business scene
+              </h2>
               <p className="text-gray-400 text-xl mb-8">
-                Explore Rwanda's finest places — from local favorites to new discoveries.
+                Explore Rwanda's finest places — from local favorites to new
+                discoveries.
               </p>
               <ul className="space-y-4">
-                <CheckListItem>Track engagement from your visitors across Kigali</CheckListItem>
-                <CheckListItem>Promote your business to locals and travelers alike</CheckListItem>
-                <CheckListItem>Gain insights that help you grow and stand out in the city</CheckListItem>
+                <CheckListItem>
+                  Track engagement from your visitors across Kigali
+                </CheckListItem>
+                <CheckListItem>
+                  Promote your business to locals and travelers alike
+                </CheckListItem>
+                <CheckListItem>
+                  Gain insights that help you grow and stand out in the city
+                </CheckListItem>
               </ul>
             </div>
 
             <div className="relative">
               <div className="overflow-hidden">
-                <Image src="/landing/kigali_scene.png" alt="Kigali Business Scene" width={600} height={400} className="w-full h-auto" />
+                <Image
+                  src="/landing/kigali_scene.png"
+                  alt="Kigali Business Scene"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
+                />
               </div>
             </div>
           </div>
@@ -146,14 +172,15 @@ export default function FeaturesSection() {
             Smart tools to power your business Hano
           </h2>
           <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
-            Simple yet powerful features that help your place attract more visitors.
+            Simple yet powerful features that help your place attract more
+            visitors.
           </p>
         </div>
 
         {/* Business Features Grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 mx-auto mb-16 md:mb-24 lg:mb-32">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10 mx-auto mb-16 md:mb-24 lg:mb-32">
           {/* Track Performance */}
-          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
@@ -182,7 +209,7 @@ export default function FeaturesSection() {
           </div>
 
           {/* Engage with Customers */}
-          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-200">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-200 mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
@@ -211,7 +238,7 @@ export default function FeaturesSection() {
           </div>
 
           {/* Integrate Effortlessly */}
-          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-400">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-400 mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
@@ -240,7 +267,7 @@ export default function FeaturesSection() {
           </div>
 
           {/* Support */}
-          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-600">
+          <div className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300 animate-fade-in-up animation-delay-600 mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               <svg
                 className="w-8 h-8 text-white"
@@ -267,7 +294,6 @@ export default function FeaturesSection() {
             </p>
           </div>
         </div>
-
       </div>
     </section>
   );

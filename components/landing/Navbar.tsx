@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <header className="relative z-50 bg-transparent pt-4 sm:pt-6 md:pt-8 lg:pt-32">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
+      <nav className="max-w-7xl mx-auto px-12 sm:px-16 md:px-24 lg:px-32 xl:px-40 ">
         <div className="flex items-center justify-between h-14 sm:h-16 md:h-20 gap-4 sm:gap-8">
           {/* Logo */}
           <motion.div
@@ -18,7 +18,10 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Link href="/" className="flex items-center space-x-2 flex-shrink-0 group">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 flex-shrink-0 group"
+            >
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 12 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -32,7 +35,7 @@ export default function Navbar() {
                 />
               </motion.div>
               <motion.span
-                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium"
                 whileHover={{ color: "#a855f7" }}
                 transition={{ duration: 0.2 }}
               >
@@ -49,10 +52,14 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {["Home", "Our Products", "Resources", "Places"].map((item) => (
-              <motion.div key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                key={item}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Link
                   href={`#${item.toLowerCase()}`}
-                  className="text-gray-300 hover:text-white transition-all duration-300 text-sm lg:text-base"
+                  className="text-white transition-all duration-300 text-sm lg:text-base font-semibold"
                 >
                   {item}
                 </Link>
@@ -68,7 +75,10 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Link href="/signup" className="text-sm lg:text-base text-gray-300">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 Sign Up
               </motion.div>
             </Link>
@@ -98,9 +108,19 @@ export default function Navbar() {
               viewBox="0 0 24 24"
             >
               {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </motion.button>
