@@ -34,7 +34,7 @@ export default function FooterSection() {
             Let's get started on something great
           </motion.h3>
           <motion.p
-            className="text-white text-xl mb-6 md:mb-8"
+            className="text-white text-lg font-semibold mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}

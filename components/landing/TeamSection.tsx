@@ -65,7 +65,7 @@ export default function TeamSection() {
             Meet our team
           </motion.h2>
           <motion.p
-            className="text-white text-xl mx-auto mb-6 md:mb-8"
+            className="text-white text-lg font-semibold mx-auto mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}

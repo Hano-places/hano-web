@@ -54,7 +54,7 @@ export default function FAQSection() {
             Frequently asked questions
           </motion.h2>
           <motion.p
-            className="text-white text-xl"
+            className="text-white text-lg font-semibold"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -99,7 +99,7 @@ export default function FAQSection() {
                 </span>
               </motion.summary>
               <motion.div
-                className="pl-10 md:pl-16 pr-4 md:pr-6 pb-4 md:pb-6 pt-2 text-white text-sm md:text-base leading-relaxed group-open:bg-[#1E1E1E]/60"
+                className="pl-10 md:pl-16 pr-4 md:pr-6 pb-4 md:pb-6 pt-2 text-white text-xs md:text-sm font-semibold leading-relaxed group-open:bg-[#1E1E1E]/60"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
