@@ -199,12 +199,8 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-purple-400 transition-colors">
               Track your performance
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
-              Get clear insights into visits, engagement, menu views, and promo
-              usage.
-            </p>
-            <p className="text-gray-500 text-sm">
-              Filter and explore your data in seconds.
+            <p className="text-gray-400 text-base leading-relaxed">
+              Get clear insights into visits, engagement, menu views, and promo usage. Filter and explore your data in seconds.
             </p>
           </div>
 
@@ -228,12 +224,8 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-400 transition-colors">
               Engage with customers
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
-              Share updates, promotions, and moments in real time.
-            </p>
-            <p className="text-gray-500 text-sm">
-              Keep your audience informed and build stronger customer
-              connections.
+            <p className="text-gray-400 text-base leading-relaxed">
+              Share updates, promotions, and moments in real time. Keep your audience informed and build stronger customer connections.
             </p>
           </div>
 
@@ -257,12 +249,8 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-blue-400 transition-colors">
               Integrate effortlessly
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
-              Sync your location, menu, booking links, and social pages.
-            </p>
-            <p className="text-gray-500 text-sm">
-              Everything works smoothly so you can focus on serving your
-              customers.
+            <p className="text-gray-400 text-base leading-relaxed">
+              Sync your location, menu, booking links, and social pages. Everything works smoothly so you can focus on serving your customers.
             </p>
           </div>
 
@@ -286,11 +274,8 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-green-400 transition-colors">
               We're here to support you
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
-              Get help anytime from the Hano support team.
-            </p>
-            <p className="text-gray-500 text-sm">
-              We guide you as you grow your presence and attract more visitors.
+            <p className="text-gray-400 text-base leading-relaxed">
+              Get help anytime from the Hano support team. We guide you as you grow your presence and attract more visitors.
             </p>
           </div>
         </div>
