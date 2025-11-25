@@ -94,7 +94,7 @@ export default function TeamSection() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mx-auto mt-10 md:mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-8 md:gap-y-12 mx-auto mt-10 md:mt-16">
           {team.map((member, index) => (
             <motion.div
               key={index}
