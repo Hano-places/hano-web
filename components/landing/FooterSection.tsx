@@ -26,7 +26,7 @@ export default function FooterSection() {
             <Image src="/logo.png" alt="Hano" width={32} height={32} />
           </motion.div>
           <motion.h3
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4"
+            className="text-3xl font-bold mb-3 md:mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
@@ -34,7 +34,7 @@ export default function FooterSection() {
             Let's get started on something great
           </motion.h3>
           <motion.p
-            className="text-gray-400 text-sm md:text-base mb-6 md:mb-8"
+            className="text-gray-400 text-xl mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -69,10 +69,10 @@ export default function FooterSection() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-gray-400 text-xs sm:text-sm">© 2025 Hano Places. All rights reserved.</p>
+            <p className="text-gray-400 text-base">© 2025 Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
-                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-xs sm:text-sm">
+                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-base">
                   {link}
                 </Link>
               ))}

@@ -54,10 +54,10 @@ export default function TeamSection() {
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container mx-auto max-w-7xl px-12 sm:px-16 md:px-24 lg:px-32 xl:px-40">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24 xl:px-40">
         <div className="text-center mb-10 md:mb-16">
           <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4"
+            className="text-4xl font-bold mb-3 md:mb-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
@@ -65,7 +65,7 @@ export default function TeamSection() {
             Meet our team
           </motion.h2>
           <motion.p
-            className="text-gray-400 text-sm sm:text-base md:text-lg mx-auto mb-6 md:mb-8"
+            className="text-gray-400 text-xl mx-auto mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -94,7 +94,7 @@ export default function TeamSection() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mx-auto mt-10 md:mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-8 md:gap-y-12 mx-auto mt-10 md:mt-16">
           {team.map((member, index) => (
             <motion.div
               key={index}

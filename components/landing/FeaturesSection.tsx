@@ -10,12 +10,12 @@ export default function FeaturesSection() {
     <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16 lg:mb-20">
+        <div className="text-center mb-2 md:mb-3 lg:mb-4">
           <SectionBadge>Features</SectionBadge>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
+          <h2 className="text-4xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-base md:text-lg lg:text-xl xl:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place.
           </p>
@@ -104,11 +104,11 @@ export default function FeaturesSection() {
       </div>
 
       {/* Kigali Business Scene */}
-      <div className="w-full bg-[#030303] py-12 md:py-14 lg:py-16 mb-16 md:mb-24 lg:mb-32">
+      <div className="w-full bg-[#030303] py-8 md:py-10 lg:py-12 mb-12 md:mb-16 lg:mb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
+          <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-center">
             <div>
-              <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-4">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -129,14 +129,14 @@ export default function FeaturesSection() {
                   />
                 </svg>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                 Discover Kigali's vibrant business scene
               </h2>
-              <p className="text-gray-400 text-xl mb-8">
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-4 md:mb-6">
                 Explore Rwanda's finest places — from local favorites to new
                 discoveries.
               </p>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 <CheckListItem>
                   Track engagement from your visitors across Kigali
                 </CheckListItem>
@@ -168,10 +168,10 @@ export default function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-16 md:mb-24 lg:mb-32">
         <div className="text-center mb-12 md:mb-16 lg:mb-20">
           <SectionBadge>Features</SectionBadge>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
+          <h2 className="text-4xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
             Smart tools to power your business Hano
           </h2>
-          <p className="text-gray-400 text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-gray-400 text-xl max-w-4xl mx-auto leading-relaxed">
             Simple yet powerful features that help your place attract more
             visitors.
           </p>

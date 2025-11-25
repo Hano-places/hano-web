@@ -46,7 +46,7 @@ export default function FAQSection() {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 max-w-7xl">
         <div className="text-center mb-10 md:mb-16">
           <motion.h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4"
+            className="text-4xl font-bold mb-3 md:mb-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6 }}
@@ -54,7 +54,7 @@ export default function FAQSection() {
             Frequently asked questions
           </motion.h2>
           <motion.p
-            className="text-gray-400 text-sm sm:text-base md:text-lg"
+            className="text-gray-400 text-xl"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
