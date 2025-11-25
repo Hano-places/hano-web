@@ -69,10 +69,10 @@ export default function FooterSection() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-gray-400 text-xs sm:text-sm">© 2025 Hano Places. All rights reserved.</p>
+            <p className="text-gray-400 text-base">© 2025 Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
-                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-xs sm:text-sm">
+                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-base">
                   {link}
                 </Link>
               ))}
