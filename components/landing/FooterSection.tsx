@@ -26,7 +26,7 @@ export default function FooterSection() {
             <Image src="/logo.png" alt="Hano" width={32} height={32} />
           </motion.div>
           <motion.h3
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4"
+            className="text-3xl font-bold mb-3 md:mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
@@ -34,7 +34,7 @@ export default function FooterSection() {
             Let's get started on something great
           </motion.h3>
           <motion.p
-            className="text-gray-400 text-sm md:text-base mb-6 md:mb-8"
+            className="text-gray-400 text-xl mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}
