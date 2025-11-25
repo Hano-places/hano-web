@@ -24,7 +24,7 @@ export default function FeatureCard({ icon, title, description, gradient, delay 
         <span className="text-2xl">{icon}</span>
       </motion.div>
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-white text-sm font-semibold leading-relaxed">{description}</p>
+      <p className="text-gray-400 text-base leading-relaxed">{description}</p>
     </motion.div>
   );
 }

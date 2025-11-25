@@ -13,7 +13,7 @@ export default function CheckListItem({ children }: CheckListItemProps) {
       >
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
       </svg>
-      <span className="text-white text-base font-semibold">{children}</span>
+      <span className="text-gray-300 text-lg">{children}</span>
     </li>
   );
 }
