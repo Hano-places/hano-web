@@ -50,12 +50,21 @@ export default function FooterSection() {
             {["View demo", "Get started"].map((btn, index) => (
               <motion.button
                 key={btn}
-                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base ${
+                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base flex items-center justify-center gap-2 ${
                   index === 0 ? "border border-gray-700" : "bg-white text-black"
                 } w-full sm:w-auto`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
+                {index === 0 && (
+                  <Image
+                    src="/logo.png"
+                    alt="Hano"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                )}
                 {btn}
               </motion.button>
             ))}
