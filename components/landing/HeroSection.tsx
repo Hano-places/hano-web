@@ -32,20 +32,20 @@ export default function HeroSection() {
       <Navbar />
 
       {/* Hero Content */}
-      <div className="relative z-10 ml-24 pt-8 sm:pt-12 md:pt-16 lg:pt-24 pb-24 sm:pb-32 md:pb-40 lg:pb-40">
-        <div className="container mx-auto max-w-7xl px-12 sm:px-16 md:px-24 lg:px-32 xl:px-40">
+      <div className="relative z-10 ml-0 sm:ml-4 md:ml-8 lg:ml-24 pt-8 sm:pt-12 md:pt-16 lg:pt-24 pb-24 sm:pb-32 md:pb-40 lg:pb-40">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24 xl:px-40">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 xl:gap-20 items-center lg:items-start">
             {/* Left: Phone Mockups */}
             <motion.div
               className="
                 relative flex justify-center lg:justify-start items-center
-                -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-20
+                -mx-2 sm:-mx-4 md:-mx-6 lg:-mx-12 xl:-mx-20
               "
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-[900px] lg:max-w-[1100px] flex items-center justify-center -space-x-8 sm:-space-x-12 md:-space-x-16">
+              <div className="relative w-full max-w-[900px] lg:max-w-[1100px] flex items-center justify-center -space-x-4 sm:-space-x-8 md:-space-x-12 lg:-space-x-16">
                 <motion.div
                   animate={{ y: [0, -20, 0] }}
                   transition={{

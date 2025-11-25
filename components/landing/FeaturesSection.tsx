@@ -129,10 +129,10 @@ export default function FeaturesSection() {
                   />
                 </svg>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
                 Discover Kigali's vibrant business scene
               </h2>
-              <p className="text-gray-400 text-xl mb-8">
+              <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-6 md:mb-8">
                 Explore Rwanda's finest places — from local favorites to new
                 discoveries.
               </p>

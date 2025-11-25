@@ -54,7 +54,7 @@ export default function TeamSection() {
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container mx-auto max-w-7xl px-12 sm:px-16 md:px-24 lg:px-32 xl:px-40">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24 xl:px-40">
         <div className="text-center mb-10 md:mb-16">
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4"
