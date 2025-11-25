@@ -74,7 +74,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Link href="/signup" className="text-sm lg:text-base text-gray-300">
+            <Link href="/signup" className="text-sm lg:text-base text-white">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -146,7 +146,7 @@ export default function Navbar() {
               >
                 <Link
                   href={`#${item}`}
-                  className="block text-gray-300 hover:text-white transition-colors text-sm sm:text-base py-2"
+                  className="block text-white hover:text-white transition-colors text-sm sm:text-base py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -157,7 +157,7 @@ export default function Navbar() {
               <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="block text-center text-gray-300 hover:text-white transition-colors text-sm sm:text-base py-2"
+                  className="block text-center text-white hover:text-white transition-colors text-sm sm:text-base py-2"
                 >
                   Sign Up
                 </motion.div>

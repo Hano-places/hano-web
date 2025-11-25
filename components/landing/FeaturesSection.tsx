@@ -15,7 +15,7 @@ export default function FeaturesSection() {
           <h2 className="text-4xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-xl text-white max-w-4xl mx-auto leading-relaxed px-4">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place.
           </p>
@@ -132,7 +132,7 @@ export default function FeaturesSection() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                 Discover Kigali's vibrant business scene
               </h2>
-              <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-4 md:mb-6">
+              <p className="text-white text-base sm:text-lg md:text-xl mb-4 md:mb-6">
                 Explore Rwanda's finest places — from local favorites to new
                 discoveries.
               </p>
@@ -171,7 +171,7 @@ export default function FeaturesSection() {
           <h2 className="text-4xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
             Smart tools to power your business Hano
           </h2>
-          <p className="text-gray-400 text-xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-white text-xl max-w-4xl mx-auto leading-relaxed">
             Simple yet powerful features that help your place attract more
             visitors.
           </p>
@@ -199,11 +199,11 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-purple-400 transition-colors">
               Track your performance
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
+            <p className="text-white text-base leading-relaxed mb-2">
               Get clear insights into visits, engagement, menu views, and promo
               usage.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white text-sm">
               Filter and explore your data in seconds.
             </p>
           </div>
@@ -228,10 +228,10 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-400 transition-colors">
               Engage with customers
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
+            <p className="text-white text-base leading-relaxed mb-2">
               Share updates, promotions, and moments in real time.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white text-sm">
               Keep your audience informed and build stronger customer
               connections.
             </p>
@@ -257,10 +257,10 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-blue-400 transition-colors">
               Integrate effortlessly
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
+            <p className="text-white text-base leading-relaxed mb-2">
               Sync your location, menu, booking links, and social pages.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white text-sm">
               Everything works smoothly so you can focus on serving your
               customers.
             </p>
@@ -286,10 +286,10 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-green-400 transition-colors">
               We're here to support you
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed mb-2">
+            <p className="text-white text-base leading-relaxed mb-2">
               Get help anytime from the Hano support team.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-white text-sm">
               We guide you as you grow your presence and attract more visitors.
             </p>
           </div>

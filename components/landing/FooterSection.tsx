@@ -34,7 +34,7 @@ export default function FooterSection() {
             Let's get started on something great
           </motion.h3>
           <motion.p
-            className="text-gray-400 text-xl mb-6 md:mb-8"
+            className="text-white text-xl mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -69,10 +69,10 @@ export default function FooterSection() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-gray-400 text-base">© 2025 Hano Places. All rights reserved.</p>
+            <p className="text-white text-base">© 2025 Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
-                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-base">
+                <Link key={link} href="#" className="text-white hover:text-white transition text-base">
                   {link}
                 </Link>
               ))}
