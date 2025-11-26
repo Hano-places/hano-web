@@ -63,6 +63,19 @@
   --tertiary-800: #9d174d;
   --tertiary-900: #831843;
   --dark: #000000;
+
+  /* Landing page shared colors */
+  --landing-bg-primary: #060606;
+  --landing-bg-secondary: #030303;
+  --landing-surface: #1e1e1e;
+  --landing-surface-90: rgba(30, 30, 30, 0.9);
+  --landing-surface-60: rgba(30, 30, 30, 0.6);
+  --landing-surface-30: rgba(30, 30, 30, 0.3);
+  --landing-icon-bg: #383838;
+  --landing-divider: rgba(238, 238, 238, 0.25);
+  --landing-text-muted: rgb(238, 238, 238);
+  --landing-text-muted-soft: rgba(238, 238, 238, 0.85);
+  --landing-text-muted-faint: rgba(238, 238, 238, 0.65);
 }
 
 .dark {

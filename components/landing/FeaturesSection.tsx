@@ -7,7 +7,7 @@ import CheckListItem from "./CheckListItem";
 
 export default function FeaturesSection() {
   return (
-    <section className="pt-16 md:pt-24 lg:pt-32 bg-[#060606] relative overflow-hidden">
+    <section className="pt-16 md:pt-24 lg:pt-32 bg-[var(--landing-bg-primary)] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-2 md:mb-3 lg:mb-4">
@@ -15,7 +15,7 @@ export default function FeaturesSection() {
           <h2 className="text-4xl font-bold mb-6 md:mb-8 max-w-5xl mx-auto leading-tight px-4">
             Smart features for a seamless discovery experience
           </h2>
-          <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-xl text-[var(--landing-text-muted)] max-w-4xl mx-auto leading-relaxed px-4">
             Discover, book, and enjoy Rwanda's best restaurants, hotels, and
             cafés — all in one place.
           </p>
@@ -53,7 +53,7 @@ export default function FeaturesSection() {
               place="1.4k RWF"
               placeColor="text-orange-400"
               avatarType="square"
-              avatarColor="bg-gray-700"
+              avatarColor="bg-[var(--landing-icon-bg)]"
             />
             <NotificationCard
               userName="Lana Steiner"
@@ -90,7 +90,7 @@ export default function FeaturesSection() {
             place="1.4k RWF"
             placeColor="text-orange-400"
             avatarType="square"
-            avatarColor="bg-gray-700"
+              avatarColor="bg-[var(--landing-icon-bg)]"
           />
           <NotificationCard
             userName="Lana Steiner"
@@ -104,11 +104,11 @@ export default function FeaturesSection() {
       </div>
 
       {/* Kigali Business Scene */}
-      <div className="w-full bg-[#030303] py-8 md:py-10 lg:py-12 mb-12 md:mb-16 lg:mb-20">
+      <div className="w-full bg-[var(--landing-bg-secondary)] py-8 md:py-10 lg:py-12 mb-12 md:mb-16 lg:mb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-center">
             <div>
-              <div className="w-12 h-12 bg-[#383838] rounded-full flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-[var(--landing-icon-bg)] rounded-full flex items-center justify-center mb-4">
                 <svg
                   className="w-6 h-6 text-white"
                   fill="none"
@@ -132,7 +132,7 @@ export default function FeaturesSection() {
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">
                 Discover Kigali's vibrant business scene
               </h2>
-              <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-4 md:mb-6">
+              <p className="text-[var(--landing-text-muted)] text-base sm:text-lg md:text-xl mb-4 md:mb-6">
                 Explore Rwanda's finest places — from local favorites to new
                 discoveries.
               </p>
@@ -171,7 +171,7 @@ export default function FeaturesSection() {
           <h2 className="text-4xl font-bold mb-8 max-w-5xl mx-auto leading-tight">
             Smart tools to power your business Hano
           </h2>
-          <p className="text-gray-400 text-xl max-w-4xl mx-auto leading-relaxed">
+          <p className="text-[var(--landing-text-muted)] text-xl max-w-4xl mx-auto leading-relaxed">
             Simple yet powerful features that help your place attract more visitors, increase visibility, and manage your activities effortlessly.
           </p>
         </div>
@@ -198,7 +198,7 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-purple-400 transition-colors">
               Track your performance
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed">
+            <p className="text-[var(--landing-text-muted)] text-base leading-relaxed">
               Get clear insights into visits, engagement, menu views, and promo usage. Filter and explore your data in seconds.
             </p>
           </div>
@@ -223,7 +223,7 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-400 transition-colors">
               Engage with customers
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed">
+            <p className="text-[var(--landing-text-muted)] text-base leading-relaxed">
               Share updates, promotions, and moments in real time. Keep your audience informed and build stronger customer connections.
             </p>
           </div>
@@ -248,7 +248,7 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-blue-400 transition-colors">
               Integrate effortlessly
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed">
+            <p className="text-[var(--landing-text-muted)] text-base leading-relaxed">
               Sync your location, menu, booking links, and social pages. Everything works smoothly so you can focus on serving your customers.
             </p>
           </div>
@@ -273,7 +273,7 @@ export default function FeaturesSection() {
             <h3 className="text-xl font-semibold mb-3 group-hover:text-green-400 transition-colors">
               We're here to support you
             </h3>
-            <p className="text-gray-400 text-base leading-relaxed">
+            <p className="text-[var(--landing-text-muted)] text-base leading-relaxed">
               Get help anytime from the Hano support team. We guide you as you grow your presence and attract more visitors.
             </p>
           </div>
@@ -287,7 +287,7 @@ export default function FeaturesSection() {
           <h2 className="text-4xl font-bold mt-6 mb-4 leading-tight">
             Cutting-edge features for advanced analytics
           </h2>
-          <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-[var(--landing-text-muted)] max-w-4xl mx-auto leading-relaxed">
             Powerful, self-serve product and growth analytics to help you convert, engage, and
             retain more users. Trusted by over 4,000 startups.
           </p>

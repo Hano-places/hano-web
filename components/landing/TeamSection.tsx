@@ -60,7 +60,7 @@ export default function TeamSection() {
             Meet our team
           </motion.h2>
           <motion.p
-            className="text-gray-400 text-xl mx-auto mb-6 md:mb-8"
+            className="text-[var(--landing-text-muted)] text-xl mx-auto mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -78,7 +78,9 @@ export default function TeamSection() {
               <motion.button
                 key={btn}
                 className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base ${
-                  index === 0 ? "border border-gray-700 hover:bg-gray-900" : "bg-white text-black hover:bg-gray-200"
+                  index === 0
+                    ? "border border-[var(--landing-divider)] text-[var(--landing-text-muted)] hover:bg-[var(--landing-surface)]"
+                    : "bg-white text-black hover:bg-gray-200"
                 } transition w-full sm:w-auto`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
