@@ -50,20 +50,18 @@ export default function FooterSection() {
             {["View demo", "Get started"].map((btn, index) => (
               <motion.button
                 key={btn}
-                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-sm md:text-base flex items-center justify-center gap-2 ${
-                  index === 0 ? "border border-gray-700" : "bg-white text-black"
+                className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-base flex items-center justify-center gap-2 ${
+                  index === 0 ? "bg-[#1E1E1E]" : "bg-white text-black"
                 } w-full sm:w-auto`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {index === 0 && (
-                  <Image
-                    src="/logo.png"
-                    alt="Hano"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
-                  />
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-whitetext-white">
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7-11-7z" />
+                    </svg>
+                  </span>
                 )}
                 {btn}
               </motion.button>
@@ -71,14 +69,14 @@ export default function FooterSection() {
           </motion.div>
         </div>
 
-        <div className="border-t border-gray-800 pt-6 md:pt-8">
+        <div className="border-t border-white pt-6 md:pt-8">
           <motion.div
             className="flex flex-col sm:flex-row justify-between items-center gap-4"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-gray-400 text-base">© 2025 Hano Places. All rights reserved.</p>
+            <p className="text-gray-400 text-base">© {new Date().getFullYear()} Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
                 <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-base">

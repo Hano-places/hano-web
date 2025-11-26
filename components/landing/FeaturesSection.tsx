@@ -292,9 +292,9 @@ export default function FeaturesSection() {
             retain more users. Trusted by over 4,000 startups.
           </p>
         </div>
-        <div className="rounded-3xl bg-gradient-to-b from-white/10 to-transparent p-4 sm:p-6 md:p-10">
+        <div className="rounded-3xl p-4 sm:p-6 md:p-10">
           <Image
-            src="/landing/kigali_features_electronics.png"
+            src="/landing/landing_features_electronics.png"
             alt="Advanced analytics preview"
             width={1600}
             height={900}
