@@ -20,7 +20,7 @@ export default function NotificationCard({
   icon,
 }: NotificationCardProps) {
   return (
-    <div className="bg-[#1E1E1E]/90 backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-4 w-full max-w-[360px] mx-auto shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="bg-[var(--landing-surface-90)] backdrop-blur-md border border-white/20 rounded-xl sm:rounded-2xl p-4 w-full max-w-[360px] mx-auto shadow-xl hover:shadow-2xl transition-all duration-300">
       <div className="flex items-start space-x-3">
         <div
           className={`w-10 h-10 ${

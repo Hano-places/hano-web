@@ -12,7 +12,7 @@ export default function FooterSection() {
   return (
     <motion.footer
       ref={containerRef}
-      className="bg-black border-t border-gray-800"
+      className="bg-black border-t border-[var(--landing-divider)]"
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.6 }}
@@ -34,7 +34,7 @@ export default function FooterSection() {
             Let's get started on something great
           </motion.h3>
           <motion.p
-            className="text-gray-400 text-xl mb-6 md:mb-8"
+            className="text-[var(--landing-text-muted)] text-xl mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -51,13 +51,13 @@ export default function FooterSection() {
               <motion.button
                 key={btn}
                 className={`px-5 md:px-6 py-2.5 md:py-3 rounded-lg text-base flex items-center justify-center gap-2 ${
-                  index === 0 ? "bg-[#1E1E1E]" : "bg-white text-black"
+                  index === 0 ? "bg-[var(--landing-surface)] text-[var(--landing-text-muted)]" : "bg-white text-black"
                 } w-full sm:w-auto`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {index === 0 && (
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-whitetext-white">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-[var(--landing-text-muted)] text-[var(--landing-text-muted)]">
                     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M8 5v14l11-7-11-7z" />
                     </svg>
@@ -69,17 +69,17 @@ export default function FooterSection() {
           </motion.div>
         </div>
 
-        <div className="border-t-2 border-white pt-6 md:pt-8">
+        <div className="border-t-2 pt-6 md:pt-8" style={{ borderColor: "var(--landing-text-muted)" }}>
           <motion.div
             className="flex flex-col sm:flex-row justify-between items-center gap-4"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-white text-base">© {new Date().getFullYear()} Hano Places. All rights reserved.</p>
+            <p className="text-[var(--landing-text-muted)] text-base">© {new Date().getFullYear()} Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
-                <Link key={link} href="#" className="text-white hover:text-white transition text-base">
+                <Link key={link} href="#" className="text-[var(--landing-text-muted)] hover:text-white transition text-base">
                   {link}
                 </Link>
               ))}

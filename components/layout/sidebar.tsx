@@ -55,7 +55,7 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0  top-0 z-50 h-screen bg-[#060606] text-white transition-transform duration-300 ease-in-out border-r border-gray-800",
+          "fixed left-0  top-0 z-50 h-screen bg-[var(--landing-bg-primary)] text-white transition-transform duration-300 ease-in-out border-r border-[var(--landing-divider)]",
           "lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
