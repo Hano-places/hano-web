@@ -11,35 +11,30 @@ export default function TeamSection() {
       role: "Founder & CEO",
       bio: "Visionary leader driving innovation and growth at Hano.",
       image: "/team/amelie.jpg",
-      bgColor: "bg-purple-200",
     },
     {
       name: "Kwizera Olivier",
       role: "Mobile Developer",
       bio: "Crafting seamless mobile experiences for iOS and Android.",
       image: "/team/nikolas.jpg",
-      bgColor: "bg-green-200",
     },
     {
       name: "Kirezi Livia",
       role: "Marketing & Communications",
       bio: "Driving brand awareness and customer engagement strategies.",
       image: "/team/sienna.jpg",
-      bgColor: "bg-pink-200",
     },
     {
       name: "Hatuma Charles",
       role: "Frontend Developer",
       bio: "Creating beautiful and intuitive user interfaces.",
       image: "/team/lily.jpg",
-      bgColor: "bg-yellow-200",
     },
     {
       name: "Irere",
       role: "Backend Developer",
       bio: "Building robust and scalable backend systems for Hano.",
       image: "/team/zahra.jpg",
-      bgColor: "bg-blue-200",
     },
   ];
 

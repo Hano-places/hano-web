@@ -129,7 +129,7 @@ export default function FeaturesSection() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4">
                 Discover Kigali's vibrant business scene
               </h2>
               <p className="text-gray-400 text-base sm:text-lg md:text-xl mb-4 md:mb-6">
@@ -172,8 +172,7 @@ export default function FeaturesSection() {
             Smart tools to power your business Hano
           </h2>
           <p className="text-gray-400 text-xl max-w-4xl mx-auto leading-relaxed">
-            Simple yet powerful features that help your place attract more
-            visitors.
+            Simple yet powerful features that help your place attract more visitors, increase visibility, and manage your activities effortlessly.
           </p>
         </div>
 
@@ -278,6 +277,30 @@ export default function FeaturesSection() {
               Get help anytime from the Hano support team. We guide you as you grow your presence and attract more visitors.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Advanced Analytics */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl mb-20 md:mb-28 lg:mb-32">
+        <div className="text-center mb-10 md:mb-14">
+          <SectionBadge>Features</SectionBadge>
+          <h2 className="text-4xl font-bold mt-6 mb-4 leading-tight">
+            Cutting-edge features for advanced analytics
+          </h2>
+          <p className="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed">
+            Powerful, self-serve product and growth analytics to help you convert, engage, and
+            retain more users. Trusted by over 4,000 startups.
+          </p>
+        </div>
+        <div className="rounded-3xl p-4 sm:p-6 md:p-10">
+          <Image
+            src="/landing/landing_features_electronics.png"
+            alt="Advanced analytics preview"
+            width={1600}
+            height={900}
+            className="w-full h-auto drop-shadow-2xl"
+            priority
+          />
         </div>
       </div>
     </section>
