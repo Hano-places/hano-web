@@ -69,17 +69,17 @@ export default function FooterSection() {
           </motion.div>
         </div>
 
-        <div className="border-t border-white pt-6 md:pt-8">
+        <div className="border-t-2 border-white pt-6 md:pt-8">
           <motion.div
             className="flex flex-col sm:flex-row justify-between items-center gap-4"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <p className="text-gray-400 text-base">© {new Date().getFullYear()} Hano Places. All rights reserved.</p>
+            <p className="text-white text-base">© {new Date().getFullYear()} Hano Places. All rights reserved.</p>
             <div className="flex space-x-4 md:space-x-6">
               {["Terms", "Privacy", "Cookies"].map((link) => (
-                <Link key={link} href="#" className="text-gray-400 hover:text-white transition text-base">
+                <Link key={link} href="#" className="text-white hover:text-white transition text-base">
                   {link}
                 </Link>
               ))}
