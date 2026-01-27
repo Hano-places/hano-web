@@ -1,3 +1,4 @@
+import React from 'react';
 import { Users, Star } from 'lucide-react';
 
 interface ValueCardProps {

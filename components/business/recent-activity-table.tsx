@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useState, useMemo } from "react"
-import { Search, Calendar, MoreHorizontal, ChevronLeft, ChevronRight } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { MoreHorizontal, ChevronLeft, ChevronRight } from "lucide-react"
 import {
     Table,
     TableBody,
@@ -11,13 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import TableControls from "@/components/ui/table-controls"
 
 export interface ActivityItem {
     id: string
@@ -44,13 +37,39 @@ export default function RecentActivityTable({
 }: RecentActivityTableProps) {
     const [currentPage, setCurrentPage] = useState(1)
     const [searchValue, setSearchValue] = useState("")
+    const [filterValue, setFilterValue] = useState("all")
+    const [sortValue, setSortValue] = useState("newest")
+
+    const filterOptions = [
+        { value: "all", label: "All Status" },
+        { value: "rewarded", label: "Rewarded" },
+    ]
+
+    const sortOptions = [
+        { value: "newest", label: "Newest" },
+        { value: "oldest", label: "Oldest" },
+    ]
 
     const filteredData = useMemo(() => {
-        return data.filter(item =>
-            item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.email.toLowerCase().includes(searchValue.toLowerCase())
-        )
-    }, [data, searchValue])
+        let filtered = [...data]
+
+        if (searchValue) {
+            filtered = filtered.filter(item =>
+                item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+                item.email.toLowerCase().includes(searchValue.toLowerCase())
+            )
+        }
+
+        if (filterValue !== "all") {
+            filtered = filtered.filter(item => item.rewards === filterValue)
+        }
+
+        if (sortValue === "newest") {
+            // Mock sort as we don't have real timestamps, but assume they are in order
+        }
+
+        return filtered
+    }, [data, searchValue, filterValue, sortValue])
 
     const paginatedData = filteredData.slice(
         (currentPage - 1) * ITEMS_PER_PAGE,
@@ -67,40 +86,16 @@ export default function RecentActivityTable({
 
     return (
         <div className="space-y-6">
-            {/* Table Controls */}
-            <div className="flex items-center justify-between gap-6">
-                <div className="relative flex-1 max-w-lg">
-                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-dark-400" />
-                    <Input
-                        placeholder="Search here..."
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        className="pl-12 h-14 bg-brand-dark-900 border-brand-dark-800 text-brand-dark-100 placeholder:text-brand-dark-400 rounded-xl"
-                    />
-                </div>
-                <div className="flex items-center gap-4">
-                    <Select>
-                        <SelectTrigger className="w-[180px] h-14 bg-brand-dark-900 border-brand-dark-800 text-brand-dark-100 rounded-xl">
-                            <Calendar className="w-5 h-5 text-brand-dark-400 mr-2" />
-                            <SelectValue placeholder="Filter by" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-brand-dark-900 border-brand-dark-800 text-brand-dark-100">
-                            <SelectItem value="all">All</SelectItem>
-                            <SelectItem value="rewarded">Rewarded</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Select>
-                        <SelectTrigger className="w-[180px] h-14 bg-brand-dark-900 border-brand-dark-800 text-brand-dark-100 rounded-xl">
-                            <Calendar className="w-5 h-5 text-brand-dark-400 mr-2" />
-                            <SelectValue placeholder="Sort by" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-brand-dark-900 border-brand-dark-800 text-brand-dark-100">
-                            <SelectItem value="newest">Newest</SelectItem>
-                            <SelectItem value="oldest">Oldest</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
+            <TableControls
+                searchValue={searchValue}
+                onSearchChange={setSearchValue}
+                filterValue={filterValue}
+                onFilterChange={setFilterValue}
+                sortValue={sortValue}
+                onSortChange={setSortValue}
+                filterOptions={filterOptions}
+                sortOptions={sortOptions}
+            />
 
             {/* Table Content */}
             <div className="bg-brand-dark-900 rounded-2xl border border-brand-dark-800 overflow-hidden">
