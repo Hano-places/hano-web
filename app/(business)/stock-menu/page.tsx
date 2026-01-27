@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import PageHeader from "@/components/layout/page-header";
 import ValueCard from "@/components/value-card";
 import { ShoppingBasket, Package, AlertCircle, AlertTriangle, UtensilsCrossed, Warehouse, ChevronRight, TrendingUp } from "lucide-react";
