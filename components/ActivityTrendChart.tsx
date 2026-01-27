@@ -27,6 +27,8 @@ interface ActivityTrendChartProps {
     color: string;
     gradientId: string;
   }[];
+  showHeader?: boolean;
+  showBorder?: boolean;
 }
 
 const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
@@ -37,6 +39,8 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
     { key: 'registeredUsers', label: 'Registered Users', color: 'rgb(156, 163, 175)', gradientId: 'registeredUsersGradient' },
     { key: 'visitors', label: 'Visitors', color: 'rgb(107, 114, 128)', gradientId: 'visitorsGradient' },
   ],
+  showHeader = true,
+  showBorder = true,
 }) => {
   const [selectedPeriod, setSelectedPeriod] = useState('All Time');
 
@@ -69,32 +73,36 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
   };
 
   return (
-    <div className="bg-brand-dark-900 border border-brand-dark-700 rounded-xl p-4 sm:p-6 w-full">
+    <div className={`w-full ${showBorder ? 'bg-brand-dark-900 border border-brand-dark-700 rounded-xl p-4 sm:p-6' : ''}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h3 className="text-lg font-medium text-brand-dark-50">
-          {title}
-        </h3>
-        <button className="p-1 hover:bg-muted rounded-lg transition-colors">
-          <MoreHorizontal className="w-5 h-5 text-brand-dark-100" />
-        </button>
-      </div>
+      {showHeader && (
+        <>
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h3 className="text-lg font-medium text-brand-dark-50">
+              {title}
+            </h3>
+            <button className="p-1 hover:bg-muted rounded-lg transition-colors">
+              <MoreHorizontal className="w-5 h-5 text-brand-dark-100" />
+            </button>
+          </div>
 
-      {/* Time Period Filters */}
-      <div className="flex flex-wrap gap-2 mb-2">
-        {periods.map((period) => (
-          <button
-            key={period}
-            onClick={() => setSelectedPeriod(period)}
-            className={`px-4 py-2 text-sm rounded-lg transition-colors ${selectedPeriod === period
-                ? 'bg-brand-dark-800 text-brand-dark-100'
-                : 'text-brand-dark-100 hover:text-brand-dark-700 hover:bg-muted/50'
-              }`}
-          >
-            {period}
-          </button>
-        ))}
-      </div>
+          {/* Time Period Filters */}
+          <div className="flex flex-wrap gap-2 mb-2">
+            {periods.map((period) => (
+              <button
+                key={period}
+                onClick={() => setSelectedPeriod(period)}
+                className={`px-4 py-2 text-sm rounded-lg transition-colors ${selectedPeriod === period
+                  ? 'bg-brand-dark-800 text-brand-dark-100'
+                  : 'text-brand-dark-100 hover:text-brand-dark-700 hover:bg-muted/50'
+                  }`}
+              >
+                {period}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Legend below period buttons, top-right */}
       <div className="flex justify-end gap-4 mb-4 sm:mb-6">
@@ -107,7 +115,7 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
       </div>
 
       {/* Chart Container */}
-      <div className="w-full h-64 sm:h-80">
+      <div className="w-full h-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}

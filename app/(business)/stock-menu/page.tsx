@@ -91,10 +91,11 @@ export default function StockMenuPage() {
     );
 
     return (
-        <div className="space-y-8 pb-12">
+        <div className="space-y-12 pb-12">
             <PageHeader
                 breadcrumbs={[{ label: "Home", href: "/dashboard" }, { label: "Stock & Menu" }]}
                 actions={headerActions}
+                hideDefaultActions
             />
 
             {/* Metric Cards */}
@@ -156,76 +157,76 @@ export default function StockMenuPage() {
                     </div>
                 </div>
 
-                <div className="h-64 mt-8">
+                {/* Fixed chart overlap by giving enough height and removing internal card styling */}
+                <div className="h-96 mt-8">
                     <ActivityTrendChart
                         data={affordabilityData}
                         title=""
                         dataKeys={chartKeys}
-                        periods={[]} // Hide period selectors for this specific chart if needed
+                        periods={[]}
+                        showBorder={false}
+                        showHeader={false}
                     />
                 </div>
             </div>
 
-            {/* Middle Grid - Components and Item Performance */}
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                {/* Component Metrics Cards Column */}
-                <div className="space-y-8 xl:col-span-1">
-                    <StockMetricCard
-                        title="Most Sold Component"
-                        name="Baking Flour"
-                        value={234}
-                        unit="Kg"
-                        image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
-                        progress={75}
-                        icon={<TrendingUp className="w-5 h-5" />}
-                    />
-                    <StockMetricCard
-                        title="Recent Out Of Stock - Component"
-                        name="Baking Flour"
-                        value={0}
-                        unit="Kg"
-                        image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
-                        progress={0}
-                        icon={<AlertCircle className="w-5 h-5" />}
-                    />
-                    <StockMetricCard
-                        title="Most Overstocked - Component"
-                        name="Maize Flour"
-                        value={234}
-                        unit="Pcs"
-                        image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
-                        progress={90}
-                        icon={<AlertTriangle className="w-5 h-5" />}
-                    />
-                </div>
+            {/* Component Metrics Section - Now full width row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <StockMetricCard
+                    title="Most Sold Component"
+                    name="Baking Flour"
+                    value={234}
+                    unit="Kg"
+                    image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
+                    progress={75}
+                    icon={<TrendingUp className="w-5 h-5" />}
+                />
+                <StockMetricCard
+                    title="Recent Out Of Stock - Component"
+                    name="Baking Flour"
+                    value={0}
+                    unit="Kg"
+                    image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
+                    progress={0}
+                    icon={<AlertCircle className="w-5 h-5" />}
+                />
+                <StockMetricCard
+                    title="Most Overstocked - Component"
+                    name="Maize Flour"
+                    value={234}
+                    unit="Pcs"
+                    image="https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=150"
+                    progress={90}
+                    icon={<AlertTriangle className="w-5 h-5" />}
+                />
+            </div>
 
-                {/* Item Performance Cards Column */}
-                <div className="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <ItemPerformanceCard
-                        title="Top Selling Menu Item"
-                        itemName="Large Pizza"
-                        sells="12,450"
-                        trend="7.2%"
-                        isPositive
-                        subItemName="Large Pizza"
-                        subItemValue="234"
-                        subItemUnit="In Last Month"
-                        subItemImage="https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=300"
-                        chartData={itemChartData}
-                    />
-                    <ItemPerformanceCard
-                        title="Least Selling Menu Item"
-                        itemName="Large Pizza"
-                        sells="12,450"
-                        trend="7.2%"
-                        isPositive={false}
-                        subItemName="Large Pizza"
-                        subItemValue="234"
-                        subItemUnit="In Last Month"
-                        subItemImage="https://images.pexels.com/photos/1239347/pexels-photo-1239347.jpeg?auto=compress&cs=tinysrgb&w=300"
-                        chartData={itemChartData}
-                    />
-                </div>
+            {/* Item Performance Cards Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <ItemPerformanceCard
+                    title="Top Selling Menu Item"
+                    itemName="Large Pizza"
+                    sells="12,450"
+                    trend="7.2%"
+                    isPositive
+                    subItemName="Large Pizza"
+                    subItemValue="234"
+                    subItemUnit="In Last Month"
+                    subItemImage="https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=300"
+                    chartData={itemChartData}
+                />
+                <ItemPerformanceCard
+                    title="Least Selling Menu Item"
+                    itemName="Large Pizza"
+                    sells="12,450"
+                    trend="7.2%"
+                    isPositive={false}
+                    subItemName="Large Pizza"
+                    subItemValue="234"
+                    subItemUnit="In Last Month"
+                    subItemImage="https://images.pexels.com/photos/1239347/pexels-photo-1239347.jpeg?auto=compress&cs=tinysrgb&w=300"
+                    chartData={itemChartData}
+                />
             </div>
 
             {/* Client Reviews Section */}
