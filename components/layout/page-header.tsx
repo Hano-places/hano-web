@@ -65,9 +65,9 @@ export default function PageHeader({ breadcrumbs, onExport }: PageHeaderProps) {
           </SelectContent>
         </Select>
 
-        <Button onClick={onExport} className="h-14 px-5 text-base bg-white text-brand-dark-900 hover:bg-gray-100">
+        <Button onClick={onExport} className="h-14 px-5 text-base bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl">
           <Upload className="w-5 h-5 mr-2" />
-          Export Report
+          Generate Report
         </Button>
       </div>
     </div>
