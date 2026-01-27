@@ -74,15 +74,29 @@ export default function StockMenuPage() {
             itemName: "Large Pizza",
             itemImage: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=300",
             itemTrend: "7.2%"
+        },
+        {
+            id: "4",
+            rating: 5,
+            text: "The best dashboard we have used for our restaurant so far. Highly recommended!",
+            userName: "Caitlyn King",
+            userEmail: "user@gmail.com",
+            userAvatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100",
+            timeAgo: "5 hours ago",
+            itemName: "Large Pizza",
+            itemImage: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=300",
+            itemTrend: "7.2%"
         }
     ];
 
     const headerActions = (
         <>
-            <Button className="h-14 px-6 bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl gap-2">
-                <UtensilsCrossed className="w-5 h-5" />
-                Menu Management
-            </Button>
+            <Link href="/stock-menu/menu-management">
+                <Button className="h-14 px-6 bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl gap-2">
+                    <UtensilsCrossed className="w-5 h-5" />
+                    Menu Management
+                </Button>
+            </Link>
             <Button className="h-14 px-6 bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl gap-2">
                 <Warehouse className="w-5 h-5" />
                 Stock Management
@@ -231,10 +245,10 @@ export default function StockMenuPage() {
 
             {/* Client Reviews Section */}
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-semibold text-white">Client reviews</h2>
-                    <button className="text-sm font-medium text-brand-dark-300 hover:text-white transition-colors flex items-center gap-1">
-                        View All <ChevronRight className="w-4 h-4" />
+                <div className="flex items-center justify-between px-4">
+                    <h2 className="text-3xl font-bold text-white">Client reviews</h2>
+                    <button className="text-base font-semibold text-orange-500 hover:text-orange-400 transition-colors flex items-center gap-2">
+                        View All <ChevronRight className="w-5 h-5" />
                     </button>
                 </div>
                 <div className="flex gap-8 overflow-x-auto no-scrollbar pb-4 pr-4">
