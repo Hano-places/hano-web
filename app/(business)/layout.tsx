@@ -27,7 +27,7 @@ export default function BusinessLayout({
                 { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
                 { icon: Users, label: "Clients", href: "/clients" },
                 { icon: UtensilsCrossed, label: "Stock & Menu", href: "/stock-menu" },
-                { icon: CreditCard, label: "Subscription", href: "/subscription" },
+                { icon: CreditCard, label: "Subscription", href: "/subscriptions" },
                 { icon: BarChart3, label: "Reports", href: "/reports" },
             ],
         },

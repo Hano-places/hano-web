@@ -23,26 +23,27 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = useSession();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(isPending);
-  }, [isPending]);
 
   const user = session?.user
     ? {
-        id: session.user.id,
-        name: session.user.name || "",
-        email: session.user.email || "",
-        avatarUrl: session.user.image || undefined,
+      id: session.user.id,
+      name: session.user.name || "",
+      email: session.user.email || "",
+      avatarUrl: session.user.image || undefined,
+    }
+    : process.env.NODE_ENV === "development"
+      ? {
+        id: "mock-user",
+        name: "Mock Business Owner",
+        email: "business@example.com",
       }
-    : null;
+      : null;
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        isLoading,
+        isLoading: isPending,
         isAuthenticated: !!user,
       }}
     >
