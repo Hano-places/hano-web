@@ -98,10 +98,12 @@ export default function StockMenuPage() {
                     Menu Management
                 </Button>
             </Link>
-            <Button className="h-14 px-6 bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl gap-2">
-                <Warehouse className="w-5 h-5" />
-                Stock Management
-            </Button>
+            <Link href="/stock-menu/stock-management">
+                <Button className="h-14 px-6 bg-white text-brand-dark-900 hover:bg-gray-100 font-bold rounded-xl gap-2">
+                    <Warehouse className="w-5 h-5" />
+                    Stock Management
+                </Button>
+            </Link>
         </>
     );
 
