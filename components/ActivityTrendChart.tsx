@@ -14,24 +14,33 @@ import {
 
 export interface ChartDataPoint {
   day: string;
-  registeredUsers: number;
-  visitors: number;
+  [key: string]: string | number;
 }
 
 interface ActivityTrendChartProps {
   data: ChartDataPoint[];
   periods?: string[];
   title?: string;
+  dataKeys?: {
+    key: string;
+    label: string;
+    color: string;
+    gradientId: string;
+  }[];
 }
 
 const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
   data,
   periods = ['All Time', '7 Days', '24 Hours', '1 Hour'],
   title = 'Activity Trend',
+  dataKeys = [
+    { key: 'registeredUsers', label: 'Registered Users', color: 'rgb(156, 163, 175)', gradientId: 'registeredUsersGradient' },
+    { key: 'visitors', label: 'Visitors', color: 'rgb(107, 114, 128)', gradientId: 'visitorsGradient' },
+  ],
 }) => {
   const [selectedPeriod, setSelectedPeriod] = useState('All Time');
 
-  const maxValue = Math.max(...data.flatMap(d => [d.registeredUsers, d.visitors]));
+  const maxValue = Math.max(...data.flatMap(d => dataKeys.map(dk => Number(d[dk.key]) || 0)));
 
   // Custom tooltip component
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -39,17 +48,20 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
       return (
         <div className="bg-brand-dark-800 border border-brand-dark-700 rounded-lg p-3 shadow-lg">
           <p className="text-brand-dark-100 text-sm font-medium mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
-              <div
-                className="w-3 h-3 rounded-sm"
-                style={{ backgroundColor: entry.color }}
-              />
-              <span className="text-brand-dark-100">
-                {entry.dataKey === 'registeredUsers' ? 'Registered Users' : 'Visitors'}: {entry.value}
-              </span>
-            </div>
-          ))}
+          {payload.map((entry: any, index: number) => {
+            const keyInfo = dataKeys.find(dk => dk.key === entry.dataKey);
+            return (
+              <div key={index} className="flex items-center gap-2 text-sm">
+                <div
+                  className="w-3 h-3 rounded-sm"
+                  style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-brand-dark-100">
+                  {keyInfo?.label || entry.dataKey}: {entry.value}
+                </span>
+              </div>
+            );
+          })}
         </div>
       );
     }
@@ -74,11 +86,10 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
           <button
             key={period}
             onClick={() => setSelectedPeriod(period)}
-            className={`px-4 py-2 text-sm rounded-lg transition-colors ${
-              selectedPeriod === period
+            className={`px-4 py-2 text-sm rounded-lg transition-colors ${selectedPeriod === period
                 ? 'bg-brand-dark-800 text-brand-dark-100'
                 : 'text-brand-dark-100 hover:text-brand-dark-700 hover:bg-muted/50'
-            }`}
+              }`}
           >
             {period}
           </button>
@@ -87,14 +98,12 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
 
       {/* Legend below period buttons, top-right */}
       <div className="flex justify-end gap-4 mb-4 sm:mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-small bg-gray-400"></div>
-          <span className="text-sm text-brand-dark-100">Registered Users</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-small bg-gray-500"></div>
-          <span className="text-sm text-brand-dark-100">Visitors</span>
-        </div>
+        {dataKeys.map((dk) => (
+          <div key={dk.key} className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-small" style={{ backgroundColor: dk.color }}></div>
+            <span className="text-sm text-brand-dark-100">{dk.label}</span>
+          </div>
+        ))}
       </div>
 
       {/* Chart Container */}
@@ -110,14 +119,12 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
             }}
           >
             <defs>
-              <linearGradient id="registeredUsersGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="rgb(156, 163, 175)" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="rgb(156, 163, 175)" stopOpacity={0.05} />
-              </linearGradient>
-              <linearGradient id="visitorsGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="rgb(107, 114, 128)" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="rgb(107, 114, 128)" stopOpacity={0.1} />
-              </linearGradient>
+              {dataKeys.map((dk) => (
+                <linearGradient key={dk.gradientId} id={dk.gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={dk.color} stopOpacity={0.3} />
+                  <stop offset="95%" stopColor={dk.color} stopOpacity={0.05} />
+                </linearGradient>
+              ))}
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
@@ -137,20 +144,16 @@ const ActivityTrendChart: React.FC<ActivityTrendChartProps> = ({
               domain={[0, maxValue]}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="registeredUsers"
-              stroke="rgb(156, 163, 175)"
-              strokeWidth={2}
-              fill="url(#registeredUsersGradient)"
-            />
-            <Area
-              type="monotone"
-              dataKey="visitors"
-              stroke="rgb(107, 114, 128)"
-              strokeWidth={2}
-              fill="url(#visitorsGradient)"
-            />
+            {dataKeys.map((dk) => (
+              <Area
+                key={dk.key}
+                type="monotone"
+                dataKey={dk.key}
+                stroke={dk.color}
+                strokeWidth={2}
+                fill={`url(#${dk.gradientId})`}
+              />
+            ))}
           </AreaChart>
         </ResponsiveContainer>
       </div>
