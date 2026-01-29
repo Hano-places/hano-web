@@ -1,17 +1,49 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { apiClient } from "@/lib/api-client";
+import { useAuth } from "@/contexts/auth-context";
 import PageHeader from "@/components/layout/page-header";
 import ValueCard from "@/components/value-card";
 import { Users, Ticket, Building2, Star, BadgeCheck, Coins, QrCode } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import RecentActivityTable, { type ActivityItem } from "@/components/business/recent-activity-table";
+import { toast } from "sonner";
 
 const ActivityTrendChart = dynamic(() => import("@/components/ActivityTrendChart"), {
     ssr: false,
 });
 
 export default function BusinessDashboardPage() {
+    const { managedPlaces } = useAuth();
+    const [placeStats, setPlaceStats] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const firstPlace = managedPlaces[0]?.place;
+
+    useEffect(() => {
+        if (!firstPlace) {
+            setIsLoading(false);
+            return;
+        }
+
+        const fetchStats = async () => {
+            try {
+                setIsLoading(true);
+                const response = await apiClient.get(`/places/${firstPlace.id}`);
+                setPlaceStats(response.data.data);
+            } catch (error) {
+                console.error("Failed to fetch place stats:", error);
+                toast.error("Failed to load business stats");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchStats();
+    }, [firstPlace]);
+
     const chartData = [
         { day: "Sun", visits: 15, reservations: 10 },
         { day: "Mon", visits: 25, reservations: 15 },
@@ -27,6 +59,7 @@ export default function BusinessDashboardPage() {
         { key: "reservations", label: "Reservations", color: "rgb(156, 163, 175)", gradientId: "reservationsGradient" },
     ];
 
+    // Mocked for now - backend doesn't have "picks" yet
     const picks = [
         {
             id: "1",
@@ -37,74 +70,18 @@ export default function BusinessDashboardPage() {
             logo: "/logo.png",
             description: "Get 10% of with Christmas Sales",
         },
-        {
-            id: "2",
-            title: "Grand Hills Suite",
-            image: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=640",
-            price: 180,
-            tag: "New Deal",
-            logo: "/logo.png",
-            description: "Exclusive Weekend Offer",
-        }
     ];
 
-    const recentActivity: ActivityItem[] = [
-        {
-            id: "1",
-            name: "John Doe",
-            email: "johndoe@gmail.com",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-            date: "2, May, 2025",
-            time: "2:04 pm",
-            coins: 2300,
-            visits: 2,
-            rewards: 20,
-        },
-        {
-            id: "2",
-            name: "John Doe",
-            email: "johndoe@gmail.com",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-            date: "2, May, 2025",
-            time: "2:04 pm",
-            coins: 2300,
-            visits: 2,
-            rewards: 20,
-        },
-        {
-            id: "3",
-            name: "John Doe",
-            email: "johndoe@gmail.com",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-            date: "2, May, 2025",
-            time: "2:04 pm",
-            coins: 2300,
-            visits: 2,
-            rewards: 20,
-        },
-        {
-            id: "4",
-            name: "John Doe",
-            email: "johndoe@gmail.com",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-            date: "2, May, 2025",
-            time: "2:04 pm",
-            coins: 2300,
-            visits: 2,
-            rewards: "rewarded",
-        },
-        {
-            id: "5",
-            name: "John Doe",
-            email: "johndoe@gmail.com",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
-            date: "2, May, 2025",
-            time: "2:04 pm",
-            coins: 2300,
-            visits: 2,
-            rewards: 20,
-        }
-    ];
+    const recentActivity: ActivityItem[] = [];
+
+    if (!firstPlace && !isLoading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+                <h2 className="text-2xl font-bold text-white">No active business found</h2>
+                <p className="text-brand-dark-300">You need to claim or register a business to see statistics.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
@@ -112,38 +89,38 @@ export default function BusinessDashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                 <ValueCard
-                    title="Clients"
-                    value="234, 800"
-                    unit="RWF"
-                    description="2 Plans"
-                    label="↑ 2.4%"
-                    icon={<Users />}
+                    title="Business Name"
+                    value={placeStats?.place?.name || "Loading..."}
+                    unit=""
+                    description={placeStats?.category?.name || "N/A"}
+                    label="Active"
+                    icon={<Building2 />}
                     iconColor="text-white"
                 />
                 <ValueCard
-                    title="Rewards"
-                    value={120}
-                    unit="Events"
-                    description="80 Registered"
+                    title="Total Reviews"
+                    value={placeStats?.reviewStats?.totalReviews || 0}
+                    unit="Reviews"
+                    description="All time"
                     label="↑ 2.4%"
-                    icon={<Ticket />}
+                    icon={<Users />}
                     iconColor="text-blue-400"
                 />
                 <ValueCard
-                    title="Total Picks"
-                    value="4.6k"
-                    unit="Businesses"
-                    description="All time"
-                    label="↑ 2.4%"
-                    icon={<Building2 />}
+                    title="Average Rating"
+                    value={placeStats?.reviewStats?.averageRating || "0.0"}
+                    showStars
+                    description={`${placeStats?.reviewStats?.totalReviews || 0} Reviews`}
+                    icon={<Star />}
                     iconColor="text-teal-400"
                 />
                 <ValueCard
-                    title="Reviews & Ratings"
-                    value=""
-                    showStars
-                    description="21 Reviews"
-                    icon={<Star />}
+                    title="Active Promotions"
+                    value={0}
+                    unit="Promos"
+                    description="Live now"
+                    label="0%"
+                    icon={<Ticket />}
                     iconColor="text-emerald-500"
                 />
             </div>
@@ -205,7 +182,7 @@ export default function BusinessDashboardPage() {
                 </div>
             </div>
 
-            <RecentActivityTable data={recentActivity} title="Recent Business Registration Requests" />
+            <RecentActivityTable data={recentActivity} title="Recent Customer Activity" />
         </div>
     );
 }

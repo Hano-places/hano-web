@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import Image from "next/image"
-import { signIn } from "@/lib/auth"
+import { apiClient } from "@/lib/api-client"
+import { setTokens } from "@/lib/auth"
 import { useAuth } from "@/contexts/auth-context"
 
 export function LoginForm() {
@@ -18,7 +19,7 @@ export function LoginForm() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { isAuthenticated } = useAuth()
+  const { refreshProfile, isAuthenticated } = useAuth()
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -31,22 +32,40 @@ export function LoginForm() {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-    
+
+    // Clear any old/expired tokens before attempting new login
+    // This prevents 401 errors from expired tokens being sent with the login request
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("refreshToken")
+
     try {
-      const result = await signIn.email({
+      const response = await apiClient.post("/auth/login", {
         email: email.trim(),
         password: password,
-        rememberMe: rememberMe,
       })
 
-      if (result.error) {
-        setError(result.error.message || "Invalid credentials. Please try logging in again or check your password.")
-      } else {
-        // Success - redirect will happen via useEffect when isAuthenticated changes
+      const { accessToken, refreshToken } = response.data
+
+      if (accessToken && refreshToken) {
+        setTokens(accessToken, refreshToken)
+        // Refresh the profile to update the global auth context
+        await refreshProfile()
         router.push("/")
+      } else {
+        setError("Invalid response from server. Please try again.")
       }
-    } catch (err) {
-      setError("An error occurred. Please try again.")
+    } catch (err: any) {
+      // Log detailed error information for debugging
+      console.error("Login Error Details:", err.response?.data)
+
+      // Extract the most specific error message available
+      const errorMessage =
+        err.response?.data?.error?.message ||
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Invalid credentials. Please try logging in again or check your password."
+
+      setError(errorMessage)
       console.error("Login error:", err)
     } finally {
       setIsLoading(false)
@@ -54,7 +73,7 @@ export function LoginForm() {
   }
 
   return (
-    <div 
+    <div
       className="flex flex-col items-center space-y-6 mx-auto"
       style={{
         width: "360px",
@@ -70,7 +89,7 @@ export function LoginForm() {
 
       {/* Header */}
       <div className="text-center space-y-2 w-full">
-        <h2 
+        <h2
           className="text-white font-medium"
           style={{
             width: "360px",
@@ -83,7 +102,7 @@ export function LoginForm() {
         >
           Log in to your account
         </h2>
-        <p 
+        <p
           className="text-brand-dark-400"
           style={{
             width: "360px",
@@ -101,8 +120,8 @@ export function LoginForm() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4 w-full" style={{ width: "360px" }}>
         <div className="space-y-2 w-full">
-          <Label 
-            htmlFor="email" 
+          <Label
+            htmlFor="email"
             className="text-white block"
             style={{
               width: "41px",
@@ -137,8 +156,8 @@ export function LoginForm() {
         </div>
 
         <div className="space-y-2 w-full">
-          <Label 
-            htmlFor="password" 
+          <Label
+            htmlFor="password"
             className="text-white block"
             style={{
               width: "41px",
@@ -187,18 +206,18 @@ export function LoginForm() {
               onCheckedChange={(checked) => setRememberMe(checked as boolean)}
               className="border-brand-dark-600 data-[state=checked]:bg-tertiary-600 data-[state=checked]:border-tertiary-600"
             />
-            <Label 
-              htmlFor="remember" 
+            <Label
+              htmlFor="remember"
               className="text-sm text-brand-dark-400"
               style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
             >
               Remember for 30 days
             </Label>
           </div>
-          <button 
-            type="button" 
-            className="text-sm transition-colors" 
-            style={{ 
+          <button
+            type="button"
+            className="text-sm transition-colors"
+            style={{
               color: "#D63D34",
               fontFamily: "var(--font-montserrat), sans-serif"
             }}
@@ -207,10 +226,10 @@ export function LoginForm() {
           </button>
         </div>
 
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           className="w-full bg-white text-black hover:bg-brand-dark-100 transition-colors"
-          style={{ 
+          style={{
             width: "360px",
             fontFamily: "var(--font-montserrat), sans-serif"
           }}
@@ -222,15 +241,15 @@ export function LoginForm() {
 
       {/* Sign up link */}
       <div className="text-center w-full" style={{ width: "360px" }}>
-        <span 
+        <span
           className="text-brand-dark-400 text-sm"
           style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
         >
           Don't have an account?{" "}
         </span>
-        <button 
-          className="text-sm font-medium transition-colors" 
-          style={{ 
+        <button
+          className="text-sm font-medium transition-colors"
+          style={{
             color: "#D63D34",
             fontFamily: "var(--font-montserrat), sans-serif"
           }}

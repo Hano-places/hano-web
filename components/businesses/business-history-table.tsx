@@ -36,6 +36,7 @@ interface BusinessHistoryTableProps {
   data: BusinessVisit[]
   title?: string
   onViewDetails?: (visit: BusinessVisit) => void
+  onApprove?: (id: string) => void
   variant?: "default" | "pending"
 }
 
@@ -48,6 +49,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
   data,
   title = "Recent Business Registration Requests",
   onViewDetails,
+  onApprove,
   variant = "default",
 }) => {
   const [sortField, setSortField] = useState<SortField>(null)
@@ -310,7 +312,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                         aria-label={`Select ${visit.businessName}`}
                         checked={selectedIds.has(visit.id)}
                         onChange={() => toggleSelectOne(visit.id)}
-                      className="h-4 w-4 rounded border border-brand-dark-600 bg-brand-dark-800 focus:ring-0 appearance-none grid place-content-center transition-colors checked:bg-brand-dark-700 checked:border-brand-dark-500 before:content-[''] before:w-2 before:h-2 before:rounded-[2px] before:bg-transparent checked:before:bg-white"
+                        className="h-4 w-4 rounded border border-brand-dark-600 bg-brand-dark-800 focus:ring-0 appearance-none grid place-content-center transition-colors checked:bg-brand-dark-700 checked:border-brand-dark-500 before:content-[''] before:w-2 before:h-2 before:rounded-[2px] before:bg-transparent checked:before:bg-white"
                       />
                     </TableCell>
                     <TableCell>
@@ -374,6 +376,7 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                             Details
                           </button>
                           <button
+                            onClick={() => onApprove?.(visit.id)}
                             className="px-4 py-2 bg-[#ffffff] text-brand-dark-800 rounded-lg text-sm font-medium transition-colors border border-brand-dark-700"
                           >
                             Approve
@@ -408,11 +411,10 @@ const BusinessHistoryTable: React.FC<BusinessHistoryTableProps> = ({
                         ) : (
                           <button
                             key={`page-${page}`}
-                            className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                              currentPage === page
-                                ? "text-brand-dark-100"
-                                : "text-brand-dark-400 hover:text-brand-dark-100"
-                            }`}
+                            className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${currentPage === page
+                              ? "text-brand-dark-100"
+                              : "text-brand-dark-400 hover:text-brand-dark-100"
+                              }`}
                             onClick={() => setCurrentPage(Number(page))}
                           >
                             {page}
