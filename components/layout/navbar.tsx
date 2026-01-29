@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Search, Settings, Bell, ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,11 @@ interface NavbarProps {
 
 export function Navbar({ onSidebarToggle, user }: NavbarProps) {
   const { logout } = useAuth();
+  const pathname = usePathname();
+
+  const isSuperAdmin = pathname?.startsWith("/super-admin");
+  const settingsHref = isSuperAdmin ? "/super-admin/settings" : "/settings";
+  const notificationsHref = isSuperAdmin ? "/super-admin/notifications" : "/notifications";
 
   return (
     <header className="text-white py-6 mb-8">
@@ -83,17 +89,17 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
               align="end"
               className="w-56 bg-brand-dark-800/95 border-brand-dark-700 backdrop-blur-sm"
             >
-              <Link href="/super-admin/settings" className="w-full">
+              <Link href={settingsHref} className="w-full">
                 <DropdownMenuItem className="text-white bg-brand-dark-700/50 cursor-pointer mb-1 w-full">
                   Profile
                 </DropdownMenuItem>
               </Link>
-              <Link href="/super-admin/settings" className="w-full">
+              <Link href={settingsHref} className="w-full">
                 <DropdownMenuItem className="text-white bg-brand-dark-700/50 cursor-pointer mb-1 w-full">
                   Account Settings
                 </DropdownMenuItem>
               </Link>
-              <Link href="/super-admin/settings" className="w-full">
+              <Link href={settingsHref} className="w-full">
                 <DropdownMenuItem className="text-white bg-brand-dark-700/50 cursor-pointer w-full">
                   Preferences
                 </DropdownMenuItem>
@@ -109,7 +115,7 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
           </DropdownMenu>
 
           {/* Settings */}
-          <Link href="/super-admin/settings">
+          <Link href={settingsHref}>
             <Button
               variant="ghost"
               size="sm"
@@ -120,7 +126,7 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
           </Link>
 
           {/* Notifications */}
-          <Link href="/super-admin/notifications">
+          <Link href={notificationsHref}>
             <Button
               variant="ghost"
               size="sm"
