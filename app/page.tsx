@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
-import SuperAdminDashboardContent from "@/components/super-admin/SuperAdminDashboardContent";
-import { AuthGuard } from "@/components/auth-guard";
 
 export default function RootPage() {
   const { user, isLoading, isAuthenticated } = useAuth();
@@ -15,14 +13,14 @@ export default function RootPage() {
 
     if (!isLoading) {
       if (isAuthenticated) {
-        // If explicitly NOT an admin, OR if isSuperAdmin is undefined/null,
-        // treat them as a normal business user and redirect to dashboard.
-        // We only keep them here if user.isSuperAdmin === true.
-        if (user?.isSuperAdmin !== true) {
+        // If isSuperAdmin, redirect to /super-admin
+        if (user?.isSuperAdmin) {
+          console.log("User is Super Admin, redirecting to /super-admin");
+          router.push("/super-admin");
+        } else {
+          // Normal business user, redirect to /dashboard
           console.log("Redirecting to /dashboard (Not Super Admin)");
           router.push("/dashboard");
-        } else {
-          console.log("User is Super Admin, staying on root");
         }
       } else {
         console.log("Not authenticated, redirecting to /login");
@@ -39,13 +37,9 @@ export default function RootPage() {
     );
   }
 
-  if (isAuthenticated && user?.isSuperAdmin) {
-    return (
-      <AuthGuard>
-        <SuperAdminDashboardContent />
-      </AuthGuard>
-    );
-  }
+  // Root page now purely redirects essentially.
+  // But if for some reason we are still here (e.g. initial render before effect), render nothing or loading.
+  // The layout will handle the rest.
 
   return null;
 }
