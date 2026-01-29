@@ -22,32 +22,6 @@ export default function UsersPage() {
   const [selected, setSelected] = useState<RegistrationRequest | null>(null);
   const [users, setUsers] = useState<RegistrationRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { user, logout } = useAuth();
-
-  const displayUser = user || {
-    id: "",
-    name: "",
-    email: "",
-  };
-
-  const menu: SidebarMenuSection[] = [
-    {
-      section: "App Management",
-      items: [
-        { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-        { icon: Building2, label: "Businesses", href: "/businesses" },
-        { icon: Users, label: "Users", href: "/users", active: true },
-        { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
-        { icon: DollarSign, label: "Revenues", href: "/revenues" },
-        { icon: BarChart3, label: "Reports", href: "/reports" },
-      ],
-    },
-    {
-      section: "Account",
-      items: [{ icon: LogOut, label: "Sign Out", onClick: logout }],
-    },
-  ];
-
   // Mocked chart data
   const chartData = [
     { day: "Sun", registeredUsers: 45, visitors: 65 },
@@ -59,55 +33,30 @@ export default function UsersPage() {
     { day: "Sat", registeredUsers: 80, visitors: 90 },
   ];
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setIsLoading(true);
-        const response = await apiClient.get("/users");
-        const mappedUsers: RegistrationRequest[] = (response.data.data || []).map((u: any) => ({
-          id: u.id,
-          name: u.name || "N/A",
-          email: u.email,
-          avatar: u.image || "",
-          totalCoins: u.coins || 0,
-          places: 0, // Placeholder
-          lastVisit: { location: "N/A", time: "N/A" },
-          status: "approved",
-        }));
-        setUsers(mappedUsers);
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-        toast.error("Failed to load users");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
   return (
-    <AuthGuard>
-      <AppShell user={displayUser} menu={menu}>
-        <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Users" }]} />
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <ValueCard title="All Users" value={users.length} unit="Users" description="+2.4%" label="All time" />
-            <ValueCard title="Active" value={0} unit="Users" description="+0%" label="Today" />
-            <ValueCard title="Restricted" value={0} unit="Users" description="0%" label="All time" />
-            <ValueCard title="Visitors" value={0} unit="Users" description="+0" label="Now" />
-          </div>
+    <div className="space-y-8">
+      <PageHeader
+        breadcrumbs={[
+          { label: "Dashboard", href: "/super-admin" },
+          { label: "Users" },
+        ]}
+      />
 
-          <ActivityTrendChart data={chartData} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <ValueCard title="All Users" value={users.length} unit="Users" description="+2.4%" label="All time" />
+        <ValueCard title="Active" value={0} unit="Users" description="+0%" label="Today" />
+        <ValueCard title="Restricted" value={0} unit="Users" description="0%" label="All time" />
+        <ValueCard title="Visitors" value={0} unit="Users" description="+0" label="Now" />
+      </div>
 
-          <ProgressTable
-            data={users}
-            title="Registered Users"
-            onViewDetails={(req) => setSelected(req)}
-          />
-        </div>
-        <UserDetailsModal selected={selected} onClose={() => setSelected(null)} />
-      </AppShell>
-    </AuthGuard>
+      <ActivityTrendChart data={chartData} />
+
+      <ProgressTable
+        data={users}
+        title="Registered Users"
+        onViewDetails={(req) => setSelected(req)}
+      />
+      <UserDetailsModal selected={selected} onClose={() => setSelected(null)} />
+    </div>
   );
 }

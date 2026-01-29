@@ -22,30 +22,6 @@ export default function BusinessesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { user, logout } = useAuth();
 
-  const displayUser = user || {
-    id: "",
-    name: "",
-    email: "",
-  };
-
-  const menu: SidebarMenuSection[] = [
-    {
-      section: "App Management",
-      items: [
-        { icon: LayoutDashboard, label: "Dashboard", href: "/" },
-        { icon: Building2, label: "Businesses", badge: places.length, href: "/businesses", active: true },
-        { icon: Users, label: "Users", href: "/users" },
-        { icon: CreditCard, label: "Subscriptions", href: "/subscriptions" },
-        { icon: DollarSign, label: "Revenues", href: "/revenues" },
-        { icon: BarChart3, label: "Reports", href: "/reports" },
-      ],
-    },
-    {
-      section: "Account",
-      items: [{ icon: LogOut, label: "Sign Out", onClick: logout }],
-    },
-  ];
-
   // Mocked chart data for now
   const chartData: ChartDataPoint[] = [
     { day: "Sun", registeredUsers: 45, visitors: 65 },
@@ -56,54 +32,6 @@ export default function BusinessesPage() {
     { day: "Fri", registeredUsers: 60, visitors: 75 },
     { day: "Sat", registeredUsers: 80, visitors: 90 },
   ];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const [placesRes, claimsRes] = await Promise.all([
-          apiClient.get("/places"),
-          apiClient.get("/claims?status=pending"),
-        ]);
-
-        const mappedPlaces: BusinessVisit[] = (placesRes.data.data || []).map((p: any) => ({
-          id: p.id,
-          businessName: p.name,
-          email: p.email || "N/A",
-          avatar: p.logoUrl || "",
-          category: p.category || "General",
-          subcategory: p.subcategory || "",
-          clients: p.reviewStats?.totalReviews || 0,
-          coinsPerVisit: 0,
-          currentPlan: "Approved",
-          time: { date: new Date(p.createdAt).toLocaleDateString(), clock: new Date(p.createdAt).toLocaleTimeString() },
-        }));
-
-        const mappedClaims: BusinessVisit[] = (claimsRes.data.data || []).map((c: any) => ({
-          id: c.id,
-          businessName: c.place?.name || "Unknown",
-          email: c.user?.email || "N/A",
-          avatar: c.place?.logoUrl || "",
-          category: c.place?.category || "General",
-          subcategory: c.place?.subcategory || "",
-          clients: 0,
-          coinsPerVisit: 0,
-          currentPlan: "Pending",
-          time: { date: new Date(c.createdAt).toLocaleDateString(), clock: new Date(c.createdAt).toLocaleTimeString() },
-        }));
-
-        setPlaces(mappedPlaces);
-        setClaims(mappedClaims);
-      } catch (error) {
-        console.error("Failed to fetch businesses data:", error);
-        toast.error("Failed to load businesses data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleApproveClaim = async (claimId: string) => {
     try {
@@ -132,48 +60,51 @@ export default function BusinessesPage() {
   };
 
   return (
-    <AuthGuard>
-      <AppShell user={displayUser} menu={menu}>
-        <PageHeader breadcrumbs={[{ label: "Home", href: "/" }, { label: "Businesses" }]} />
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <ValueCard title="All Businesses" value={places.length} unit="Groups" description="+2.4%" label="All time" />
-            <ValueCard title="Pending" value={claims.length} unit="Requests" description="Action required" label="Now" />
-            <ValueCard title="Suspended" value={0} unit="Groups" description="0%" label="All time" />
-            <ValueCard title="Visitors" value={0} unit="Now" description="+0" label="Now" />
-          </div>
+    <div className="space-y-8">
+      <PageHeader
+        breadcrumbs={[
+          { label: "Dashboard", href: "/super-admin" },
+          { label: "Businesses" },
+        ]}
+      />
 
-          <ActivityTrendChart data={chartData} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <ValueCard title="All Businesses" value={places.length} unit="Groups" description="+2.4%" label="All time" />
+        <ValueCard title="Pending" value={claims.length} unit="Requests" description="Action required" label="Now" />
+        <ValueCard title="Suspended" value={0} unit="Groups" description="0%" label="All time" />
+        <ValueCard title="Visitors" value={0} unit="Now" description="+0" label="Now" />
+      </div>
 
-          <Tabs defaultValue="active" className="w-full">
-            <TabsList className="grid grid-cols-3 w-full bg-brand-dark-900 border border-brand-dark-800">
-              <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="pending">Pending</TabsTrigger>
-              <TabsTrigger value="restricted">Restricted</TabsTrigger>
-            </TabsList>
-            <TabsContent value="active" className="mt-4">
-              <BusinessHistoryTable
-                data={places}
-                title="Active Businesses"
-                onViewDetails={(req) => setSelected(req)}
-              />
-            </TabsContent>
-            <TabsContent value="pending" className="mt-4">
-              <BusinessHistoryTable
-                data={claims}
-                title="Pending Business Claims"
-                onViewDetails={(req) => setSelected(req)}
-                onApprove={handleApproveClaim}
-                variant="pending"
-              />
-            </TabsContent>
-            <TabsContent value="restricted" className="mt-4">
-              <div className="rounded-lg border border-brand-dark-800 p-6 text-brand-dark-300">Restricted view coming soon.</div>
-            </TabsContent>
-          </Tabs>
-        </div>
-        <BusinessDetailsModal selected={selected} onClose={() => setSelected(null)} />
-      </AppShell>
-    </AuthGuard>
+      <ActivityTrendChart data={chartData} />
+
+      <Tabs defaultValue="active" className="w-full">
+        <TabsList className="grid grid-cols-3 w-full bg-brand-dark-900 border border-brand-dark-800">
+          <TabsTrigger value="active">Active</TabsTrigger>
+          <TabsTrigger value="pending">Pending</TabsTrigger>
+          <TabsTrigger value="restricted">Restricted</TabsTrigger>
+        </TabsList>
+        <TabsContent value="active" className="mt-4">
+          <BusinessHistoryTable
+            data={places}
+            title="Active Businesses"
+            onViewDetails={(req) => setSelected(req)}
+          />
+        </TabsContent>
+        <TabsContent value="pending" className="mt-4">
+          <BusinessHistoryTable
+            data={claims}
+            title="Pending Business Claims"
+            onViewDetails={(req) => setSelected(req)}
+            onApprove={handleApproveClaim}
+            variant="pending"
+          />
+        </TabsContent>
+        <TabsContent value="restricted" className="mt-4">
+          <div className="rounded-lg border border-brand-dark-800 p-6 text-brand-dark-300">Restricted view coming soon.</div>
+        </TabsContent>
+      </Tabs>
+
+      <BusinessDetailsModal selected={selected} onClose={() => setSelected(null)} />
+    </div>
   );
 }
