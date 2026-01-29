@@ -1,53 +1,35 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import Image from "next/image"
-import { signIn } from "@/lib/auth"
 import { useAuth } from "@/contexts/auth-context"
 
 export function LoginForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("irereapps@gmail.com")
+  const [password, setPassword] = useState("admin123")
   const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { isAuthenticated } = useAuth()
-
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated, router])
+  const { login } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-    
-    try {
-      const result = await signIn.email({
-        email: email.trim(),
-        password: password,
-        rememberMe: rememberMe,
-      })
 
-      if (result.error) {
-        setError(result.error.message || "Invalid credentials. Please try logging in again or check your password.")
-      } else {
-        // Success - redirect will happen via useEffect when isAuthenticated changes
-        router.push("/")
-      }
+    try {
+      await login(email, password)
+      router.push("/")
     } catch (err) {
-      setError("An error occurred. Please try again.")
-      console.error("Login error:", err)
+      console.error("Login failed:", err)
+      setError(err instanceof Error ? err.message : "Invalid email or password. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -99,77 +81,46 @@ export function LoginForm() {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-4 w-full" style={{ width: "360px" }}>
-        <div className="space-y-2 w-full">
-          <Label 
-            htmlFor="email" 
-            className="text-white block"
-            style={{
-              width: "41px",
-              height: "17px",
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontSize: "14px",
-              fontWeight: 600,
-              lineHeight: "17px"
-            }}
-          >
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="text"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              setError("")
-            }}
-            className="text-white placeholder:text-brand-dark-400 focus:outline-none rounded-lg border border-brand-dark-600"
-            style={{
-              width: "360px",
-              height: "55px",
-              padding: "10px 14px",
-              backgroundColor: "#1E1E1E99",
-              fontFamily: "var(--font-montserrat), sans-serif"
-            }}
-            required
-          />
-        </div>
-
-        <div className="space-y-2 w-full">
-          <Label 
-            htmlFor="password" 
-            className="text-white block"
-            style={{
-              width: "41px",
-              height: "17px",
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontSize: "14px",
-              fontWeight: 600,
-              lineHeight: "17px"
-            }}
-          >
-            Password
-          </Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value)
-              setError("")
-            }}
-            className="text-white placeholder:text-brand-dark-400 focus:outline-none rounded-lg border border-brand-dark-600"
-            style={{
-              width: "360px",
-              height: "55px",
-              padding: "10px 14px",
-              backgroundColor: "#1E1E1E99",
-              fontFamily: "var(--font-montserrat), sans-serif"
-            }}
-            required
-          />
+      <form onSubmit={handleSubmit} className="space-y-6 w-full" style={{ width: "360px" }}>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-white">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="text-white placeholder:text-brand-dark-400 focus:outline-none rounded-lg border border-brand-dark-600"
+              style={{
+                width: "100%",
+                height: "48px",
+                padding: "10px 14px",
+                backgroundColor: "#1E1E1E99",
+                fontFamily: "var(--font-montserrat), sans-serif"
+              }}
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-white">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="text-white placeholder:text-brand-dark-400 focus:outline-none rounded-lg border border-brand-dark-600"
+              style={{
+                width: "100%",
+                height: "48px",
+                padding: "10px 14px",
+                backgroundColor: "#1E1E1E99",
+                fontFamily: "var(--font-montserrat), sans-serif"
+              }}
+              required
+            />
+          </div>
         </div>
 
         {/* Error message */}
@@ -207,17 +158,18 @@ export function LoginForm() {
           </button>
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-white text-black hover:bg-brand-dark-100 transition-colors"
-          style={{ 
-            width: "360px",
-            fontFamily: "var(--font-montserrat), sans-serif"
-          }}
-          disabled={isLoading}
-        >
-          {isLoading ? "Signing in..." : "Sign in"}
-        </Button>
+        <div className="space-y-4">
+          <Button 
+            type="submit" 
+            className="w-full bg-white text-black hover:bg-brand-dark-100 transition-colors h-12"
+            style={{ 
+              fontFamily: "var(--font-montserrat), sans-serif"
+            }}
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing in..." : "Sign in"}
+          </Button>
+        </div>
       </form>
 
       {/* Sign up link */}
