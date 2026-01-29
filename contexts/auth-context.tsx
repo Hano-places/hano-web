@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         name: distinctUser.name || "",
         email: distinctUser.email || "",
         avatarUrl: distinctUser.image || undefined,
-        isSuperAdmin: distinctUser.isSuperAdmin,
+        isSuperAdmin: distinctUser.isSuperAdmin ?? (localStorage.getItem("isSuperAdmin") === "true"),
       });
 
       // Fetch managed places for business owners

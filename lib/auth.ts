@@ -16,6 +16,7 @@ export const clearTokens = () => {
   if (typeof window === "undefined") return;
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
+  localStorage.removeItem("isSuperAdmin");
 };
 
 export const logout = () => {

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/auth-context";
-import AdminDashboardContent from "@/components/admin/AdminDashboardContent";
+import SuperAdminDashboardContent from "@/components/super-admin/SuperAdminDashboardContent";
 import { AuthGuard } from "@/components/auth-guard";
 
 export default function RootPage() {
@@ -42,7 +42,7 @@ export default function RootPage() {
   if (isAuthenticated && user?.isSuperAdmin) {
     return (
       <AuthGuard>
-        <AdminDashboardContent />
+        <SuperAdminDashboardContent />
       </AuthGuard>
     );
   }

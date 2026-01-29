@@ -44,10 +44,18 @@ export function LoginForm() {
         password: password,
       })
 
-      const { accessToken, refreshToken } = response.data
+      const { accessToken, refreshToken, user } = response.data
 
       if (accessToken && refreshToken) {
         setTokens(accessToken, refreshToken)
+
+        // Persist admin status if present
+        if (user?.isSuperAdmin) {
+          localStorage.setItem("isSuperAdmin", "true");
+        } else {
+          localStorage.removeItem("isSuperAdmin");
+        }
+
         // Refresh the profile to update the global auth context
         await refreshProfile()
         router.push("/")
