@@ -1,9 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { AuthProvider } from "@/contexts/auth-context"
+import { RootRedirect } from "@/components/root-redirect"
 import "./globals.css"
 
 const montserrat = Montserrat({
@@ -15,7 +15,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Hano",
   description: "Hano Application",
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -27,8 +27,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${montserrat.variable}`}>
         <AuthProvider>
+          <RootRedirect />
           <Suspense fallback={null}>{children}</Suspense>
-          <Analytics />
         </AuthProvider>
       </body>
     </html>
