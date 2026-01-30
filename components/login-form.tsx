@@ -11,6 +11,7 @@ import Image from "next/image"
 import { apiClient } from "@/lib/api-client"
 import { setTokens } from "@/lib/auth"
 import { useAuth } from "@/contexts/auth-context"
+import Link from "next/link"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
@@ -255,7 +256,8 @@ export function LoginForm() {
         >
           Don't have an account?{" "}
         </span>
-        <button
+        <Link
+          href="/sign-up"
           className="text-sm font-medium transition-colors"
           style={{
             color: "#D63D34",
@@ -263,7 +265,7 @@ export function LoginForm() {
           }}
         >
           Sign up
-        </button>
+        </Link>
       </div>
     </div>
   )
