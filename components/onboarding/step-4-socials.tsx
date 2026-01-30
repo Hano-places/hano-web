@@ -8,66 +8,57 @@ import { Facebook, Globe, Instagram, Twitter, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api-client";
+import { useAuth } from "@/contexts/auth-context";
 
 export function Step4Socials() {
     const { data, updateData, handleBack, isSubmitting, setIsSubmitting } = useOnboarding();
     const router = useRouter();
+    const { user, refreshProfile } = useAuth();
 
     const handleSubmit = async () => {
         try {
             setIsSubmitting(true);
 
-            // Construct payload based on user Curl
-            const payload = {
-                name: data.name,
-                description: data.description,
-                categoryId: data.categoryId,
-                websiteUrl: data.socials.website,
-                // Optional/Empty fields for now as per design
-                id: "",
-                bannerUrl: "",
-                logoUrl: "",
-
-                // Extra data that backend might accept (based on my assumption)
-                // If backend strictly accepts only the CURL fields, these might be ignored or cause error.
-                // I will assume for now we just send what is asked, plus the contact info if possible?
-                // The CURL only had: id, name, description, bannerUrl, logoUrl, websiteUrl, categoryId.
-                // It did NOT have address, phone, hours, social links (other than website).
-
-                // I'll send the extra data in a separate object or hope backend handles it.
-                // Or I'll just try to send standard fields.
-
-                // Let's send everything we collected, assuming backend might be updated or flexible.
-                phone: data.phone,
-                email: data.email,
-                address: data.address,
-                locationName: data.locationName,
-                openingHours: data.openingHours,
-                socials: data.socials
-            };
-
-            console.log("Submitting payload:", payload);
-
-            // We use the fields requested
+            // Construct strictly the payload requested
             const requestBody = {
-                id: "",
+                // Removed ID field to avoid 400 (Validation) and 500 (DB) errors
                 name: data.name,
                 description: data.description,
                 categoryId: data.categoryId,
-                websiteUrl: data.socials.website,
-                bannerUrl: "",
-                logoUrl: "",
-                // I'll attach the others as well just in case
-                phone: data.phone,
-                email: data.email,
-                address: data.address,
-                socials: data.socials
+
+                // Use static mocked URLs if empty to satisfy backend validation
+                websiteUrl: data.socials.website || "https://google.com",
+                bannerUrl: "https://placehold.co/1200x400/png",
+                logoUrl: "https://placehold.co/400x400/png",
             };
 
-            await apiClient.post("/places/places", requestBody);
+            console.log("Submitting payload:", requestBody);
+
+            const response = await apiClient.post("/places/places", requestBody);
+            console.log("Creation response:", response.data);
+
+            const placeId = response.data?.id;
+
+            if (placeId && user?.email) {
+                try {
+                    console.log("Inviting user as admin:", user.email);
+                    await apiClient.post(`/place-admins/places/${placeId}/admins/invite`, {
+                        email: user.email,
+                        role: "ADMIN"
+                    });
+
+                    // Refresh profile to update managed places list
+                    await refreshProfile();
+                } catch (inviteError) {
+                    console.error("Failed to auto-invite admin:", inviteError);
+                    toast.error("Business created, but failed to assign you as admin.");
+                }
+            } else {
+                console.warn("Place ID missing in response or User email missing, skipping auto-invite.");
+            }
 
             toast.success("Business created successfully!");
-            router.push("/dashboard"); // Redirect to dashboard
+            router.push("/dashboard");
 
         } catch (error) {
             console.error("Failed to create business:", error);

@@ -27,14 +27,25 @@ export function Step2Location() {
             </div>
 
             <div className="space-y-6">
-                <div className="relative">
-                    <Search className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
-                    <Input
-                        placeholder="Search here nearest locations..."
-                        className="bg-[#1F1F1F] border-[#333] text-white h-12 pl-10"
-                        value={data.locationName}
-                        onChange={(e) => updateData({ locationName: e.target.value, address: e.target.value })}
-                    />
+                <div className="space-y-4">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <Input
+                            placeholder="Search here nearest locations..."
+                            className="bg-[#1F1F1F] border-[#333] text-white h-12 pl-10"
+                            value={data.locationName}
+                            onChange={(e) => updateData({ locationName: e.target.value })}
+                        />
+                    </div>
+                    <div className="relative">
+                        <MapPin className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                        <Input
+                            placeholder="Enter specific address manually (optional)"
+                            className="bg-[#1F1F1F] border-[#333] text-white h-12 pl-10"
+                            value={data.address}
+                            onChange={(e) => updateData({ address: e.target.value })}
+                        />
+                    </div>
                 </div>
 
                 {/* Map Placeholder */}
@@ -69,7 +80,6 @@ export function Step2Location() {
                     <Button
                         className="flex-1 h-12 text-base bg-white text-black hover:bg-gray-200"
                         onClick={handleNext}
-                        disabled={!isFormValid}
                     >
                         Next
                     </Button>
