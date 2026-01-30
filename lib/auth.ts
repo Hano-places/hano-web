@@ -1,8 +1,27 @@
-import { createAuthClient } from "better-auth/react";
+export const getTokens = () => {
+  if (typeof window === "undefined") return { accessToken: null, refreshToken: null };
+  return {
+    accessToken: localStorage.getItem("accessToken"),
+    refreshToken: localStorage.getItem("refreshToken"),
+  };
+};
 
-export const authClient = createAuthClient({
-  baseURL: "https://hano.fly.dev",
-});
+export const setTokens = (accessToken: string, refreshToken: string) => {
+  if (typeof window === "undefined") return;
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
+};
 
-export const { signIn, signOut, useSession } = authClient;
+export const clearTokens = () => {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("isSuperAdmin");
+};
 
+export const logout = () => {
+  clearTokens();
+  if (typeof window !== "undefined") {
+    window.location.href = "/login";
+  }
+};
