@@ -20,7 +20,7 @@ export default function AppShell({ user, menu, children }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white" style={{ ['--sidebar-width' as any]: '16rem' }}>
+    <div className="min-h-screen bg-[#0C0C0C] text-white" style={{ ['--sidebar-width' as any]: '16rem' }}>
       {/* Fixed sidebar (mobile slide-in). Reserve space on lg screens */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} menu={menu} />
 

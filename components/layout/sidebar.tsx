@@ -24,9 +24,10 @@ type MenuIcon = typeof ChartLine;
 export interface SidebarMenuItem {
   icon: MenuIcon;
   label: string;
-  href: string;
+  href?: string;
   active?: boolean;
   badge?: number;
+  onClick?: () => void;
 }
 
 export interface SidebarMenuSection {
@@ -63,9 +64,9 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
       >
         {/* Header */}
         <div className="flex items-center justify-between py-4 pr-4 pl-6">
-           <div className="flex items-center">
-             <div className="w-16 h-16 flex items-center justify-center p-0.5">
-               <div className="w-14 h-14 flex items-center justify-center">
+          <div className="flex items-center">
+            <div className="w-16 h-16 flex items-center justify-center p-0.5">
+              <div className="w-14 h-14 flex items-center justify-center">
                 <img
                   src="/logo.png"
                   alt="Hano Logo"
@@ -99,47 +100,58 @@ export function Sidebar({ isOpen, onToggle, menu }: SidebarProps) {
                 {section.items.map((item, itemIndex) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href || item.active;
+
+                  const content = (
+                    <>
+                      <div className="flex items-center px-4 space-x-4">
+                        <Icon
+                          className={cn(
+                            "h-5 w-5 transition-colors",
+                            isActive ? "text-white" : "text-gray-400 group-hover:text-white"
+                          )}
+                        />
+                        <span
+                          className={cn(
+                            "transition-colors text-sm",
+                            isActive ? "text-white " : "group-hover:text-white"
+                          )}
+                        >
+                          {item.label}
+                        </span>
+                      </div>
+
+                      {item.badge && (
+                        <Badge
+                          variant="destructive"
+                          className={cn(
+                            "h-5 w-5 p-0 text-[10px] flex items-center justify-center rounded-full",
+                            isActive ? "bg-red-500 text-white" : "bg-red-500 hover:bg-red-600"
+                          )}
+                        >
+                          {item.badge}
+                        </Badge>
+                      )}
+                    </>
+                  );
+
+                  const className = cn(
+                    "w-full flex items-center justify-between px-3 py-3 text-[13px] font-medium transition-all duration-200 group relative h-12",
+                    isActive
+                      ? "border-l-4 border-white bg-brand-dark-900 text-white"
+                      : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
+                  );
+
                   return (
                     <li key={itemIndex}>
-                      <Link
-  href={item.href}
-  className={cn(
-    "flex items-center justify-between px-3 py-3 text-[13px] font-medium transition-all duration-200 group relative h-12",
-    isActive
-      ? "border-l-4 border-white bg-brand-dark-900 text-white"
-      : "text-gray-300 hover:bg-brand-dark-900 hover:text-white"
-  )}
->
-  <div className="flex items-center px-4 space-x-4"> {/* ⬅️ slightly wider space between icon and text */}
-    <Icon
-      className={cn(
-        "h-5 w-5 transition-colors",
-        isActive ? "text-white" : "text-gray-400 group-hover:text-white"
-      )}
-    />
-    <span
-      className={cn(
-        "transition-colors text-sm",
-        isActive ? "text-white " : "group-hover:text-white"
-      )}
-    >
-      {item.label}
-    </span>
-  </div>
-
-  {item.badge && (
-    <Badge
-      variant="destructive"
-      className={cn(
-        "h-5 w-5 p-0 text-[10px] flex items-center justify-center rounded-full",
-        isActive ? "bg-red-500 text-white" : "bg-red-500 hover:bg-red-600"
-      )}
-    >
-      {item.badge}
-    </Badge>
-  )}
-</Link>
-
+                      {item.onClick ? (
+                        <button onClick={item.onClick} className={className}>
+                          {content}
+                        </button>
+                      ) : (
+                        <Link href={item.href || "#"} className={className}>
+                          {content}
+                        </Link>
+                      )}
                     </li>
                   );
                 })}
