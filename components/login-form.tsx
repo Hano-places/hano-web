@@ -11,8 +11,8 @@ import Image from "next/image"
 import { useAuth } from "@/contexts/auth-context"
 
 export function LoginForm() {
-  const [email, setEmail] = useState("irereapps@gmail.com")
-  const [password, setPassword] = useState("admin123")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)

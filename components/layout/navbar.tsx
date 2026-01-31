@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Search, Settings, Bell, ChevronDown, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+import { useAuth } from "@/contexts/auth-context";
 
 interface NavbarUser {
   name: string;
@@ -25,6 +37,20 @@ interface NavbarProps {
 }
 
 export function Navbar({ onSidebarToggle, user }: NavbarProps) {
+  const router = useRouter();
+  const { logout } = useAuth();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleSignOutClick = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  const handleConfirmSignOut = async () => {
+    setShowLogoutConfirm(false);
+    await logout();
+    router.push("/login");
+  };
+
   return (
     <header className="text-white py-6 mb-8">
   <div className="grid grid-cols-[2fr_5fr_2fr] items-center w-full gap-3">
@@ -79,9 +105,40 @@ export function Navbar({ onSidebarToggle, user }: NavbarProps) {
     align="end"
     className="w-56 bg-brand-dark-800/95 border-brand-dark-700 backdrop-blur-sm"
   >
-    <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Profile </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Account Settings </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Preferences </DropdownMenuItem> <DropdownMenuSeparator className="bg-brand-dark-700" /> <DropdownMenuItem className="text-red-400 focus:text-brand-dark-100 focus:bg-red-400/50"> Sign Out </DropdownMenuItem>
+    <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Profile </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Account Settings </DropdownMenuItem> <DropdownMenuItem className="text-white bg-brand-dark-700/50 "> Preferences </DropdownMenuItem> <DropdownMenuSeparator className="bg-brand-dark-700" />
+    <DropdownMenuItem
+      className="text-red-400 focus:text-brand-dark-100 focus:bg-red-400/50 cursor-pointer"
+      onSelect={handleSignOutClick}
+    >
+      Sign Out
+    </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
+
+      <AlertDialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
+        <AlertDialogContent className="bg-brand-dark-900 border-brand-dark-700 text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Sign out?</AlertDialogTitle>
+            <AlertDialogDescription className="text-brand-dark-300">
+              Do you really want to sign out? You will need to log in again to access the dashboard.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className="bg-brand-dark-800 border-brand-dark-600 text-white hover:bg-brand-dark-700"
+              onClick={() => setShowLogoutConfirm(false)}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 text-white hover:bg-red-700"
+              onClick={handleConfirmSignOut}
+            >
+              Sign out
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
 
       {/* Settings */}
