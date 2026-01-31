@@ -24,7 +24,8 @@ export function Step4Socials() {
                 // Removed ID field to avoid 400 (Validation) and 500 (DB) errors
                 name: data.name,
                 description: data.description,
-                categoryId: data.categoryId,
+                ...(data.categoryId && { categoryId: data.categoryId }),
+                verified: true,
 
                 // Use static mocked URLs if empty to satisfy backend validation
                 websiteUrl: data.socials.website || "https://google.com",

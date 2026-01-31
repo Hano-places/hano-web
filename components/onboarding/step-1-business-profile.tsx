@@ -17,7 +17,7 @@ import { Zap } from "lucide-react";
 export function Step1BusinessProfile() {
     const { data, updateData, handleNext } = useOnboarding();
 
-    const isFormValid = data.name && data.categoryId && data.description;
+    const isFormValid = data.name && data.description;
 
     const categories = [
         { id: "restaurant", name: "Restaurant" },
@@ -56,13 +56,13 @@ export function Step1BusinessProfile() {
                 </div>
 
                 <div className="space-y-2">
-                    <Label className="text-white">Business Category</Label>
+                    <Label className="text-white">Business Category (Optional)</Label>
                     <Select
                         value={data.categoryId}
                         onValueChange={(value) => updateData({ categoryId: value })}
                     >
                         <SelectTrigger className="bg-[#1F1F1F] border-[#333] text-white h-12">
-                            <SelectValue placeholder="Tap to select category..." />
+                            <SelectValue placeholder="Tap to select category (optional)..." />
                         </SelectTrigger>
                         <SelectContent className="bg-[#1F1F1F] border-[#333] text-white">
                             {categories.map((cat) => (

@@ -13,7 +13,7 @@ interface OnboardingData {
     // Step 1: Business Profile
     name: string;
     description: string;
-    categoryId: string;
+    categoryId?: string;
 
     // Step 2: Location
     locationName: string; // For display
