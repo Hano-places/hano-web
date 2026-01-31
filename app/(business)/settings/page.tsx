@@ -1,6 +1,7 @@
 "use client";
 
 import PageHeader from "@/components/layout/page-header";
+import { LogoutDevicesButton } from "@/components/auth/logout-devices-button";
 
 export default function BusinessSettingsPage() {
     return (
@@ -19,6 +20,7 @@ export default function BusinessSettingsPage() {
                     Manage your business profile, operating hours, and improved configurations.
                 </p>
             </div>
+            <LogoutDevicesButton />
         </div>
     );
 }

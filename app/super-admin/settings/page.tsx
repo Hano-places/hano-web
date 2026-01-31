@@ -1,6 +1,7 @@
 "use client";
 
 import PageHeader from "@/components/layout/page-header";
+import { LogoutDevicesButton } from "@/components/auth/logout-devices-button";
 
 export default function SuperAdminSettingsPage() {
     return (
@@ -19,6 +20,7 @@ export default function SuperAdminSettingsPage() {
                     Manage global platform configurations, security settings, and system preferences.
                 </p>
             </div>
+            <LogoutDevicesButton />
         </div>
     );
 }
